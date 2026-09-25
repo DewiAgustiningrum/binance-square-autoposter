@@ -33,6 +33,10 @@ jobs:
         run: |
           git config user.name "square-autoposter-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/posts.json
-          git diff --staged --quiet || git commit -m "chore: update post history [skip ci]"
-          git push
+          if [ -f data/posts.json ]; then
+            git add data/posts.json
+            git diff --staged --quiet || git commit -m "chore: update post history [skip ci]"
+            git push
+          else
+            echo "data/posts.json doesn't exist yet (no successful publish this run) — nothing to commit."
+          fi
