@@ -10,6 +10,11 @@ import path from "node:path";
 
 const MAX_LENGTH = 560; // hard cap; prompts target 500, this catches overshoot
 const MIN_LENGTH = 40; // catches empty/near-empty LLM output
+// Square rejects posts with too many distinct cashtags (error 220095,
+// undocumented in the skill — discovered via a real failed post referencing
+// $BTC/$ETH/$BNB/$USDT). 3 is confirmed safe; not confirmed as the exact
+// ceiling, so treat this as a conservative cap, not a verified max.
+const MAX_CASHTAGS = 3;
 const HISTORY_PATH = path.resolve("data/posts.json");
 const HISTORY_KEEP = 30; // how many past posts to compare against for duplicates
 const DUPLICATE_SIMILARITY_THRESHOLD = 0.6; // word-overlap ratio
@@ -96,8 +101,17 @@ export async function validatePost(text, theme) {
     "tokenized-stocks",
     "daily-recap",
   ];
-  if (cashtagThemes.includes(theme) && !/\$[A-Z]{2,10}\b/.test(trimmed)) {
+  const cashtags = new Set((trimmed.match(/\$[A-Z]{2,10}\b/g) ?? []).map((t) => t.toUpperCase()));
+
+  if (cashtagThemes.includes(theme) && cashtags.size === 0) {
     return { valid: false, reason: "No $CASHTAG found in output" };
+  }
+
+  if (cashtags.size > MAX_CASHTAGS) {
+    return {
+      valid: false,
+      reason: `Too many cashtags (${cashtags.size}: ${[...cashtags].join(", ")}), Square rejects over ${MAX_CASHTAGS}`,
+    };
   }
 
   const history = await loadHistory();
