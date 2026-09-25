@@ -47,6 +47,9 @@ Style rules (must follow):
 - Reference coin/token tickers using cashtag format (e.g. $BTC, $ETH, $BNB) —
   never write the coin name without the $ prefix. This is required for
   Binance Square's chart auto-detection.
+- Use AT MOST 3 different cashtags in the whole post. Square rejects posts
+  referencing more than 3 coins. Pick the 3 most relevant and mention any
+  others (if truly necessary) by plain name without the $ prefix.
 - Use only the data provided below. Do not invent numbers. Do not give
   financial advice or tell people to buy/sell.
 - No em dashes, no bullet points in the post body.
