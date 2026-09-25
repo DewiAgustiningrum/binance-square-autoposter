@@ -2,7 +2,11 @@
 // Powers Theme 1 (Morning Market Brief) and Theme 8 (Daily Recap).
 // Public Binance REST API — no API key required.
 
-const BASE_URL = "https://api.binance.com";
+// api.binance.com returns HTTP 451 from US-hosted IPs (GitHub Actions
+// runners included — they run on US Azure datacenters). data-api.binance.vision
+// is Binance's public read-only market-data mirror with the same response
+// shape and no geo-restriction.
+const BASE_URL = "https://data-api.binance.vision";
 const SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT"];
 
 async function fetchTicker24hr(symbol) {
