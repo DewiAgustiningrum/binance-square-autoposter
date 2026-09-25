@@ -142,14 +142,26 @@ async function callGroq(prompt) {
     body: JSON.stringify({
       model: "openai/gpt-oss-120b",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: 400,
+      // gpt-oss-120b is a reasoning model — it spends tokens "thinking"
+      // before writing the final answer, so this needs real headroom
+      // beyond the ~500-char post itself or content comes back empty.
+      max_tokens: 1200,
       temperature: 0.9,
     }),
   });
 
   if (!res.ok) throw new Error(`Groq error ${res.status}: ${await res.text()}`);
   const json = await res.json();
-  return json.choices?.[0]?.message?.content?.trim();
+  const content = json.choices?.[0]?.message?.content?.trim();
+
+  if (!content) {
+    // Log the raw response once so a future empty-output case is debuggable
+    // instead of silently falling through with nothing to show for it.
+    console.error("Groq returned no content. Raw response:", JSON.stringify(json));
+    throw new Error("Groq returned empty content");
+  }
+
+  return content;
 }
 
 async function callGemini(prompt) {
@@ -160,14 +172,21 @@ async function callGemini(prompt) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 400, temperature: 0.9 },
+        generationConfig: { maxOutputTokens: 800, temperature: 0.9 },
       }),
     }
   );
 
   if (!res.ok) throw new Error(`Gemini error ${res.status}: ${await res.text()}`);
   const json = await res.json();
-  return json.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+  const content = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+  if (!content) {
+    console.error("Gemini returned no content. Raw response:", JSON.stringify(json));
+    throw new Error("Gemini returned empty content");
+  }
+
+  return content;
 }
 
 async function callLLM(prompt) {
