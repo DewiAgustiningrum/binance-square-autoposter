@@ -142,17 +142,30 @@ async function callGroq(prompt) {
     body: JSON.stringify({
       model: "openai/gpt-oss-120b",
       messages: [{ role: "user", content: prompt }],
-      // gpt-oss-120b is a reasoning model — it spends tokens "thinking"
-      // before writing the final answer, so this needs real headroom
-      // beyond the ~500-char post itself or content comes back empty.
-      max_tokens: 1200,
+      // gpt-oss-120b always reasons — it can't be turned off — and
+      // reasoning tokens share the same max_tokens budget as the final
+      // answer. reasoning_effort:"low" keeps more of that budget free
+      // for the actual post instead of internal chain-of-thought.
+      reasoning_effort: "low",
+      // Real headroom beyond the ~500-char post itself, since reasoning
+      // still eats into this even at "low" effort.
+      max_tokens: 2000,
       temperature: 0.9,
     }),
   });
 
   if (!res.ok) throw new Error(`Groq error ${res.status}: ${await res.text()}`);
   const json = await res.json();
-  const content = json.choices?.[0]?.message?.content?.trim();
+  const choice = json.choices?.[0];
+  const content = choice?.message?.content?.trim();
+
+  if (choice?.finish_reason === "length") {
+    // Hit max_tokens before finishing — content (if any) is truncated
+    // mid-sentence. Treat as a failure rather than publishing a cut-off
+    // post; let the caller fall back to Gemini instead.
+    console.error("Groq output truncated (finish_reason=length). Raw response:", JSON.stringify(json));
+    throw new Error("Groq output truncated (hit max_tokens)");
+  }
 
   if (!content) {
     // Log the raw response once so a future empty-output case is debuggable
@@ -172,14 +185,20 @@ async function callGemini(prompt) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 800, temperature: 0.9 },
+        generationConfig: { maxOutputTokens: 1200, temperature: 0.9 },
       }),
     }
   );
 
   if (!res.ok) throw new Error(`Gemini error ${res.status}: ${await res.text()}`);
   const json = await res.json();
-  const content = json.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+  const candidate = json.candidates?.[0];
+  const content = candidate?.content?.parts?.[0]?.text?.trim();
+
+  if (candidate?.finishReason === "MAX_TOKENS") {
+    console.error("Gemini output truncated (finishReason=MAX_TOKENS). Raw response:", JSON.stringify(json));
+    throw new Error("Gemini output truncated (hit maxOutputTokens)");
+  }
 
   if (!content) {
     console.error("Gemini returned no content. Raw response:", JSON.stringify(json));
