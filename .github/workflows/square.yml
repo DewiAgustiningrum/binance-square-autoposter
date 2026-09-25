@@ -1,0 +1,38 @@
+name: Binance Square Auto Post
+
+on:
+  workflow_dispatch: {} # manual trigger button in the Actions tab
+  schedule:
+    - cron: "0 2 * * *" # 09:00 WIB daily — adjust to taste (cron is UTC)
+
+permissions:
+  contents: write # needed to commit data/posts.json back to the repo
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate and publish post
+        env:
+          BINANCE_SQUARE_OPENAPI_KEY: ${{ secrets.BINANCE_SQUARE_OPENAPI_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node src/run.mjs
+
+      - name: Commit updated post history
+        if: always() # run even if the publish step failed/skipped, in case
+                      # data/posts.json changed before the failure point
+        run: |
+          git config user.name "square-autoposter-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/posts.json
+          git diff --staged --quiet || git commit -m "chore: update post history [skip ci]"
+          git push
