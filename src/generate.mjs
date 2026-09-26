@@ -37,13 +37,41 @@ function pickTheme() {
 // Shared style rules — anti-"AI-sounding" instructions, cashtag format, etc.
 // Appended to every theme's system prompt so they don't have to repeat it.
 // ---------------------------------------------------------------------------
+const TONE_EXAMPLE = `
+Example of the tone to match (casual, like texting a friend an update —
+not the topic, just the voice):
+
+"BTC's sitting at $84K after tapping $85.2K then sliding back to $83.1K,
+still choppy this week. ETH barely moved, hanging around $2.7K. BNB's
+actually the one bleeding, down over half a percent to $775. Nothing
+dramatic today, just a quiet grind lower across the board."
+
+Notice: contractions (BTC's, isn't), plain word choices, a personal read
+at the end ("nothing dramatic", "quiet grind") instead of a generic hype
+phrase, and no clinical listing of every stat with formal transitions.
+`.trim();
+
 const STYLE_RULES = `
 Style rules (must follow):
-- Write like a trader posting on Binance Square, not like a report.
+- Tone: write like you're texting a trader friend a quick update, not
+  filing a market report. Use contractions (it's, didn't, that's, BTC's).
+  Casual word choices over formal ones (e.g. "dropped" not "declined",
+  "barely moved" not "exhibited minimal movement").
 - Skip intros like "Today the market..." — start directly from the point.
 - No hedging filler ("might", "could potentially", "it's worth noting").
 - No generic adjectives ("significant", "notable", "interesting").
 - Vary sentence length — mix short punchy lines with longer ones.
+- If mentioning multiple tokens, do NOT repeat the same sentence template
+  for each one (e.g. "$X does A on B; C keeps it going" three times in a
+  row with different words). Give each token a distinct structure and
+  angle — one can be a short fragment, another a longer sentence, another
+  can lead with the number instead of the ticker.
+- Cut generic narrative filler at the end of clauses — phrases like "fuels
+  the surge", "keeps momentum alive", "steady hands push it forward",
+  "traders snapping up every dip". State the number and stop; don't editorialize
+  around it with stock trading-blog phrasing.
+- Never use an em dash (—) anywhere in the post, under any circumstance.
+  Use a period, comma, or semicolon instead.
 - Reference coin/token tickers using cashtag format (e.g. $BTC, $ETH, $BNB) —
   never write the coin name without the $ prefix. This is required for
   Binance Square's chart auto-detection.
@@ -54,6 +82,8 @@ Style rules (must follow):
   financial advice or tell people to buy/sell.
 - No em dashes, no bullet points in the post body.
 - Return ONLY the final post text, nothing else.
+
+${TONE_EXAMPLE}
 `.trim();
 
 const THEME_PROMPTS = {
