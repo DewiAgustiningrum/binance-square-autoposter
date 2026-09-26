@@ -1,14 +1,19 @@
 // src/validate.mjs
 // Validates LLM-generated text before it's allowed anywhere near publish.mjs.
-// Square's exact character cap isn't documented in the skill (only error
-// code 20013 "Content length is limited") — MAX_LENGTH below is a safety
-// margin under the ~500 chars we told the LLM to target, not a confirmed
-// Binance limit. Tighten/loosen after a few real test posts.
+// Square's exact character cap isn't documented anywhere official (only
+// error code 20013 "Content length is limited"). Secondhand claims put it
+// around ~2000-2100, but that's unverified — MAX_LENGTH below is a
+// conservative safety margin under the ~1100 chars we told the LLM to
+// target, not a confirmed Binance limit. Raise it further only after
+// confirming the real ceiling (check the compose UI for a char counter,
+// or test empirically) — going too high risks a failed publish (20013)
+// rather than a caught validation error, since Square's own limit is
+// enforced after validate.mjs already passed the text through.
 
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-const MAX_LENGTH = 560; // hard cap; prompts target 500, this catches overshoot
+const MAX_LENGTH = 1200; // hard cap; prompts target 1100, this catches overshoot
 const MIN_LENGTH = 40; // catches empty/near-empty LLM output
 // Square rejects posts with too many distinct cashtags (error 220095,
 // undocumented in the skill — discovered via a real failed post referencing
@@ -99,11 +104,10 @@ export async function validatePost(text, theme) {
   // a downstream step accidentally stripping the $ prefix.
   const cashtagThemes = [
     "morning-brief",
-    "smart-money-setup",
-    "trending-narrative",
-    "smart-money-inflow",
-    "meme-launch-radar",
-    "hot-topic-rush",
+    "leaders-laggards",
+    "breakout-watch",
+    "quiet-movers",
+    "relative-strength",
     "tokenized-stocks",
     "daily-recap",
   ];
