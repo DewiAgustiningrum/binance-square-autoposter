@@ -49,6 +49,12 @@ dramatic today, just a quiet grind lower across the board."
 Notice: contractions (BTC's, isn't), plain word choices, a personal read
 at the end ("nothing dramatic", "quiet grind") instead of a generic hype
 phrase, and no clinical listing of every stat with formal transitions.
+
+IMPORTANT: this example shows the VOICE to match, not phrases to reuse.
+Do not reuse "quiet grind", "nothing dramatic", or any other specific
+wording from this example — write your own closing line in your own
+words. Copying phrasing from this example across multiple posts creates
+the exact repetitive pattern this whole style guide is trying to avoid.
 `.trim();
 
 const STYLE_RULES = `
