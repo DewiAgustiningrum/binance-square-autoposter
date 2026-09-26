@@ -52,6 +52,8 @@ src/
   publish.mjs                  publishes to Square, records history
   run.mjs                      entry point: generate → validate → publish (with retry)
 data/posts.json                auto-generated post history, don't create manually
+package.json                   type: module, engines: node >=22
+.gitignore                     node_modules/, .env, *.log
 README.md                      this file
 LICENSE                        MIT
 ```
