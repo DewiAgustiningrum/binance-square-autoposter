@@ -2,11 +2,24 @@
 // Picks a theme, fetches its data, calls the LLM (Groq primary, Gemini fallback),
 // returns the generated Square post text.
 
-import { getMarketSnapshot } from "./sources/market.mjs";
-import { getSmartMoneySignals } from "./sources/smart-money.mjs";
-import { getTrendingTokens, getSmartMoneyInflow } from "./sources/market-rank.mjs";
-import { getLaunchRadar, getHotTopics } from "./sources/meme.mjs";
+import {
+  getMarketSnapshot,
+  getLeadersLaggards,
+  getBreakoutWatch,
+  getQuietMovers,
+  getRelativeStrength,
+} from "./sources/market.mjs";
 import { getTokenizedStocksSnapshot } from "./sources/tokenized-stocks.mjs";
+
+// NOTE: trading-signal, crypto-market-rank, and meme-rush skills are
+// intentionally NOT imported here anymore. They surface tokens from
+// BSC/Solana DEX activity with no guarantee those tokens are listed on
+// Binance — one of those posts (via crypto-market-rank's smart-money-inflow)
+// got a real compliance notice from Square for referencing a non-Binance-
+// listed token. Every theme below is now built only from Binance's own
+// listed USDT pairs (data-api.binance.vision), which structurally rules
+// that out. The three skills are still in skills/ and still valid to use
+// for manual research — just not wired into the auto-post pipeline.
 
 // ---------------------------------------------------------------------------
 // Theme registry — weighted random pick, no state file needed.
@@ -14,11 +27,10 @@ import { getTokenizedStocksSnapshot } from "./sources/tokenized-stocks.mjs";
 // ---------------------------------------------------------------------------
 const THEMES = [
   { id: "morning-brief", weight: 3, fetch: () => getMarketSnapshot(), label: "Morning Market Brief" },
-  { id: "smart-money-setup", weight: 2, fetch: () => getSmartMoneySignals(), label: "Smart Money Setup" },
-  { id: "trending-narrative", weight: 2, fetch: () => getTrendingTokens(), label: "Trending Narrative" },
-  { id: "smart-money-inflow", weight: 1, fetch: () => getSmartMoneyInflow(), label: "Smart Money Inflow" },
-  { id: "meme-launch-radar", weight: 1, fetch: () => getLaunchRadar(), label: "Meme Launch Radar" },
-  { id: "hot-topic-rush", weight: 1, fetch: () => getHotTopics(), label: "Hot Topic Rush" },
+  { id: "leaders-laggards", weight: 2, fetch: () => getLeadersLaggards(), label: "Leaders & Laggards" },
+  { id: "breakout-watch", weight: 1, fetch: () => getBreakoutWatch(), label: "Breakout Watch" },
+  { id: "quiet-movers", weight: 1, fetch: () => getQuietMovers(), label: "The Quiet Ones" },
+  { id: "relative-strength", weight: 2, fetch: () => getRelativeStrength(), label: "Relative Strength Check" },
   { id: "tokenized-stocks", weight: 1, fetch: () => getTokenizedStocksSnapshot(), label: "Tokenized Stocks Corner" },
   { id: "daily-recap", weight: 3, fetch: () => getMarketSnapshot(), label: "Daily Recap" },
 ];
@@ -99,54 +111,56 @@ using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
 Cover overnight price action for BTC, ETH, BNB — what changed, what's worth
-watching today. Keep it under 500 characters.
+watching today. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
-  "smart-money-setup": (data) => `
-You are a Binance Square crypto analyst. Write a post about recent smart-money
-on-chain signals using ONLY this data:
+  "leaders-laggards": (data) => `
+You are a Binance Square crypto analyst. Write a post contrasting today's
+leaders and laggards using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Mention direction (buy/sell), notable trigger vs current price, and smart
-money conviction count. Frame it as "worth watching", not a signal to act on.
-Keep it under 500 characters.
+"leaders" are the top gainers, "laggards" are the top losers, both drawn
+from the same basket of actively-traded Binance-listed pairs today. Frame
+it as a contrast — who's pulling ahead vs who's falling behind — not two
+separate lists. Mention AT MOST 3 tickers total combined across both sides
+(e.g. 2 leaders + 1 laggard, or 1 and 2) — never more than 3 tickers in the
+whole post. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
-  "trending-narrative": (data) => `
-You are a Binance Square crypto analyst. Write a post about which tokens are
-trending right now using ONLY this data:
+  "breakout-watch": (data) => `
+You are a Binance Square crypto analyst. Write a post about tokens moving
+unusually wide today using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Pick 2-3 standouts and say what's driving attention (volume, holders growth,
-price action). Keep it under 500 characters.
+Each entry has "todayRangePct" (today's high-low range as % of price) vs
+"avgRangePct" (its typical daily range over the past week) — "ratio" over 1
+means today is wider than normal. Frame this as "something's stirring here"
+observation, not a trade signal. Pick 2-3 standouts. Keep it under 1100
+characters.
 ${STYLE_RULES}`,
 
-  "smart-money-inflow": (data) => `
-You are a Binance Square crypto analyst. Write a post about which tokens are
-seeing the biggest smart-money net inflow using ONLY this data:
+  "quiet-movers": (data) => `
+You are a Binance Square crypto analyst. Write a post about tokens that have
+gone unusually quiet today using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Highlight the top 2-3 by inflow, and mention trader count as a conviction
-signal. Keep it under 500 characters.
+Each entry has "todayRangePct" vs "avgRangePct" — "ratio" under 1 means
+today's range is tighter than normal, i.e. compressing. Frame this as a
+"coiled, worth watching" observation — compression often precedes a move,
+but don't say which direction or advise any action. Pick 2-3 standouts.
+Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
-  "meme-launch-radar": (data) => `
-You are a Binance Square crypto analyst covering the meme/launchpad scene.
-Write a post about tokens close to finalizing/migrating using ONLY this data:
+  "relative-strength": (data) => `
+You are a Binance Square crypto analyst. Write a post about where money is
+rotating today using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Mention bonding curve progress and liquidity for 2-3 tokens. Keep the tone
-observational, not hype-y. Keep it under 500 characters.
-${STYLE_RULES}`,
-
-  "hot-topic-rush": (data) => `
-You are a Binance Square crypto analyst. Write a post about the hottest
-market narrative right now using ONLY this data:
-${JSON.stringify(data, null, 2)}
-
-Explain the narrative in your own words (use the AI summary as grounding,
-don't quote it verbatim) and mention 1-2 associated tokens. Keep it under
-500 characters.
+"ethBtcChangePercent" shows whether ETH is gaining or losing ground against
+BTC directly. "btcChangePercent" vs "altsAvgChangePercent" shows whether the
+average alt in today's most-traded basket is outperforming or lagging BTC.
+Tell the rotation story: is money flowing into BTC, into ETH, or spreading
+into alts today? Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "tokenized-stocks": (data) => `
@@ -155,7 +169,7 @@ post about on-chain tokenized stocks using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
 Compare on-chain price movement to the underlying stock fundamentals (P/E,
-dividend yield, 52-week range) for 1-2 tickers. Keep it under 500 characters.
+dividend yield, 52-week range) for 1-2 tickers. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "daily-recap": (data) => `
@@ -164,7 +178,7 @@ ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
 Summarize what happened today for BTC/ETH/BNB and give one thing worth
-watching tomorrow. Keep it under 500 characters.
+watching tomorrow. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 };
 
@@ -188,7 +202,7 @@ async function callGroq(prompt) {
       reasoning_effort: "low",
       // Real headroom beyond the ~500-char post itself, since reasoning
       // still eats into this even at "low" effort.
-      max_tokens: 2000,
+      max_tokens: 3000,
       temperature: 0.9,
     }),
   });
@@ -224,7 +238,7 @@ async function callGemini(prompt) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 1200, temperature: 0.9 },
+        generationConfig: { maxOutputTokens: 1800, temperature: 0.9 },
       }),
     }
   );
