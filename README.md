@@ -54,6 +54,7 @@ src/
 data/posts.json                auto-generated post history, don't create manually
 package.json                   type: module, engines: node >=22
 .gitignore                     node_modules/, .env, *.log
+.env.example                   required env vars for local testing (no values)
 README.md                      this file
 LICENSE                        MIT
 ```
