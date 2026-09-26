@@ -88,6 +88,12 @@ export async function validatePost(text, theme) {
     }
   }
 
+  // Em dash is explicitly forbidden in the prompt but the LLM has ignored
+  // it in a real published post — enforce it here instead of trusting it.
+  if (/—/.test(trimmed)) {
+    return { valid: false, reason: "Contains em dash (—), forbidden by style rules" };
+  }
+
   // Cashtag check: any theme discussing tokens should reference at least
   // one $TICKER — catches the LLM writing "Bitcoin" instead of "$BTC", or
   // a downstream step accidentally stripping the $ prefix.
