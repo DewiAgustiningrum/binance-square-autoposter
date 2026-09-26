@@ -6,21 +6,32 @@ import { generatePost } from "./generate.mjs";
 import { validatePost } from "./validate.mjs";
 import { publishPost } from "./publish.mjs";
 
-async function main() {
-  const { theme, themeLabel, text } = await generatePost();
-  console.log(`Theme: ${themeLabel} (${theme})`);
-  console.log(`Draft:\n${text}\n`);
+const MAX_ATTEMPTS = 3;
 
-  const validation = await validatePost(text, theme);
-  if (!validation.valid) {
-    console.error(`Validation failed: ${validation.reason}`);
-    console.error("Skipping publish for this run. No post was sent.");
-    process.exitCode = 1; // non-zero so the Actions run shows as failed/flagged
+async function main() {
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    console.log(`--- Attempt ${attempt}/${MAX_ATTEMPTS} ---`);
+
+    const { theme, themeLabel, text } = await generatePost();
+    console.log(`Theme: ${themeLabel} (${theme})`);
+    console.log(`Draft:\n${text}\n`);
+
+    const validation = await validatePost(text, theme);
+    if (!validation.valid) {
+      console.error(`Validation failed: ${validation.reason}`);
+      if (attempt < MAX_ATTEMPTS) {
+        console.error("Regenerating...\n");
+        continue;
+      }
+      console.error(`All ${MAX_ATTEMPTS} attempts failed validation. Skipping publish for this run.`);
+      process.exitCode = 1; // non-zero so the Actions run shows as failed/flagged
+      return;
+    }
+
+    const result = await publishPost({ theme, text });
+    console.log(`Published on attempt ${attempt}. id=${result.id ?? "n/a"} link=${result.shareLink ?? "n/a"}`);
     return;
   }
-
-  const result = await publishPost({ theme, text });
-  console.log(`Published. id=${result.id ?? "n/a"} link=${result.shareLink ?? "n/a"}`);
 }
 
 main().catch((err) => {
