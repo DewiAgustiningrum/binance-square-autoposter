@@ -43,7 +43,7 @@ skills/                        Binance skill files (see below)
 src/
   sources/
     market.mjs                 Themes 1, 2, 3, 4, 5, 7 — Binance public market data
-    tokenized-stocks.mjs       Theme 6 — tokenized equities (manual fetch, docs-only skill)
+    tokenized-stocks.mjs       Theme 6 — bStocks (tokenized equities), via data-api.binance.vision
   generate.mjs                 theme picker, prompts, LLM calls
   validate.mjs                 pre-publish checks + post history
   publish.mjs                  publishes to Square, records history
@@ -61,11 +61,17 @@ LICENSE                        MIT
 | Skill | Role | Auth |
 |---|---|---|
 | `square-post` | Publishing | `BINANCE_SQUARE_OPENAPI_KEY` |
-| `binance-tokenized-securities-info` | Theme 6 data (docs only, no CLI — `tokenized-stocks.mjs` implements the fetch manually per its spec) | None, public |
 
-`trading-signal`, `crypto-market-rank`, and `meme-rush` are still present in
-`skills/` but are **not** wired into the auto-post pipeline anymore — see
-"Not included / out of scope" below for why.
+`binance-tokenized-securities-info` is no longer used either — Theme 6 was
+rewritten to read bStocks (Binance's tokenized US equities) as regular spot
+tickers via `data-api.binance.vision` instead of that skill's
+`www.binance.com/bapi/defi` endpoint, which was never confirmed safe from
+GitHub Actions the way `data-api.binance.vision` is. `square-post` is now
+the only skill this repo actually depends on.
+
+`trading-signal`, `crypto-market-rank`, and `meme-rush` were removed from
+this repo entirely (not just unwired) — see "Not included / out of scope"
+below for why.
 
 ## The 7 themes
 
@@ -76,7 +82,7 @@ LICENSE                        MIT
 | 3 | Breakout Watch | Binance public API — today's range vs 7-day average (klines) |
 | 4 | The Quiet Ones | Same as above, inverted — unusually compressed range |
 | 5 | Relative Strength Check | Binance public API — ETH/BTC ratio + alts-vs-BTC rotation |
-| 6 | Tokenized Stocks Corner | `binance-tokenized-securities-info` |
+| 6 | Tokenized Stocks Corner | Binance public API (`tokenized-stocks.mjs`) — bStocks read as regular spot tickers |
 | 7 | Daily Recap | Binance public API (`market.mjs`) |
 
 All 7 themes now pull exclusively from Binance's own listed USDT pairs
@@ -154,22 +160,29 @@ hitting the real errors during development:
   504 and still have actually posted, with `id`/`shareLink` as `null`.
   `publish.mjs` treats this as success (only a thrown error counts as
   failure) — don't treat a null id as a failed publish.
+- **bStocks (tokenized stocks) trade as regular spot pairs**: `NVDABUSDT`,
+  `TSLABUSDT`, etc. are readable through the exact same `ticker/24hr`
+  endpoint as BTC/ETH/BNB — no need for the separate wallet/RWA API the
+  `binance-tokenized-securities-info` skill documents. Found this after
+  realizing that skill's `www.binance.com` endpoint was never actually
+  confirmed safe from GitHub Actions (only `web3.binance.com` was tested).
+  Trade-off: spot tickers don't include stock fundamentals (P/E, dividend
+  yield) the RWA endpoint had — `tokenized-stocks.mjs`'s `BSTOCK_SYMBOLS`
+  list is manually curated and needs occasional updates as Binance lists
+  more (5 at launch, 46+ within two months of launch).
 - **`data/posts.json` doesn't exist on first run** (or after a
   validation-only failure) — the workflow's commit step checks the file
   exists before trying to `git add` it.
 
 ## Not included / out of scope
 
-- **DEX/on-chain themes (`trading-signal`, `crypto-market-rank`, `meme-rush`)
-  were removed from the auto-post pipeline** after a real post (via
-  `crypto-market-rank`'s `smart-money-inflow`) referenced a token not
-  listed on Binance and got a compliance notice from Square. These skills
-  surface whatever's active on BSC/Solana DEXs with no guarantee of a
-  Binance listing — fine for manual research, not safe for unattended
+- **DEX/on-chain skills (`trading-signal`, `crypto-market-rank`, `meme-rush`)
+  were removed from this repo entirely**, not just unwired, after a real
+  post (via `crypto-market-rank`'s `smart-money-inflow`) referenced a token
+  not listed on Binance and got a compliance notice from Square. These
+  skills surface whatever's active on BSC/Solana DEXs with no guarantee of
+  a Binance listing — fine for manual research, not safe for unattended
   auto-posting. All 7 themes now come from Binance's own listed pairs only.
 - No fallback beyond Groq → Gemini (OpenRouter, etc.) — current volume (1
   post/day) makes a dual-provider outage unlikely enough that it's not
   worth the added complexity yet.
-- No custom trading-signal strategies (`baw signal strategy ...`) — only
-  the Smart Money mode of `trading-signal`, which is a pure read-only API
-  call.
