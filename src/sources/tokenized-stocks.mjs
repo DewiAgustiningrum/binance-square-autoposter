@@ -1,69 +1,71 @@
 // src/sources/tokenized-stocks.mjs
-// Powers Theme 7 (Tokenized Stocks Corner).
-// No CLI script for this skill (docs-only) — manual fetch() per
-// skills/binance-tokenized-securities-info/SKILL.md. Public, no key.
+// Powers Theme 6 (Tokenized Stocks Corner).
+//
+// Rewritten to use data-api.binance.vision instead of www.binance.com/bapi/defi
+// (the old binance-tokenized-securities-info skill's endpoint). bStocks —
+// Binance's tokenized US equities (NVDAB, TSLAB, CRCLB, etc.) — trade as
+// regular SPOT pairs, so they're readable through the exact same public
+// ticker endpoint as BTC/ETH/BNB. No special headers, no separate domain,
+// no geo-block risk (www.binance.com wasn't confirmed safe from GitHub
+// Actions the way data-api.binance.vision is).
+//
+// Trade-off: this drops the underlying-stock fundamentals (P/E, dividend
+// yield, 52-week range) that the old RWA endpoint provided — spot ticker
+// data doesn't include those. The theme's angle shifts accordingly: instead
+// of "on-chain price vs stock fundamentals", it's now "equities trading
+// 24/7 alongside crypto, including outside normal market hours" — which is
+// arguably the more interesting story anyway.
 
-const BASE_URL = "https://www.binance.com/bapi/defi";
-const HEADERS = {
-  "Accept-Encoding": "identity",
-  "User-Agent": "binance-web3/1.1 (Skill)",
-};
+const BASE_URL = "https://data-api.binance.vision";
 
-async function fetchJson(url) {
-  const res = await fetch(url, { headers: HEADERS });
-  if (!res.ok) throw new Error(`Tokenized stocks fetch failed: ${res.status} ${url}`);
-  const json = await res.json();
-  if (json.code !== "000000" || !json.success) {
-    throw new Error(`Tokenized stocks API error: ${JSON.stringify(json)}`);
+// Known bStocks USDT pairs as of the product's rollout. This list is NOT
+// guaranteed exhaustive or current — Binance has been adding new bStocks
+// regularly (5 at launch, 46+ within two months). Update this list
+// periodically by checking Binance's bStocks announcement page. A symbol
+// that gets delisted or renamed will just fail its own fetch (caught and
+// skipped below) rather than breaking the whole theme.
+const BSTOCK_SYMBOLS = [
+  "NVDABUSDT", // Nvidia
+  "TSLABUSDT", // Tesla
+  "CRCLBUSDT", // Circle
+  "MUBUSDT", // Micron
+  "SNDKBUSDT", // Sandisk
+  "CBRSBUSDT", // Cerebras
+  "SPYBUSDT", // S&P 500 ETF exposure
+];
+
+async function fetchTicker24hr(symbol) {
+  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
+  if (!res.ok) {
+    throw new Error(`bStock ticker fetch failed for ${symbol}: ${res.status}`);
   }
-  return json.data;
-}
-
-// API 1 — list of supported Ondo tokenized stocks (type=1 = Ondo)
-async function listStockTokens() {
-  return fetchJson(
-    `${BASE_URL}/v1/public/wallet-direct/buw/wallet/market/token/rwa/stock/detail/list/ai?type=1`
-  );
-}
-
-// API 5 — real-time on-chain + underlying stock data for one token
-async function getStockDynamic(chainId, contractAddress) {
-  return fetchJson(
-    `${BASE_URL}/v2/public/wallet-direct/buw/wallet/market/token/rwa/dynamic/ai?chainId=${chainId}&contractAddress=${contractAddress}`
-  );
+  return res.json();
 }
 
 /**
- * Pick a handful of tokenized stocks and pull their live on-chain + stock
- * fundamentals. `count` controls how many tickers get detail-fetched
- * (each is a separate API 5 call, so keep this small).
+ * Fetch live data for a handful of bStocks. Picks a random subset each run
+ * (rather than always the same ones) so the theme doesn't always talk
+ * about the same 2-3 tickers. Symbols that fail to fetch (delisted,
+ * renamed, typo in BSTOCK_SYMBOLS) are silently skipped, not fatal.
  */
 export async function getTokenizedStocksSnapshot({ count = 3 } = {}) {
-  const list = await listStockTokens();
-  const picks = list.slice(0, count);
+  const shuffled = [...BSTOCK_SYMBOLS].sort(() => Math.random() - 0.5);
+  const picks = shuffled.slice(0, count);
 
-  const details = await Promise.all(
-    picks.map((t) => getStockDynamic(t.chainId, t.contractAddress))
-  );
+  const results = await Promise.allSettled(picks.map(fetchTicker24hr));
 
-  return details.map((d) => {
-    const referencePrice =
-      Number(d.tokenInfo.price) / Number(d.tokenInfo.sharesMultiplier);
-
-    return {
-      ticker: d.ticker,
-      tokenSymbol: d.symbol,
-      onchainPrice: Number(d.tokenInfo.price),
-      referencePrice, // price ÷ sharesMultiplier — comparable to real stock price
-      priceChangePct24h: Number(d.tokenInfo.priceChangePct24h) * 100,
-      totalHolders: Number(d.tokenInfo.totalHolders),
-      marketCap: Number(d.tokenInfo.marketCap),
-      stockPriceHigh52w: d.stockInfo.priceHigh52w,
-      stockPriceLow52w: d.stockInfo.priceLow52w,
-      priceToEarnings: d.stockInfo.priceToEarnings,
-      dividendYield: d.stockInfo.dividendYield,
-    };
-  });
+  return results
+    .filter((r) => r.status === "fulfilled")
+    .map((r) => r.value)
+    .map((t) => ({
+      symbol: t.symbol,
+      lastPrice: Number(t.lastPrice),
+      priceChangePercent: Number(t.priceChangePercent),
+      highPrice: Number(t.highPrice),
+      lowPrice: Number(t.lowPrice),
+      volume: Number(t.volume),
+      quoteVolume: Number(t.quoteVolume),
+    }));
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
