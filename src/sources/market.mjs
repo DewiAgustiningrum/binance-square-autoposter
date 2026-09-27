@@ -13,8 +13,11 @@
 const BASE_URL = "https://data-api.binance.vision";
 const SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT"];
 
-// Matches leveraged tokens (BTCUPUSDT, ETHDOWNUSDT, etc.) — these aren't
-// real spot pairs and would be confusing/misleading in a "top mover" post.
+// Matches leveraged tokens (BTCUPUSDT, ETHDOWNUSDT, etc.). Binance actually
+// discontinued USDT-paired leveraged tokens years ago, so as of now this
+// pattern matches nothing in real ticker data — it's a defensive no-op,
+// kept in case a similar product ever reappears, not something currently
+// filtering real results.
 const LEVERAGED_TOKEN_PATTERN = /(UP|DOWN|BULL|BEAR)USDT$/;
 
 async function fetchTicker24hr(symbol) {
