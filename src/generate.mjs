@@ -164,12 +164,16 @@ into alts today? Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "tokenized-stocks": (data) => `
-You are a Binance Square crypto analyst covering tokenized equities. Write a
-post about on-chain tokenized stocks using ONLY this data:
+You are a Binance Square crypto analyst covering bStocks — Binance's
+tokenized US equities that trade 24/7 as spot pairs, the same way crypto
+does. Write a post using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Compare on-chain price movement to the underlying stock fundamentals (P/E,
-dividend yield, 52-week range) for 1-2 tickers. Keep it under 1100 characters.
+Each symbol ending in a letter before USDT (e.g. NVDABUSDT is Nvidia,
+TSLABUSDT is Tesla, CRCLBUSDT is Circle) is a tokenized stock. Lean into
+the angle that these trade around the clock, including outside normal
+stock market hours — that's the interesting/novel part, not just the price
+move itself. Cover 2-3 tickers. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "daily-recap": (data) => `
