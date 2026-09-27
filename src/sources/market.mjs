@@ -20,6 +20,20 @@ const SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT"];
 // filtering real results.
 const LEVERAGED_TOKEN_PATTERN = /(UP|DOWN|BULL|BEAR)USDT$/;
 
+// Stablecoin/USDT pairs (USDCUSDT, FDUSDUSDT, etc.) trade near 1:1 by
+// design — they'd otherwise show up in the volume-ranked basket (they're
+// often high-volume) but are meaningless for "leader/laggard" or
+// "breakout" framing since they basically never move. Matched by base
+// asset (the part before USDT), not a leveraged-token-style suffix match.
+const STABLECOIN_BASE_ASSETS = new Set([
+  "USDC", "FDUSD", "TUSD", "BUSD", "DAI", "USDP", "USDD", "PYUSD", "EURI",
+]);
+
+function isStablecoinPair(symbol) {
+  const baseAsset = symbol.slice(0, -"USDT".length);
+  return STABLECOIN_BASE_ASSETS.has(baseAsset);
+}
+
 async function fetchTicker24hr(symbol) {
   const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
   if (!res.ok) {
@@ -94,7 +108,12 @@ export async function getDynamicBasket(size = 20) {
   const all = await fetchAllTickers();
 
   return all
-    .filter((t) => t.symbol.endsWith("USDT") && !LEVERAGED_TOKEN_PATTERN.test(t.symbol))
+    .filter(
+      (t) =>
+        t.symbol.endsWith("USDT") &&
+        !LEVERAGED_TOKEN_PATTERN.test(t.symbol) &&
+        !isStablecoinPair(t.symbol)
+    )
     .map((t) => ({
       symbol: t.symbol,
       lastPrice: Number(t.lastPrice),
@@ -123,12 +142,22 @@ export async function getLeadersLaggards({ basketSize = 20, topN = 3 } = {}) {
 }
 
 /**
- * Shared helper for Theme 3 & 4: for each basket token, compare today's
- * high-low range (as % of price) against its average daily range over the
- * past `historyDays`. Ratio > 1 means today is more volatile than usual
- * (breakout candidate); ratio < 1 means unusually quiet (compression).
- * Basket kept smaller here (default 10) since this fetches klines per
- * token — 10 extra calls is fine, 20+ starts adding meaningful latency.
+ * Shared helper for Theme 3 & 4: for each basket token, compare the most
+ * recent 24h's high-low range (as % of price) against its average daily
+ * range over the past `historyDays`. Ratio > 1 means the last 24h were
+ * more volatile than usual (breakout candidate); ratio < 1 means unusually
+ * quiet (compression). Basket kept smaller here (default 10) since this
+ * fetches klines per token — 10 extra calls is fine, 20+ starts adding
+ * meaningful latency.
+ *
+ * Caveat (not fully resolved): `last24hRangePct` comes from ticker/24hr,
+ * a rolling window ending now — e.g. if it's 09:00, that's 09:00 yesterday
+ * to 09:00 today. `avgRangePct` comes from daily klines, which are UTC
+ * calendar-day candles (00:00-00:00). These aren't quite the same window,
+ * so the ratio is directionally useful but not a precise apples-to-apples
+ * comparison. Fixing properly would mean switching one side to match the
+ * other (e.g. computing "today so far" from an intraday kline query
+ * instead of the rolling ticker) — not done here to keep this simple.
  */
 async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
   const basket = await getDynamicBasket(basketSize);
@@ -138,15 +167,15 @@ async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
       const klines = await fetchKlines(t.symbol, "1d", historyDays + 1);
       const pastDays = klines.slice(0, -1); // exclude today's still-forming candle
       const avgRangePct = average(pastDays.map((k) => ((k.high - k.low) / k.close) * 100));
-      const todayRangePct = ((t.highPrice - t.lowPrice) / t.lastPrice) * 100;
+      const last24hRangePct = ((t.highPrice - t.lowPrice) / t.lastPrice) * 100;
 
       return {
         symbol: t.symbol,
         lastPrice: t.lastPrice,
         priceChangePercent: t.priceChangePercent,
-        todayRangePct,
+        last24hRangePct,
         avgRangePct,
-        ratio: todayRangePct / avgRangePct,
+        ratio: last24hRangePct / avgRangePct,
       };
     })
   );
