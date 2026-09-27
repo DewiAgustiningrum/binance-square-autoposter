@@ -8,6 +8,17 @@ on:
 permissions:
   contents: write # needed to commit data/posts.json back to the repo
 
+# Prevents a manual workflow_dispatch from racing a scheduled cron run (or
+# two overlapping runs from any cause). Without this, two concurrent runs
+# can both read data/posts.json, both publish, then race to write/push it
+# back — the loser's push either gets rejected or silently drops the other
+# run's post from history. cancel-in-progress: false queues the second run
+# instead of killing it, since we want both posts to happen, just not at
+# the same time.
+concurrency:
+  group: square-autoposter
+  cancel-in-progress: false
+
 jobs:
   post:
     runs-on: ubuntu-latest
