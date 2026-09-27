@@ -42,11 +42,8 @@ Cron (GitHub Actions)
 skills/                        Binance skill files (see below)
 src/
   sources/
-    market.mjs                 Theme 1 & 8 — Binance public market data
-    smart-money.mjs            Theme 2 — smart-money buy/sell signals
-    market-rank.mjs            Theme 3 & 4 — trending tokens, smart-money inflow
-    meme.mjs                   Theme 5 & 6 — launch radar, hot topics
-    tokenized-stocks.mjs       Theme 7 — tokenized equities (manual fetch, docs-only skill)
+    market.mjs                 Themes 1, 2, 3, 4, 5, 7 — Binance public market data
+    tokenized-stocks.mjs       Theme 6 — bStocks (tokenized equities), via data-api.binance.vision
   generate.mjs                 theme picker, prompts, LLM calls
   validate.mjs                 pre-publish checks + post history
   publish.mjs                  publishes to Square, records history
@@ -64,26 +61,41 @@ LICENSE                        MIT
 | Skill | Role | Auth |
 |---|---|---|
 | `square-post` | Publishing | `BINANCE_SQUARE_OPENAPI_KEY` |
-| `trading-signal` | Theme 2 data (Smart Money mode only — not the `baw`/custom-strategy mode) | None, public |
-| `crypto-market-rank` | Theme 3 & 4 data | None, public |
-| `meme-rush` | Theme 5 & 6 data | None, public |
-| `binance-tokenized-securities-info` | Theme 7 data (docs only, no CLI — `tokenized-stocks.mjs` implements the fetch manually per its spec) | None, public |
 
-## The 8 themes
+`binance-tokenized-securities-info` is no longer used either — Theme 6 was
+rewritten to read bStocks (Binance's tokenized US equities) as regular spot
+tickers via `data-api.binance.vision` instead of that skill's
+`www.binance.com/bapi/defi` endpoint, which was never confirmed safe from
+GitHub Actions the way `data-api.binance.vision` is. `square-post` is now
+the only skill this repo actually depends on.
+
+`trading-signal`, `crypto-market-rank`, and `meme-rush` were removed from
+this repo entirely (not just unwired) — see "Not included / out of scope"
+below for why.
+
+## The 7 themes
 
 | # | Theme | Source |
 |---|---|---|
-| 1 | Morning Market Brief | Binance public API |
-| 2 | Smart Money Setup | `trading-signal` |
-| 3 | Trending Narrative | `crypto-market-rank` (`token-rank`) |
-| 4 | Smart Money Inflow | `crypto-market-rank` (`smart-money-inflow`) |
-| 5 | Meme Launch Radar | `meme-rush` (`meme-rush`) |
-| 6 | Hot Topic Rush | `meme-rush` (`topic-rush`) |
-| 7 | Tokenized Stocks Corner | `binance-tokenized-securities-info` |
-| 8 | Daily Recap | Binance public API |
+| 1 | Morning Market Brief | Binance public API (`market.mjs`) |
+| 2 | Leaders & Laggards | Binance public API — top gainers vs losers, dynamic basket |
+| 3 | Breakout Watch | Binance public API — today's range vs 7-day average (klines) |
+| 4 | The Quiet Ones | Same as above, inverted — unusually compressed range |
+| 5 | Relative Strength Check | Binance public API — ETH/BTC ratio + alts-vs-BTC rotation |
+| 6 | Tokenized Stocks Corner | Binance public API (`tokenized-stocks.mjs`) — bStocks read as regular spot tickers |
+| 7 | Daily Recap | Binance public API (`market.mjs`) |
 
-Theme selection is weighted random (`src/generate.mjs` → `THEMES`), not a
-fixed daily rotation — no state file needed for scheduling.
+All 7 themes now pull exclusively from Binance's own listed USDT pairs
+(`data-api.binance.vision`) — no DEX/on-chain token data in the auto-post
+pipeline anymore (see below for why). Theme selection is weighted random
+(`src/generate.mjs` → `THEMES`), not a fixed daily rotation — no state file
+needed for scheduling.
+
+The basket behind themes 2-5 is dynamic, not a hardcoded symbol list: every
+run fetches all USDT pairs, filters out leveraged tokens (`*UP`/`*DOWN`/
+`*BULL`/`*BEAR`), and ranks by 24h quote volume. This means only pairs
+with real trading activity ever appear, and delistings/new listings are
+picked up automatically without a code change.
 
 ## Setup
 
@@ -116,8 +128,8 @@ BINANCE_SQUARE_OPENAPI_KEY="key" GROQ_API_KEY="key" GEMINI_API_KEY="key" node sr
 Test individual sources in isolation:
 
 ```bash
-node src/sources/market.mjs
-node src/sources/smart-money.mjs
+node src/sources/market.mjs           # covers themes 1, 2, 3, 4, 5, 7
+node src/sources/tokenized-stocks.mjs # theme 6
 ```
 
 **Note:** some Binance domains (`web3.binance.com`, `www.binance.com`) may
@@ -148,15 +160,29 @@ hitting the real errors during development:
   504 and still have actually posted, with `id`/`shareLink` as `null`.
   `publish.mjs` treats this as success (only a thrown error counts as
   failure) — don't treat a null id as a failed publish.
+- **bStocks (tokenized stocks) trade as regular spot pairs**: `NVDABUSDT`,
+  `TSLABUSDT`, etc. are readable through the exact same `ticker/24hr`
+  endpoint as BTC/ETH/BNB — no need for the separate wallet/RWA API the
+  `binance-tokenized-securities-info` skill documents. Found this after
+  realizing that skill's `www.binance.com` endpoint was never actually
+  confirmed safe from GitHub Actions (only `web3.binance.com` was tested).
+  Trade-off: spot tickers don't include stock fundamentals (P/E, dividend
+  yield) the RWA endpoint had — `tokenized-stocks.mjs`'s `BSTOCK_SYMBOLS`
+  list is manually curated and needs occasional updates as Binance lists
+  more (5 at launch, 46+ within two months of launch).
 - **`data/posts.json` doesn't exist on first run** (or after a
   validation-only failure) — the workflow's commit step checks the file
   exists before trying to `git add` it.
 
 ## Not included / out of scope
 
+- **DEX/on-chain skills (`trading-signal`, `crypto-market-rank`, `meme-rush`)
+  were removed from this repo entirely**, not just unwired, after a real
+  post (via `crypto-market-rank`'s `smart-money-inflow`) referenced a token
+  not listed on Binance and got a compliance notice from Square. These
+  skills surface whatever's active on BSC/Solana DEXs with no guarantee of
+  a Binance listing — fine for manual research, not safe for unattended
+  auto-posting. All 7 themes now come from Binance's own listed pairs only.
 - No fallback beyond Groq → Gemini (OpenRouter, etc.) — current volume (1
   post/day) makes a dual-provider outage unlikely enough that it's not
   worth the added complexity yet.
-- No custom trading-signal strategies (`baw signal strategy ...`) — only
-  the Smart Money mode of `trading-signal`, which is a pure read-only API
-  call.
