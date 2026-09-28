@@ -24,15 +24,16 @@ const BASE_URL = "https://data-api.binance.vision";
 // periodically by checking Binance's bStocks announcement page. A symbol
 // that gets delisted or renamed will just fail its own fetch (caught and
 // skipped below) rather than breaking the whole theme.
-const BSTOCK_SYMBOLS = [
-  "NVDABUSDT", // Nvidia
-  "TSLABUSDT", // Tesla
-  "CRCLBUSDT", // Circle
-  "MUBUSDT", // Micron
-  "SNDKBUSDT", // Sandisk
-  "CBRSBUSDT", // Cerebras
-  "SPYBUSDT", // S&P 500 ETF exposure
-];
+const BSTOCKS = {
+  NVDABUSDT: "Nvidia",
+  TSLABUSDT: "Tesla",
+  CRCLBUSDT: "Circle",
+  MUBUSDT: "Micron",
+  SNDKBUSDT: "Sandisk",
+  CBRSBUSDT: "Cerebras",
+  SPYBUSDT: "S&P 500 ETF",
+};
+const BSTOCK_SYMBOLS = Object.keys(BSTOCKS);
 
 async function fetchTicker24hr(symbol) {
   const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
@@ -58,13 +59,17 @@ export async function getTokenizedStocksSnapshot({ count = 3 } = {}) {
     .filter((r) => r.status === "fulfilled")
     .map((r) => r.value)
     .map((t) => ({
-      symbol: t.symbol,
-      lastPrice: Number(t.lastPrice),
+      // Exact tradable ticker as a ready-made cashtag (e.g. "$NVDAB").
+      // Without this the LLM derives "$NVDA" from the symbol, which isn't
+      // the bStock and won't link to its chart on Square.
+      cashtag: `$${t.symbol.replace(/USDT$/, "")}`,
+      name: BSTOCKS[t.symbol],
+      lastPriceUSDT: Number(t.lastPrice),
       priceChangePercent: Number(t.priceChangePercent),
       highPrice: Number(t.highPrice),
       lowPrice: Number(t.lowPrice),
-      volume: Number(t.volume),
-      quoteVolume: Number(t.quoteVolume),
+      // quote volume only: raw base volume got confused with USDT volume
+      volumeUSDT: Number(t.quoteVolume),
     }));
 }
 

@@ -6,12 +6,13 @@
 
 Serverless bot that generates a crypto market post once a day and publishes
 it to Binance Square, using GitHub Actions as the scheduler/compute (no
-server, no Termux, nothing that needs to stay running).
+server, nothing that needs to stay running).
 
 ```
 Cron (GitHub Actions)
-  → fetch market data (Binance public API + 3 Binance skills)
+  → fetch market data (Binance public spot API, data-api.binance.vision)
   → generate post text (Groq, Gemini fallback)
+  → sanitize (em dashes, unicode quotes, stablecoin cashtags)
   → validate (length, cashtags, duplicates, banned patterns)
   → publish to Binance Square
   → commit post history back to the repo
@@ -19,32 +20,35 @@ Cron (GitHub Actions)
 
 ## How it works
 
-1. **Pick a theme** — one of 8, weighted random (`src/generate.mjs`), no
+1. **Pick a theme**: one of 7, weighted random (`src/generate.mjs`), no
    fixed rotation order.
-2. **Fetch data** for that theme from the relevant source
-   (`src/sources/*.mjs`).
+2. **Fetch data** for that theme (`src/sources/*.mjs`).
 3. **Generate text** with an LLM (Groq primary, Gemini fallback), using a
    per-theme prompt plus shared style rules (casual tone, cashtag format,
-   anti-repetition, no em dash, etc.).
-4. **Validate** the output (`src/validate.mjs`) — length, banned patterns,
-   cashtag count/presence, duplicate check against recent posts.
-5. If validation fails, **regenerate** (up to 3 attempts total) before
-   giving up for the day.
-6. **Publish** to Binance Square (`src/publish.mjs`), then record the post
+   anti-repetition, only-use-supplied-data, etc.).
+4. **Sanitize** the output deterministically (`sanitizeText()` in
+   `generate.mjs`), because prompt instructions alone aren't reliable.
+5. **Validate** (`src/validate.mjs`): length, banned patterns, cashtag
+   count/presence, duplicate check against recent posts.
+6. If validation fails, **start over** (up to 3 attempts). Each attempt is a
+   fresh generation and may land on a different theme, it doesn't just
+   re-roll the same draft.
+7. **Publish** to Binance Square (`src/publish.mjs`), then record the post
    in `data/posts.json` for future duplicate checks.
-7. The workflow commits the updated `data/posts.json` back to the repo so
-   history persists across runs (GitHub Actions runners are ephemeral).
+8. The workflow commits the updated `data/posts.json` back to the repo so
+   history persists across runs (GitHub Actions runners are ephemeral). A
+   `concurrency` lock stops a manual run and the cron run from overlapping.
 
 ## Project structure
 
 ```
-.github/workflows/square.yml   cron + manual trigger, runs src/run.mjs
-skills/                        Binance skill files (see below)
+.github/workflows/square.yml   cron + manual trigger, concurrency lock, runs src/run.mjs
+skills/square-post/            Binance's official posting skill (publishing only)
 src/
   sources/
-    market.mjs                 Themes 1, 2, 3, 4, 5, 7 — Binance public market data
-    tokenized-stocks.mjs       Theme 6 — bStocks (tokenized equities), via data-api.binance.vision
-  generate.mjs                 theme picker, prompts, LLM calls
+    market.mjs                 Themes 1-5 and 7: Binance public market data
+    tokenized-stocks.mjs       Theme 6: bStocks (tokenized equities), same API
+  generate.mjs                 theme picker, prompts, LLM calls, sanitizeText
   validate.mjs                 pre-publish checks + post history
   publish.mjs                  publishes to Square, records history
   run.mjs                      entry point: generate → validate → publish (with retry)
@@ -62,40 +66,32 @@ LICENSE                        MIT
 |---|---|---|
 | `square-post` | Publishing | `BINANCE_SQUARE_OPENAPI_KEY` |
 
-`binance-tokenized-securities-info` is no longer used either — Theme 6 was
-rewritten to read bStocks (Binance's tokenized US equities) as regular spot
-tickers via `data-api.binance.vision` instead of that skill's
-`www.binance.com/bapi/defi` endpoint, which was never confirmed safe from
-GitHub Actions the way `data-api.binance.vision` is. `square-post` is now
-the only skill this repo actually depends on.
-
-`trading-signal`, `crypto-market-rank`, and `meme-rush` were removed from
-this repo entirely (not just unwired) — see "Not included / out of scope"
-below for why.
+It's the only skill this repo depends on. All market data comes straight
+from Binance's public spot API, with no key and no other skill involved.
 
 ## The 7 themes
 
 | # | Theme | Source |
 |---|---|---|
-| 1 | Morning Market Brief | Binance public API (`market.mjs`) |
-| 2 | Leaders & Laggards | Binance public API — top gainers vs losers, dynamic basket |
-| 3 | Breakout Watch | Binance public API — today's range vs 7-day average (klines) |
-| 4 | The Quiet Ones | Same as above, inverted — unusually compressed range |
-| 5 | Relative Strength Check | Binance public API — ETH/BTC ratio + alts-vs-BTC rotation |
-| 6 | Tokenized Stocks Corner | Binance public API (`tokenized-stocks.mjs`) — bStocks read as regular spot tickers |
-| 7 | Daily Recap | Binance public API (`market.mjs`) |
+| 1 | Morning Market Brief | BTC/ETH/BNB 24h ticker (`market.mjs`) |
+| 2 | Leaders & Laggards | Top gainers vs losers in the dynamic basket |
+| 3 | Breakout Watch | Past-24h range vs 7-day average daily range (klines) |
+| 4 | The Quiet Ones | Same as above, inverted: unusually compressed range |
+| 5 | Relative Strength Check | ETH/BTC pair + average alt vs BTC (price performance, not capital flow) |
+| 6 | Tokenized Stocks Corner | bStocks read as regular spot tickers (`tokenized-stocks.mjs`) |
+| 7 | Daily Recap | BTC/ETH/BNB 24h ticker (`market.mjs`) |
 
-All 7 themes now pull exclusively from Binance's own listed USDT pairs
-(`data-api.binance.vision`) — no DEX/on-chain token data in the auto-post
-pipeline anymore (see below for why). Theme selection is weighted random
-(`src/generate.mjs` → `THEMES`), not a fixed daily rotation — no state file
-needed for scheduling.
+All themes pull exclusively from Binance-listed USDT pairs
+(`data-api.binance.vision`), with no DEX/on-chain token data anywhere in the
+pipeline (see "Not included" for why). Theme selection is weighted random
+(`THEMES` in `src/generate.mjs`), so no state is needed for scheduling.
 
-The basket behind themes 2-5 is dynamic, not a hardcoded symbol list: every
-run fetches all USDT pairs, filters out leveraged tokens (`*UP`/`*DOWN`/
-`*BULL`/`*BEAR`), and ranks by 24h quote volume. This means only pairs
-with real trading activity ever appear, and delistings/new listings are
-picked up automatically without a code change.
+The basket behind themes 2-5 is dynamic, not a hardcoded list. Every run
+fetches all USDT pairs, drops stablecoin pairs (USDC, FDUSD, etc., which
+never move and add noise) and ranks the rest by 24h quote volume. Delistings
+and new listings are picked up automatically. A leveraged-token filter
+(`*UP`/`*DOWN`/`*BULL`/`*BEAR`) is also in place but currently matches
+nothing, since Binance discontinued those years ago.
 
 ## Setup
 
@@ -109,6 +105,11 @@ Settings → Secrets and variables → Actions:
 | `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) |
 | `GEMINI_API_KEY` | [aistudio.google.com](https://aistudio.google.com) |
 
+Secrets never carry over to forks or template copies, so anyone reusing
+this repo needs their own keys (and their own Square key, otherwise posts
+go to *your* account). Also delete `data/posts.json` in a fresh copy so it
+starts with its own history.
+
 ### 2. Workflow permissions
 
 `.github/workflows/square.yml` needs `permissions: contents: write` (already
@@ -117,62 +118,103 @@ set) so it can commit `data/posts.json` back after a successful publish.
 ### 3. Schedule
 
 Default cron is `0 2 * * *` (02:00 UTC = 09:00 WIB). Cron in GitHub Actions
-is always UTC — adjust to taste.
+is always UTC, and runs can start a few minutes late. Adjust to taste.
 
 ## Local testing
 
 ```bash
-BINANCE_SQUARE_OPENAPI_KEY="key" GROQ_API_KEY="key" GEMINI_API_KEY="key" node src/run.mjs
+cp .env.example .env   # then fill in the keys
+node --env-file=.env src/run.mjs
 ```
 
 Test individual sources in isolation:
 
 ```bash
-node src/sources/market.mjs           # covers themes 1, 2, 3, 4, 5, 7
+node src/sources/market.mjs           # themes 1-5 and 7
 node src/sources/tokenized-stocks.mjs # theme 6
 ```
 
-**Note:** some Binance domains (`web3.binance.com`, `www.binance.com`) may
-be blocked on certain local networks/ISPs depending on region — this is a
-network-level block, not a code issue. It hasn't been an issue on GitHub
-Actions runners. `api.binance.com` on the other hand returns HTTP 451
-specifically from US-hosted IPs (including GitHub Actions runners), which
-is why `market.mjs` uses `data-api.binance.vision` instead — Binance's
-geo-unrestricted public market-data mirror.
+**Network notes.** Binance's regular endpoints behave differently depending
+on where you call them from:
+
+- `api.binance.com` and `fapi.binance.com` return HTTP 451 from US IPs,
+  which includes GitHub Actions runners (US Azure). That's why market data
+  uses `data-api.binance.vision`, Binance's public market-data mirror.
+  Other developers report the block can vary by time of day, so don't
+  assume a passing run means the block is gone.
+- Some local ISPs reset connections to `www.binance.com` / `web3.binance.com`
+  (`ECONNRESET`). That's a local network issue: the same domains worked
+  from GitHub Actions, and publishing itself goes through
+  `www.binance.com/bapi/...`.
 
 ## Known quirks (found by testing against the real API)
 
-These aren't documented anywhere in the skills themselves — found by
-hitting the real errors during development:
+These aren't documented anywhere in the skills themselves. They were found
+by hitting the real errors during development:
 
 - **Cashtag limit**: Square rejects posts referencing more than 3 distinct
   `$COIN` tickers (error `220095`, undocumented). Enforced in both the
-  prompt and `validate.mjs` (`MAX_CASHTAGS`).
-- **`gpt-oss-120b` is a reasoning model**: it consumes part of `max_tokens`
-  on internal reasoning before writing the answer, and can come back empty
-  or truncated if the budget is too tight. Mitigated with
+  prompt and `validate.mjs` (`MAX_CASHTAGS`). Stablecoins written as
+  cashtags count too, so `$USDT` is stripped to `USDT`.
+- **Post length limit is unknown**: the skill only documents error `20013`
+  ("Content length is limited") with no number. Secondhand claims say
+  ~2000-2100 characters, unverified. Prompts target 1100 and
+  `MAX_LENGTH` is 1200 as a conservative margin. If Square's real limit is
+  lower, the failure shows up at publish time (`20013`), not in validation.
+- **`gpt-oss-120b` is a reasoning model**: it spends part of `max_tokens`
+  on internal reasoning before writing the answer, and can return empty or
+  truncated text if the budget is too tight. Mitigated with
   `reasoning_effort: "low"`, a larger `max_tokens`, and explicit
   `finish_reason` checks in `generate.mjs`.
 - **Em dash**: the LLM ignores "never use em dash" in the prompt often
-  enough that `validate.mjs` hard-rejects any output containing one — the
-  retry loop in `run.mjs` regenerates instead of publishing it.
+  enough that a real run failed validation 3 attempts in a row and skipped
+  the day's post. Retrying alone isn't reliable, so `generate.mjs` runs a
+  deterministic `sanitizeText()` on every output before validation (em dash
+  to comma or "to", curly quotes and non-breaking hyphens to ASCII).
+  `validate.mjs` still rejects em dashes as a safety net.
+- **Cashtags must match the tradable ticker**: bStocks trade as `NVDAB`,
+  not `NVDA`. Left alone the LLM derives `$NVDA` from the symbol, which
+  won't link to the right chart. `tokenized-stocks.mjs` sends a ready-made
+  `cashtag` field (and the company `name`) so the model doesn't guess.
 - **`success_without_post_id`**: `square-post`'s publish call can return a
   504 and still have actually posted, with `id`/`shareLink` as `null`.
   `publish.mjs` treats this as success (only a thrown error counts as
-  failure) — don't treat a null id as a failed publish.
-- **bStocks (tokenized stocks) trade as regular spot pairs**: `NVDABUSDT`,
-  `TSLABUSDT`, etc. are readable through the exact same `ticker/24hr`
-  endpoint as BTC/ETH/BNB — no need for the separate wallet/RWA API the
-  `binance-tokenized-securities-info` skill documents. Found this after
-  realizing that skill's `www.binance.com` endpoint was never actually
-  confirmed safe from GitHub Actions (only `web3.binance.com` was tested).
-  Trade-off: spot tickers don't include stock fundamentals (P/E, dividend
-  yield) the RWA endpoint had — `tokenized-stocks.mjs`'s `BSTOCK_SYMBOLS`
-  list is manually curated and needs occasional updates as Binance lists
-  more (5 at launch, 46+ within two months of launch).
+  failure). Caveat: a 504 doesn't *guarantee* the post landed, so a null id
+  is "probably posted", not "confirmed".
+- **bStocks trade as regular spot pairs**: `NVDABUSDT`, `TSLABUSDT`, etc.
+  are readable through the same `ticker/24hr` endpoint as BTC/ETH/BNB, so
+  Theme 6 doesn't need the separate RWA API that the
+  `binance-tokenized-securities-info` skill documents. Switching also
+  removed that skill's extra headers and a second API surface. Trade-off:
+  spot tickers carry no stock fundamentals (P/E, dividend yield), so the
+  theme leans on the "trades 24/7" angle instead.
+- **Rolling 24h vs calendar day**: `ticker/24hr` is a rolling window ending
+  now, not "since 00:00 UTC". Prompts say "past 24 hours" rather than
+  "today" for that reason. Themes 3-4 also compare that rolling range
+  against daily-candle averages, which is directionally useful but not a
+  strict like-for-like comparison.
 - **`data/posts.json` doesn't exist on first run** (or after a
-  validation-only failure) — the workflow's commit step checks the file
+  validation-only failure): the workflow's commit step checks the file
   exists before trying to `git add` it.
+
+## Known limitations
+
+Deliberately left as-is for a one-post-a-day bot, but worth knowing:
+
+- No timeout or retry/backoff on individual HTTP calls (Binance, Groq,
+  Gemini, Square). A hung connection stalls the run until GitHub's job
+  timeout.
+- `BSTOCKS` in `tokenized-stocks.mjs` is a hand-maintained list of 7
+  tickers, while Binance keeps adding bStocks. It needs occasional manual
+  updates (check Binance's announcements). Delisted symbols are skipped
+  silently rather than breaking the theme.
+- Duplicate detection is a simple word-overlap ratio (threshold 0.6) against
+  the last 30 posts. It can miss paraphrases and occasionally over-reject
+  posts that share common words.
+- If the publish call succeeds but writing `data/posts.json` fails, that post
+  isn't in history and a near-duplicate could be published later.
+- No automated tests and no failure alerting; a failed run is only visible in
+  the Actions tab.
 
 ## Not included / out of scope
 
@@ -181,8 +223,8 @@ hitting the real errors during development:
   post (via `crypto-market-rank`'s `smart-money-inflow`) referenced a token
   not listed on Binance and got a compliance notice from Square. These
   skills surface whatever's active on BSC/Solana DEXs with no guarantee of
-  a Binance listing — fine for manual research, not safe for unattended
-  auto-posting. All 7 themes now come from Binance's own listed pairs only.
-- No fallback beyond Groq → Gemini (OpenRouter, etc.) — current volume (1
-  post/day) makes a dual-provider outage unlikely enough that it's not
-  worth the added complexity yet.
+  a Binance listing: fine for manual research, not safe for unattended
+  auto-posting. All themes now come from Binance's own listed pairs only.
+- No fallback beyond Groq → Gemini (OpenRouter, etc.). At one post a day a
+  dual-provider outage is unlikely enough that it's not worth the added
+  complexity yet.
