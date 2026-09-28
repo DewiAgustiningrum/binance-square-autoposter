@@ -27,11 +27,23 @@ const LEVERAGED_TOKEN_PATTERN = /(UP|DOWN|BULL|BEAR)USDT$/;
 // asset (the part before USDT), not a leveraged-token-style suffix match.
 const STABLECOIN_BASE_ASSETS = new Set([
   "USDC", "FDUSD", "TUSD", "BUSD", "DAI", "USDP", "USDD", "PYUSD", "EURI",
+  "USD1", "USDE", "USDS", "USDG", "RLUSD", "AEUR", "BFUSD", "XUSD",
 ]);
 
 function isStablecoinPair(symbol) {
   const baseAsset = symbol.slice(0, -"USDT".length);
   return STABLECOIN_BASE_ASSETS.has(baseAsset);
+}
+
+// The name list above can't keep up with new stablecoins (USD1 slipped
+// through it and showed up in a real "Quiet Ones" post as a "quiet mover").
+// Fingerprint backstop: priced within 2 cents of $1 AND a sub-1% daily
+// range is a USD peg for all practical purposes. A genuine coin sitting
+// at ~$1 with a range that flat would make a pointless post anyway.
+function looksPegged(t) {
+  const last = Number(t.lastPrice);
+  const rangePct = ((Number(t.highPrice) - Number(t.lowPrice)) / last) * 100;
+  return last > 0 && Math.abs(last - 1) <= 0.02 && rangePct < 1;
 }
 
 async function fetchTicker24hr(symbol) {
@@ -112,7 +124,8 @@ export async function getDynamicBasket(size = 20) {
       (t) =>
         t.symbol.endsWith("USDT") &&
         !LEVERAGED_TOKEN_PATTERN.test(t.symbol) &&
-        !isStablecoinPair(t.symbol)
+        !isStablecoinPair(t.symbol) &&
+        !looksPegged(t)
     )
     .map((t) => ({
       symbol: t.symbol,

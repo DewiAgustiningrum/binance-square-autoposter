@@ -137,27 +137,41 @@ ${STYLE_RULES}`,
 
   "breakout-watch": (data) => `
 You are a Binance Square crypto analyst. Write a post about tokens whose
-price range has widened unusually over the past 24 hours, using ONLY this
-data:
+price range has been wider than usual over the past 24 hours, using ONLY
+this data:
 ${JSON.stringify(data, null, 2)}
 
-Each entry has "last24hRangePct" (the past 24 hours' high-low range as % of
-price) vs "avgRangePct" (its typical daily range over the past week) —
-"ratio" over 1 means the recent range is wider than normal. Frame this as
-"something's stirring here" observation, not a trade signal. Pick 2-3
-standouts. Keep it under 1100 characters.
+Each entry has "last24hRangePct" vs "avgRangePct" (its typical daily range
+over the past week). "ratio" is the first divided by the second; over 1
+means a wider range than normal.
+- Say it in plain language ("swung about twice its usual daily range"),
+  never use the word "ratio" or any field name.
+- Match the wording to the size of the gap: 1.0-1.3 is basically normal,
+  don't call it a breakout; 1.3-2 is "noticeably wider"; over 2 is "much
+  wider".
+- Describe what happened only. No predictions, no "something's stirring",
+  no hint of what comes next, no advice.
+- Pick 2-3 standouts. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "quiet-movers": (data) => `
-You are a Binance Square crypto analyst. Write a post about tokens that have
-gone unusually quiet over the past 24 hours, using ONLY this data:
+You are a Binance Square crypto analyst. Write a post about tokens whose
+price range has been tighter than usual over the past 24 hours, using ONLY
+this data:
 ${JSON.stringify(data, null, 2)}
 
-Each entry has "last24hRangePct" vs "avgRangePct" — "ratio" under 1 means
-the recent range is tighter than normal, i.e. compressing. Frame this as a
-"coiled, worth watching" observation — compression often precedes a move,
-but don't say which direction or advise any action. Pick 2-3 standouts.
-Keep it under 1100 characters.
+Each entry has "last24hRangePct" vs "avgRangePct" (its typical daily range
+over the past week). "ratio" is the first divided by the second; under 1
+means a tighter range than normal.
+- Say it in plain language ("about a third tighter than its usual daily
+  swing"), never use the word "ratio" or any field name.
+- Match the wording to the size of the gap: 0.8-1.0 is basically normal,
+  don't call it quiet; 0.5-0.8 is "somewhat tighter"; under 0.5 is "much
+  tighter".
+- Describe what happened only. Do not say it is "coiled", "compressing",
+  "brewing", or hint at a squeeze, breakout, or what comes next. No
+  predictions, no advice.
+- Pick 2-3 standouts. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "relative-strength": (data) => `
@@ -306,6 +320,10 @@ function sanitizeText(text) {
     .replace(/[\u2010\u2011]/g, "-") // unicode / non-breaking hyphens
     .replace(/[\u2018\u2019]/g, "'") // curly single quotes
     .replace(/[\u201C\u201D]/g, '"') // curly double quotes
+    // en dash is the same AI tell as an em dash when used as a separator
+    // ("average – ratio"); the model switched to it once em dashes got banned
+    .replace(/(\d)\s*\u2013\s*(\$?\d)/g, "$1 to $2") // numeric range
+    .replace(/\s+\u2013\s+/g, ", ")
     // em dash between two numbers is a range: "$768.34—$771.52" -> "to"
     .replace(/(\d)\s*\u2014\s*(\$?\d)/g, "$1 to $2")
     // em dash opening a line is a tacked-on aside: drop the dash itself
