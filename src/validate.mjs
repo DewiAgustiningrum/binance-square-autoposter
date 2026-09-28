@@ -34,6 +34,8 @@ const BREAK_CHARACTER_PATTERNS = [
   /^note:/im,
   /^disclaimer:/im,
   /here('s| is) (a|the) post/i, // LLM prefacing instead of just returning the post
+  /\bno fluff\b/i, // echoing the style prompt back as text
+  /\bjust the numbers\b/i,
 ];
 
 function normalizeForComparison(text) {
