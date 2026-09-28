@@ -98,6 +98,13 @@ Style rules (must follow):
   others (if truly necessary) by plain name without the $ prefix.
 - Use only the data provided below. Do not invent numbers. Do not give
   financial advice or tell people to buy/sell.
+- Only mention metrics that appear in the supplied data. Do NOT bring in
+  open interest, funding rates, liquidations, on-chain flows, or anything
+  else that isn't in the JSON above, even as a "thing to watch".
+- No predictions or directional calls ("short squeeze brewing", "reversal
+  incoming", "likely to break out"). Describe what already happened.
+- Never echo these style instructions inside the post (no "just the
+  numbers, no fluff" or similar asides).
 - No em dashes, no bullet points in the post body.
 - Return ONLY the final post text, nothing else.
 
@@ -171,16 +178,22 @@ characters.
 ${STYLE_RULES}`,
 
   "tokenized-stocks": (data) => `
-You are a Binance Square crypto analyst covering bStocks — Binance's
-tokenized US equities that trade 24/7 as spot pairs, the same way crypto
-does. Write a post using ONLY this data:
+You are a Binance Square crypto analyst covering bStocks, Binance's tokenized
+US equities that trade 24/7 as spot pairs, the same way crypto does. Write a
+post using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Each symbol ending in a letter before USDT (e.g. NVDABUSDT is Nvidia,
-TSLABUSDT is Tesla, CRCLBUSDT is Circle) is a tokenized stock. Lean into
-the angle that these trade around the clock, including outside normal
-stock market hours — that's the interesting/novel part, not just the price
-move itself. Cover 2-3 tickers. Keep it under 1100 characters.
+Rules for this theme:
+- Refer to each token by its "cashtag" value EXACTLY as given (e.g. $NVDAB,
+  never $NVDA). The trailing B matters: it's the tradable bStock, and only
+  the exact ticker links to the right chart.
+- "name" is the company it tracks; use it, don't guess company names.
+- These are tokenized versions, not the shares themselves. Say "tokenized
+  stock" or "bStock", never "shares", "contracts", or "the stock itself".
+- Prices and volumes are in USDT; write USDT as plain text, never $USDT.
+- Lean into the angle that these trade around the clock, including outside
+  normal stock market hours. That's the interesting part, not just the move.
+- Cover 2-3 tokens. Keep it under 1100 characters.
 ${STYLE_RULES}`,
 
   "daily-recap": (data) => `
@@ -281,6 +294,35 @@ async function callLLM(prompt) {
   }
 }
 
+// Deterministic cleanup applied to every LLM output BEFORE validation.
+// Retrying alone wasn't enough: in a real run gpt-oss-120b used an em dash
+// in 3 of 3 attempts despite the prompt banning it, so the whole day's post
+// got skipped. Prompt instructions are a request, this is the guarantee.
+// validate.mjs still rejects em dashes as a last-resort safety net, but
+// after this step it should essentially never fire.
+function sanitizeText(text) {
+  return text
+    // typographic characters LLMs like to emit -> plain ASCII
+    .replace(/[\u2010\u2011]/g, "-") // unicode / non-breaking hyphens
+    .replace(/[\u2018\u2019]/g, "'") // curly single quotes
+    .replace(/[\u201C\u201D]/g, '"') // curly double quotes
+    // em dash between two numbers is a range: "$768.34—$771.52" -> "to"
+    .replace(/(\d)\s*\u2014\s*(\$?\d)/g, "$1 to $2")
+    // em dash opening a line is a tacked-on aside: drop the dash itself
+    .replace(/^[ \t]*\u2014[ \t]*/gm, "")
+    // any other em dash reads fine as a comma
+    .replace(/[ \t]*\u2014[ \t]*/g, ", ")
+    // tidy punctuation the replacements can leave behind
+    .replace(/,\s*,/g, ",")
+    .replace(/,\s*([.!?])/g, "$1")
+    // stablecoins aren't worth a cashtag and would eat into Square's
+    // 3-cashtag limit (a real draft used $USDT as one of its cashtags)
+    .replace(/\$(USDT|USDC|FDUSD|BUSD)\b/g, "$1")
+    // trailing spaces the LLM leaves at line ends
+    .replace(/[ \t]+$/gm, "")
+    .trim();
+}
+
 // ---------------------------------------------------------------------------
 // Main entry point.
 // ---------------------------------------------------------------------------
@@ -288,7 +330,7 @@ export async function generatePost() {
   const theme = pickTheme();
   const data = await theme.fetch();
   const prompt = THEME_PROMPTS[theme.id](data);
-  const text = await callLLM(prompt);
+  const text = sanitizeText(await callLLM(prompt));
 
   return { theme: theme.id, themeLabel: theme.label, text, rawData: data };
 }
