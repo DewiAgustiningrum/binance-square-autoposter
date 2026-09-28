@@ -97,8 +97,18 @@ export async function validatePost(text, theme) {
 
   // Em dash is explicitly forbidden in the prompt but the LLM has ignored
   // it in a real published post — enforce it here instead of trusting it.
-  if (/—/.test(trimmed)) {
-    return { valid: false, reason: "Contains em dash (—), forbidden by style rules" };
+  if (/—/.test(trimmed) || /\s–\s/.test(trimmed)) {
+    return { valid: false, reason: "Contains an em/en dash used as a separator, forbidden by style rules" };
+  }
+
+  // Directional/predictive wording that reads like a call, even when framed
+  // as "watching". A real draft said "something brewing" and "keep an eye
+  // on the squeeze" for tokens whose range was only ~30% below normal.
+  const predictive = trimmed.match(
+    /\b(squeeze|brewing|coiled|about to (?:break|move|explode|pump|dump)|set to (?:break|move|explode)|imminent)\b/i
+  );
+  if (predictive) {
+    return { valid: false, reason: `Predictive language ("${predictive[0]}"), not allowed` };
   }
 
   // Cashtag check: any theme discussing tokens should reference at least
