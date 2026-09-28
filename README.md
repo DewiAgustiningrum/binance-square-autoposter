@@ -87,8 +87,11 @@ pipeline (see "Not included" for why). Theme selection is weighted random
 (`THEMES` in `src/generate.mjs`), so no state is needed for scheduling.
 
 The basket behind themes 2-5 is dynamic, not a hardcoded list. Every run
-fetches all USDT pairs, drops stablecoin pairs (USDC, FDUSD, etc., which
-never move and add noise) and ranks the rest by 24h quote volume. Delistings
+fetches all USDT pairs, drops stablecoin pairs and ranks the rest by 24h
+quote volume. Stablecoins are caught two ways: a name list (USDC, USD1,
+USDE, ...) plus a peg fingerprint (priced within 2 cents of $1 with a
+sub-1% daily range), because the name list alone missed USD1 and it showed
+up in a real "Quiet Ones" post. Delistings
 and new listings are picked up automatically. A leveraged-token filter
 (`*UP`/`*DOWN`/`*BULL`/`*BEAR`) is also in place but currently matches
 nothing, since Binance discontinued those years ago.
@@ -170,8 +173,16 @@ by hitting the real errors during development:
   enough that a real run failed validation 3 attempts in a row and skipped
   the day's post. Retrying alone isn't reliable, so `generate.mjs` runs a
   deterministic `sanitizeText()` on every output before validation (em dash
-  to comma or "to", curly quotes and non-breaking hyphens to ASCII).
-  `validate.mjs` still rejects em dashes as a safety net.
+  to comma or "to", curly quotes and non-breaking hyphens to ASCII). Once
+  em dashes were banned the model switched to spaced en dashes (`–`), which
+  are the same tell, so those are handled too. `validate.mjs` still rejects
+  both as a safety net.
+- **Predictive language**: even with "no predictions" in the prompt, drafts
+  said things like "something brewing" and "keep an eye on the squeeze" for
+  tokens whose range was only ~30% below normal. Themes 3-4 now tell the
+  model to scale its wording to the size of the gap and describe only what
+  happened, and `validate.mjs` rejects words like "squeeze", "brewing" and
+  "coiled".
 - **Cashtags must match the tradable ticker**: bStocks trade as `NVDAB`,
   not `NVDA`. Left alone the LLM derives `$NVDA` from the symbol, which
   won't link to the right chart. `tokenized-stocks.mjs` sends a ready-made
