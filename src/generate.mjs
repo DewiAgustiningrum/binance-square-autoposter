@@ -102,6 +102,12 @@ Style rules (must follow):
 - Reference coin/token tickers using cashtag format (e.g. $BTC, $ETH, $BNB) —
   never write the coin name without the $ prefix. This is required for
   Binance Square's chart auto-detection.
+- If a data entry has a "cashtag" field, use that value EXACTLY as given.
+  Do NOT build a cashtag yourself from a "symbol" field (e.g. "ZECUSDT") —
+  that's the raw trading pair, and writing "$ZECUSDT" glues the quote
+  asset onto the ticker, which reads as one garbled word. If you need to
+  mention the quote currency, write "USDT" as plain text with a space
+  before it, never stuck directly after a cashtag with no space.
 - Use AT MOST 3 different cashtags in the whole post. Square rejects posts
   referencing more than 3 coins. Pick the 3 most relevant and mention any
   others (if truly necessary) by plain name without the $ prefix.
