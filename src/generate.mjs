@@ -10,6 +10,7 @@ import {
   getRelativeStrength,
 } from "./sources/market.mjs";
 import { getTokenizedStocksSnapshot } from "./sources/tokenized-stocks.mjs";
+import { getRecentThemes } from "./validate.mjs";
 
 // NOTE: trading-signal, crypto-market-rank, and meme-rush skills are
 // intentionally NOT imported here anymore. They surface tokens from
@@ -22,27 +23,35 @@ import { getTokenizedStocksSnapshot } from "./sources/tokenized-stocks.mjs";
 // for manual research — just not wired into the auto-post pipeline.
 
 // ---------------------------------------------------------------------------
-// Theme registry — weighted random pick, no state file needed.
-// weight roughly reflects how "daily-fresh" the underlying data is.
+// Theme registry — uniform random pick, no state file needed. All 7 themes
+// now pull from the same safe, Binance-listed data source, so there's no
+// reason to favor some over others; each has an equal 1/7 chance per run.
 // ---------------------------------------------------------------------------
 const THEMES = [
-  { id: "morning-brief", weight: 3, fetch: () => getMarketSnapshot(), label: "Morning Market Brief" },
-  { id: "leaders-laggards", weight: 2, fetch: () => getLeadersLaggards(), label: "Leaders & Laggards" },
-  { id: "breakout-watch", weight: 1, fetch: () => getBreakoutWatch(), label: "Breakout Watch" },
-  { id: "quiet-movers", weight: 1, fetch: () => getQuietMovers(), label: "The Quiet Ones" },
-  { id: "relative-strength", weight: 2, fetch: () => getRelativeStrength(), label: "Relative Strength Check" },
-  { id: "tokenized-stocks", weight: 1, fetch: () => getTokenizedStocksSnapshot(), label: "Tokenized Stocks Corner" },
-  { id: "daily-recap", weight: 3, fetch: () => getMarketSnapshot(), label: "Daily Recap" },
+  { id: "morning-brief", fetch: () => getMarketSnapshot(), label: "Morning Market Brief" },
+  { id: "leaders-laggards", fetch: () => getLeadersLaggards(), label: "Leaders & Laggards" },
+  { id: "breakout-watch", fetch: () => getBreakoutWatch(), label: "Breakout Watch" },
+  { id: "quiet-movers", fetch: () => getQuietMovers(), label: "The Quiet Ones" },
+  { id: "relative-strength", fetch: () => getRelativeStrength(), label: "Relative Strength Check" },
+  { id: "tokenized-stocks", fetch: () => getTokenizedStocksSnapshot(), label: "Tokenized Stocks Corner" },
+  { id: "daily-recap", fetch: () => getMarketSnapshot(), label: "Daily Recap" },
 ];
 
-function pickTheme() {
-  const total = THEMES.reduce((sum, t) => sum + t.weight, 0);
-  let r = Math.random() * total;
-  for (const theme of THEMES) {
-    if (r < theme.weight) return theme;
-    r -= theme.weight;
-  }
-  return THEMES[THEMES.length - 1]; // fallback, should not hit
+const RECENT_THEMES_TO_AVOID = 4;
+
+/**
+ * Uniform random pick, excluding any theme used in the last
+ * RECENT_THEMES_TO_AVOID posts. With 7 themes and at most 4 excluded,
+ * there are always at least 3 left to pick from, so this never has to
+ * handle an empty pool. If history is short (fresh repo) or missing
+ * (recordPost never ran, or a fork that deleted data/posts.json),
+ * getRecentThemes just returns fewer entries to avoid — never an error,
+ * and never fewer choices than "no history at all" would give.
+ */
+async function pickTheme() {
+  const recent = await getRecentThemes(RECENT_THEMES_TO_AVOID);
+  const pool = THEMES.filter((t) => !recent.includes(t.id));
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 // ---------------------------------------------------------------------------
@@ -118,7 +127,7 @@ using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
 Cover price action for BTC, ETH, BNB over the past 24 hours — what changed,
-what's worth watching next. Keep it under 1100 characters.
+what's worth watching next. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 
   "leaders-laggards": (data) => `
@@ -132,7 +141,7 @@ pairs. Frame
 it as a contrast — who's pulling ahead vs who's falling behind — not two
 separate lists. Mention AT MOST 3 tickers total combined across both sides
 (e.g. 2 leaders + 1 laggard, or 1 and 2) — never more than 3 tickers in the
-whole post. Keep it under 1100 characters.
+whole post. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 
   "breakout-watch": (data) => `
@@ -151,7 +160,7 @@ means a wider range than normal.
   wider".
 - Describe what happened only. No predictions, no "something's stirring",
   no hint of what comes next, no advice.
-- Pick 2-3 standouts. Keep it under 1100 characters.
+- Pick 2-3 standouts. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 
   "quiet-movers": (data) => `
@@ -171,7 +180,7 @@ means a tighter range than normal.
 - Describe what happened only. Do not say it is "coiled", "compressing",
   "brewing", or hint at a squeeze, breakout, or what comes next. No
   predictions, no advice.
-- Pick 2-3 standouts. Keep it under 1100 characters.
+- Pick 2-3 standouts. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 
   "relative-strength": (data) => `
@@ -187,7 +196,7 @@ IMPORTANT: this is price performance, not capital flow data — do not say
 "money is flowing into X" or "rotating into Y", since that implies volume/
 flow data this doesn't measure. Say "BTC is outperforming the basket" or
 "ETH is gaining relative strength against BTC" instead — describe which is
-doing better, not where money is supposedly moving. Keep it under 1100
+doing better, not where money is supposedly moving. Keep it under 1600
 characters.
 ${STYLE_RULES}`,
 
@@ -207,7 +216,7 @@ Rules for this theme:
 - Prices and volumes are in USDT; write USDT as plain text, never $USDT.
 - Lean into the angle that these trade around the clock, including outside
   normal stock market hours. That's the interesting part, not just the move.
-- Cover 2-3 tokens. Keep it under 1100 characters.
+- Cover 2-3 tokens. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 
   "daily-recap": (data) => `
@@ -216,7 +225,7 @@ ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
 Summarize what happened over the past 24 hours for BTC/ETH/BNB and give one
-thing worth watching next. Keep it under 1100 characters.
+thing worth watching next. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 };
 
@@ -240,7 +249,7 @@ async function callGroq(prompt) {
       reasoning_effort: "low",
       // Real headroom beyond the ~500-char post itself, since reasoning
       // still eats into this even at "low" effort.
-      max_tokens: 3000,
+      max_tokens: 4000,
       temperature: 0.9,
     }),
   });
@@ -276,7 +285,7 @@ async function callGemini(prompt) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 1800, temperature: 0.9 },
+        generationConfig: { maxOutputTokens: 2400, temperature: 0.9 },
       }),
     }
   );
@@ -345,7 +354,7 @@ function sanitizeText(text) {
 // Main entry point.
 // ---------------------------------------------------------------------------
 export async function generatePost() {
-  const theme = pickTheme();
+  const theme = await pickTheme();
   const data = await theme.fetch();
   const prompt = THEME_PROMPTS[theme.id](data);
   const text = sanitizeText(await callLLM(prompt));
