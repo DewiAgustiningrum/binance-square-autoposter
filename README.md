@@ -4,7 +4,7 @@
 ![Node](https://img.shields.io/badge/node-%3E%3D22-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-Serverless bot that generates a crypto market post once a day and publishes
+Serverless bot that generates a crypto market post every 6 hours and publishes
 it to Binance Square, using GitHub Actions as the scheduler/compute (no
 server, nothing that needs to stay running).
 
@@ -20,8 +20,11 @@ Cron (GitHub Actions)
 
 ## How it works
 
-1. **Pick a theme**: one of 7, weighted random (`src/generate.mjs`), no
-   fixed rotation order.
+1. **Pick a theme**: one of 7, uniform random (`src/generate.mjs`), excluding
+   whichever themes appear in the last 4 published posts
+   (`getRecentThemes()` in `validate.mjs`). With 7 themes and at most 4
+   excluded, there are always at least 3 left to pick from — this never
+   errors out, even with no history yet.
 2. **Fetch data** for that theme (`src/sources/*.mjs`).
 3. **Generate text** with an LLM (Groq primary, Gemini fallback), using a
    per-theme prompt plus shared style rules (casual tone, cashtag format,
@@ -83,8 +86,10 @@ from Binance's public spot API, with no key and no other skill involved.
 
 All themes pull exclusively from Binance-listed USDT pairs
 (`data-api.binance.vision`), with no DEX/on-chain token data anywhere in the
-pipeline (see "Not included" for why). Theme selection is weighted random
-(`THEMES` in `src/generate.mjs`), so no state is needed for scheduling.
+pipeline (see "Not included" for why). Theme selection is uniform random
+(`THEMES` in `src/generate.mjs`) — all 7 themes now pull from the same
+safe data source, so each gets an equal chance per run, minus whichever
+were used in the last 4 posts (see "How it works" above).
 
 The basket behind themes 2-5 is dynamic, not a hardcoded list. Every run
 fetches all USDT pairs, drops stablecoin pairs and ranks the rest by 24h
@@ -120,8 +125,17 @@ set) so it can commit `data/posts.json` back after a successful publish.
 
 ### 3. Schedule
 
-Default cron is `0 2 * * *` (02:00 UTC = 09:00 WIB). Cron in GitHub Actions
-is always UTC, and runs can start a few minutes late. Adjust to taste.
+Default cron is `0 */6 * * *` (every 6 hours: 00:00/06:00/12:00/18:00 UTC =
+07:00/13:00/19:00/01:00 WIB). Cron in GitHub Actions is always UTC, and runs
+can start a few minutes late. Adjust to taste.
+
+At 4 runs/day with up to 3 attempts each, worst case is ~12 LLM requests and
+roughly 60,000-70,000 tokens/day — comfortably under Groq's free-tier
+gpt-oss-120b limits (1,000 requests/day, 200,000 tokens/day) and Square's
+100 posts/day cap. The anti-repeat check (below) matters more at this
+frequency: several runs can land within the same rolling-24h data window,
+so avoiding a repeated theme is what keeps back-to-back posts from reading
+near-identical.
 
 ## Local testing
 
@@ -159,11 +173,11 @@ by hitting the real errors during development:
   `$COIN` tickers (error `220095`, undocumented). Enforced in both the
   prompt and `validate.mjs` (`MAX_CASHTAGS`). Stablecoins written as
   cashtags count too, so `$USDT` is stripped to `USDT`.
-- **Post length limit is unknown**: the skill only documents error `20013`
-  ("Content length is limited") with no number. Secondhand claims say
-  ~2000-2100 characters, unverified. Prompts target 1100 and
-  `MAX_LENGTH` is 1200 as a conservative margin. If Square's real limit is
-  lower, the failure shows up at publish time (`20013`), not in validation.
+- **Post length limit is confirmed at 1900 characters**, tested directly
+  (the skill itself only documents error `20013` "Content length is
+  limited" with no number). Prompts target 1600, `MAX_LENGTH` is 1850 as a
+  small margin, since it's unclear whether Square counts raw characters or
+  UTF-16 code units.
 - **`gpt-oss-120b` is a reasoning model**: it spends part of `max_tokens`
   on internal reasoning before writing the answer, and can return empty or
   truncated text if the budget is too tight. Mitigated with
@@ -236,6 +250,6 @@ Deliberately left as-is for a one-post-a-day bot, but worth knowing:
   skills surface whatever's active on BSC/Solana DEXs with no guarantee of
   a Binance listing: fine for manual research, not safe for unattended
   auto-posting. All themes now come from Binance's own listed pairs only.
-- No fallback beyond Groq → Gemini (OpenRouter, etc.). At one post a day a
-  dual-provider outage is unlikely enough that it's not worth the added
-  complexity yet.
+- No fallback beyond Groq → Gemini (OpenRouter, etc.). At a handful of
+  posts a day a dual-provider outage is unlikely enough that it's not
+  worth the added complexity yet.
