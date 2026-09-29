@@ -197,10 +197,16 @@ by hitting the real errors during development:
   model to scale its wording to the size of the gap and describe only what
   happened, and `validate.mjs` rejects words like "squeeze", "brewing" and
   "coiled".
-- **Cashtags must match the tradable ticker**: bStocks trade as `NVDAB`,
-  not `NVDA`. Left alone the LLM derives `$NVDA` from the symbol, which
-  won't link to the right chart. `tokenized-stocks.mjs` sends a ready-made
-  `cashtag` field (and the company `name`) so the model doesn't guess.
+- **Cashtags must match the tradable ticker, not the raw trading-pair
+  symbol**: a real post wrote "$MARSCOINUSDT" and "$ZECUSDT" — Square
+  actually parsed these fine (only the base asset rendered as a live
+  cashtag, "USDT" sat after as plain text) but with no space it read as
+  one garbled ticker. bStocks have the same issue in reverse: they trade
+  as `NVDAB`, not `NVDA`, so deriving a cashtag from the symbol guesses
+  wrong either way. Every `market.mjs` and `tokenized-stocks.mjs` function
+  now sends a ready-made `cashtag` field (base asset only, `$` prefix
+  included) so the model doesn't have to derive one, plus a rule in
+  `STYLE_RULES` telling it to use that field verbatim.
 - **`success_without_post_id`**: `square-post`'s publish call can return a
   504 and still have actually posted, with `id`/`shareLink` as `null`.
   `publish.mjs` treats this as success (only a thrown error counts as

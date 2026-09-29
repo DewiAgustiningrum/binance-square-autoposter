@@ -84,6 +84,17 @@ async function fetchKlines(symbol, interval = "1d", limit = 8) {
   }));
 }
 
+// A real published post wrote "$MARSCOINUSDT", "$ZECUSDT" etc — the LLM
+// cashtagged the raw trading-pair symbol (base+quote glued together)
+// instead of just the base asset. Square actually parsed it fine (only
+// "$MARSCOIN" rendered as the live cashtag, "USDT" sat after as plain
+// text) but with no space it reads as one garbled ticker. Same fix
+// already applied to bStocks: send a ready-made cashtag, don't make the
+// LLM derive one from a raw pair symbol.
+function toCashtag(symbol) {
+  return `$${symbol.replace(/USDT$/, "")}`;
+}
+
 function average(numbers) {
   const valid = numbers.filter(Number.isFinite);
   if (valid.length === 0) return NaN;
@@ -100,6 +111,7 @@ export async function getMarketSnapshot() {
 
   return results.map((t) => ({
     symbol: t.symbol,
+    cashtag: toCashtag(t.symbol),
     lastPrice: Number(t.lastPrice),
     priceChangePercent: Number(t.priceChangePercent),
     highPrice: Number(t.highPrice),
@@ -129,6 +141,7 @@ export async function getDynamicBasket(size = 20) {
     )
     .map((t) => ({
       symbol: t.symbol,
+      cashtag: toCashtag(t.symbol),
       lastPrice: Number(t.lastPrice),
       priceChangePercent: Number(t.priceChangePercent),
       highPrice: Number(t.highPrice),
@@ -184,6 +197,7 @@ async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
 
       return {
         symbol: t.symbol,
+        cashtag: toCashtag(t.symbol),
         lastPrice: t.lastPrice,
         priceChangePercent: t.priceChangePercent,
         last24hRangePct,
