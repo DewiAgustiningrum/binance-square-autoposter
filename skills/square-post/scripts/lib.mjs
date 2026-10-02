@@ -5,6 +5,8 @@ import path from "path";
 const BASE_URL_V1 = "https://www.binance.com/bapi/composite/v1/public/pgc/openApi";
 const BASE_URL_V2 = "https://www.binance.com/bapi/composite/v2/public/pgc/openApi";
 const POLL_INTERVAL_MS = 3000;
+const API_TIMEOUT_MS = Number(process.env.HTTP_TIMEOUT_MS) || 30_000;
+const UPLOAD_TIMEOUT_MS = Number(process.env.HTTP_TIMEOUT_MS) || 120_000;
 const MAX_POLL_RETRIES = 10;
 const CONFIG_DIR = path.join(os.homedir(), ".config", "binance-square");
 const CONFIG_FILE = path.join(CONFIG_DIR, "openapi-key");
@@ -84,6 +86,7 @@ export async function api(endpoint, apiKey, body, baseUrl = BASE_URL_V2) {
       clienttype: "binanceSkill",
     },
     body: JSON.stringify(body),
+    signal: AbortSignal.timeout(API_TIMEOUT_MS),
   });
   const raw = await res.text();
 
@@ -115,6 +118,7 @@ export async function uploadToS3(presignedUrl, filePath, contentType) {
     method: "PUT",
     headers: { "Content-Type": contentType },
     body: fileBuffer,
+    signal: AbortSignal.timeout(UPLOAD_TIMEOUT_MS),
   });
   if (!res.ok) {
     throw new Error(`S3 upload failed: ${res.status} ${res.statusText}`);
