@@ -10,6 +10,8 @@
 // runners included — they run on US Azure datacenters). data-api.binance.vision
 // is Binance's public read-only market-data mirror with the same response
 // shape and no geo-restriction.
+import { fetchWithTimeout } from "../http.mjs";
+
 const BASE_URL = "https://data-api.binance.vision";
 const SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT"];
 
@@ -47,7 +49,7 @@ function looksPegged(t) {
 }
 
 async function fetchTicker24hr(symbol) {
-  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
+  const res = await fetchWithTimeout(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
   if (!res.ok) {
     throw new Error(`Binance ticker fetch failed for ${symbol}: ${res.status}`);
   }
@@ -58,21 +60,24 @@ async function fetchTicker24hr(symbol) {
 // to know who's "top" at anything; there's no endpoint that returns
 // pre-ranked results, so we fetch everything then sort/filter ourselves.
 async function fetchAllTickers() {
-  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr`);
+  const res = await fetchWithTimeout(`${BASE_URL}/api/v3/ticker/24hr`);
   if (!res.ok) {
     throw new Error(`Binance all-tickers fetch failed: ${res.status}`);
   }
-  return res.json();
+  const all = await res.json();
+  if (!Array.isArray(all)) throw new Error("Binance all-tickers: unexpected response shape");
+  return all;
 }
 
 async function fetchKlines(symbol, interval = "1d", limit = 8) {
-  const res = await fetch(
+  const res = await fetchWithTimeout(
     `${BASE_URL}/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`
   );
   if (!res.ok) {
     throw new Error(`Binance klines fetch failed for ${symbol}: ${res.status}`);
   }
   const raw = await res.json();
+  if (!Array.isArray(raw)) throw new Error(`Binance klines for ${symbol}: unexpected response shape`);
   // Each row: [openTime, open, high, low, close, volume, closeTime, ...]
   return raw.map((k) => ({
     openTime: k[0],
