@@ -12,11 +12,11 @@ async function main() {
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     console.log(`--- Attempt ${attempt}/${MAX_ATTEMPTS} ---`);
 
-    const { theme, themeLabel, text } = await generatePost();
+    const { theme, themeLabel, text, rawData } = await generatePost();
     console.log(`Theme: ${themeLabel} (${theme})`);
     console.log(`Draft:\n${text}\n`);
 
-    const validation = await validatePost(text, theme);
+    const validation = await validatePost(text, theme, rawData);
     if (!validation.valid) {
       console.error(`Validation failed: ${validation.reason}`);
       if (attempt < MAX_ATTEMPTS) {
@@ -29,7 +29,10 @@ async function main() {
     }
 
     const result = await publishPost({ theme, text });
-    console.log(`Published on attempt ${attempt}. id=${result.id ?? "n/a"} link=${result.shareLink ?? "n/a"}`);
+    console.log(`Published on attempt ${attempt}. status=${result.status} id=${result.id ?? "n/a"} link=${result.shareLink ?? "n/a"}`);
+    if (result.status === "unknown") {
+      console.warn("::warning::Square returned 504: post probably went through but is NOT confirmed. Check Square manually.");
+    }
     return;
   }
 }
