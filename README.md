@@ -125,9 +125,10 @@ set) so it can commit `data/posts.json` back after a successful publish.
 
 ### 3. Schedule
 
-Default cron is `0 */6 * * *` (every 6 hours: 00:00/06:00/12:00/18:00 UTC =
-07:00/13:00/19:00/01:00 WIB). Cron in GitHub Actions is always UTC, and runs
-can start a few minutes late. Adjust to taste.
+Default cron is `17 */6 * * *` (every 6 hours at :17: 00:17/06:17/12:17/18:17
+UTC = 07:17/13:17/19:17/01:17 WIB). Cron in GitHub Actions is always UTC. The
+minute is deliberately not `:00`: GitHub delays or drops scheduled runs at the
+top of the hour when load is high. Adjust to taste.
 
 At 4 runs/day with up to 3 attempts each, worst case is ~12 LLM requests and
 roughly 60,000-70,000 tokens/day — comfortably under Groq's free-tier
@@ -143,6 +144,17 @@ near-identical.
 cp .env.example .env   # then fill in the keys
 node --env-file=.env src/run.mjs
 ```
+
+Automated tests (no network, no keys needed, ~10 s):
+
+```bash
+npm test
+```
+
+Optional env vars: `GROUNDING_MODE=warn` logs numbers/tickers that can't be
+traced to the source data instead of rejecting the post (useful when rolling
+grounding out); `HTTP_TIMEOUT_MS` overrides every request timeout;
+`RETRY_DELAY_MS` overrides the retry backoff base (default 5000).
 
 Test individual sources in isolation:
 
@@ -209,9 +221,12 @@ by hitting the real errors during development:
   `STYLE_RULES` telling it to use that field verbatim.
 - **`success_without_post_id`**: `square-post`'s publish call can return a
   504 and still have actually posted, with `id`/`shareLink` as `null`.
-  `publish.mjs` treats this as success (only a thrown error counts as
-  failure). Caveat: a 504 doesn't *guarantee* the post landed, so a null id
-  is "probably posted", not "confirmed".
+  `publish.mjs` records this as `status: "unknown"` (not `published`) and the
+  run logs a warning to check Square. Timeouts and gateway errors are also
+  `unknown`. An `unknown` outcome is **never retried**, since the post may be
+  live and publishing again could duplicate it. History statuses: `pending`
+  (written before publishing), `published`, `unknown`, `failed` (Square
+  rejected it; doesn't count as a used theme).
 - **bStocks trade as regular spot pairs**: `NVDABUSDT`, `TSLABUSDT`, etc.
   are readable through the same `ticker/24hr` endpoint as BTC/ETH/BNB, so
   Theme 6 doesn't need the separate RWA API that the
@@ -225,27 +240,33 @@ by hitting the real errors during development:
   against daily-candle averages, which is directionally useful but not a
   strict like-for-like comparison.
 - **`data/posts.json` doesn't exist on first run** (or after a
-  validation-only failure): the workflow's commit step checks the file
-  exists before trying to `git add` it.
+  validation-only failure): a missing file is treated as empty history and
+  created on first write, and the workflow's commit step checks the file
+  exists before trying to `git add` it. A file that exists but is corrupt,
+  empty, or the wrong shape stops the run with a `HistoryError` instead of
+  silently resetting history. To reset history, delete the file or set it
+  to `[]`.
 
 ## Known limitations
 
 Deliberately left as-is for a one-post-a-day bot, but worth knowing:
 
-- No timeout or retry/backoff on individual HTTP calls (Binance, Groq,
-  Gemini, Square). A hung connection stalls the run until GitHub's job
-  timeout.
 - `BSTOCKS` in `tokenized-stocks.mjs` is a hand-maintained list of 7
   tickers, while Binance keeps adding bStocks. It needs occasional manual
-  updates (check Binance's announcements). Delisted symbols are skipped
-  silently rather than breaking the theme.
+  updates (check Binance's announcements). A failing symbol is replaced by
+  another candidate; if fewer than 2 can be fetched the theme fails and the
+  run retries with a different one.
 - Duplicate detection is a simple word-overlap ratio (threshold 0.6) against
   the last 30 posts. It can miss paraphrases and occasionally over-reject
   posts that share common words.
-- If the publish call succeeds but writing `data/posts.json` fails, that post
-  isn't in history and a near-duplicate could be published later.
-- No automated tests and no failure alerting; a failed run is only visible in
-  the Actions tab.
+- Grounding (`src/grounding.mjs`) checks that tickers and numbers exist in the
+  source data, but compares numbers by magnitude only and does not check the
+  wording or the relationship between real numbers.
+- If the publish call succeeds but updating its history entry fails, the
+  entry stays `pending` (still protects against duplicates) and the run logs
+  an error; it does not fail the run.
+- Morning/recap themes are chosen at random, not tied to the time of day.
+- No failure alerting; a failed run is only visible in the Actions tab.
 
 ## Not included / out of scope
 
