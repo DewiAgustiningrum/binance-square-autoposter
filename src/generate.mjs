@@ -365,6 +365,9 @@ function sanitizeText(text) {
 export async function generatePost() {
   const theme = await pickTheme();
   const data = await theme.fetch();
+  if (Array.isArray(data) && data.length === 0) {
+    throw new Error(`No source data for theme "${theme.id}"`);
+  }
   const prompt = THEME_PROMPTS[theme.id](data);
   const text = sanitizeText(await callLLM(prompt));
 
