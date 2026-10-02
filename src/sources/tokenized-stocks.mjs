@@ -16,6 +16,8 @@
 // 24/7 alongside crypto, including outside normal market hours" — which is
 // arguably the more interesting story anyway.
 
+import { fetchWithTimeout } from "../http.mjs";
+
 const BASE_URL = "https://data-api.binance.vision";
 
 // Known bStocks USDT pairs as of the product's rollout. This list is NOT
@@ -36,7 +38,7 @@ const BSTOCKS = {
 const BSTOCK_SYMBOLS = Object.keys(BSTOCKS);
 
 async function fetchTicker24hr(symbol) {
-  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
+  const res = await fetchWithTimeout(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
   if (!res.ok) {
     throw new Error(`bStock ticker fetch failed for ${symbol}: ${res.status}`);
   }
