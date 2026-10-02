@@ -26,7 +26,8 @@ function isDefinitiveRejection(err) {
  * Returns { id, shareLink, publishStatus, status } where `status` is
  * "published" (confirmed) or "unknown" (HTTP 504: probably posted, not
  * confirmed; id/shareLink are null). Throws if Square definitively rejected
- * the post or the outcome can't be determined.
+ * the post or the outcome can't be determined; the error carries
+ * `publishOutcome` = "failed" (safe to retry) or "unknown" (do not retry).
  */
 export async function publishPost({ theme, text }) {
   const apiKey = resolveApiKey(); // reads BINANCE_SQUARE_OPENAPI_KEY from env
@@ -41,6 +42,7 @@ export async function publishPost({ theme, text }) {
     });
   } catch (err) {
     const status = isDefinitiveRejection(err) ? "failed" : "unknown";
+    err.publishOutcome = status; // run.mjs: "failed" is safe to retry, "unknown" is not
     await updatePost(entry.id, { status, error: String(err.message).slice(0, 200) }).catch((e) =>
       console.error(`Could not update history entry after publish error: ${e.message}`)
     );
