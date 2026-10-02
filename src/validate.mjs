@@ -1,5 +1,7 @@
 // src/validate.mjs
-// Validates LLM-generated text before it's allowed anywhere near publish.mjs.
+// Validates LLM-generated text before it's allowed anywhere near publish.mjs,
+// and owns the post history file (data/posts.json).
+//
 // Square's exact character cap isn't documented anywhere official (only
 // error code 20013 "Content length is limited"), but it's been confirmed
 // empirically at 1900 characters. MAX_LENGTH below sits under that with a
@@ -7,8 +9,12 @@
 // characters or something like UTF-16 code units (which would differ for
 // any surrogate-pair characters, e.g. some emoji).
 
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, mkdir, rename, open } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { extractCashtags } from "./cashtags.mjs";
+import { checkGrounding } from "./grounding.mjs";
 
 const MAX_LENGTH = 1850; // confirmed limit is 1900; prompts target 1600
 const MIN_LENGTH = 40; // catches empty/near-empty LLM output
@@ -17,14 +23,19 @@ const MIN_LENGTH = 40; // catches empty/near-empty LLM output
 // $BTC/$ETH/$BNB/$USDT). 3 is confirmed safe; not confirmed as the exact
 // ceiling, so treat this as a conservative cap, not a verified max.
 const MAX_CASHTAGS = 3;
-const HISTORY_PATH = path.resolve("data/posts.json");
 const HISTORY_KEEP = 30; // how many past posts to compare against for duplicates
 const DUPLICATE_SIMILARITY_THRESHOLD = 0.6; // word-overlap ratio
+
+// HISTORY_PATH (env) lets tests point at a temp file. Resolved lazily and
+// relative to this module, so the result doesn't depend on the cwd.
+function historyPath() {
+  return process.env.HISTORY_PATH ?? fileURLToPath(new URL("../data/posts.json", import.meta.url));
+}
 
 // Phrases that indicate the LLM broke character (refusals, meta-commentary,
 // disclaimers) instead of returning a clean post.
 const BREAK_CHARACTER_PATTERNS = [
-  /as an ai/i,
+  /\bas an ai\b/i, // word boundaries: "as an airdrop" is legitimate crypto talk
   /i cannot/i,
   /i'm unable to/i,
   /language model/i,
@@ -52,37 +63,94 @@ function wordOverlapRatio(a, b) {
   return shared / Math.min(setA.size, setB.size);
 }
 
-async function loadHistory() {
-  try {
-    const raw = await readFile(HISTORY_PATH, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return []; // file doesn't exist yet — first run
+// ---------------------------------------------------------------------------
+// History storage
+// ---------------------------------------------------------------------------
+
+/** Thrown when posts.json exists but can't be trusted. Never swallowed. */
+export class HistoryError extends Error {
+  constructor(message, options) {
+    super(message, options);
+    this.name = "HistoryError";
   }
 }
 
+function assertHistoryShape(history) {
+  if (!Array.isArray(history)) {
+    throw new HistoryError("posts.json must contain a JSON array");
+  }
+  history.forEach((entry, i) => {
+    if (!entry || typeof entry.theme !== "string" || typeof entry.text !== "string") {
+      throw new HistoryError(`posts.json entry ${i} is malformed (needs string "theme" and "text")`);
+    }
+  });
+}
+
+/**
+ * Missing file = first run = empty history. Anything else (unreadable file,
+ * invalid JSON, wrong shape) is a hard error: silently treating a corrupt
+ * file as "no history" would disable duplicate protection and let the next
+ * write overwrite every past entry.
+ */
+export async function loadHistory() {
+  let raw;
+  try {
+    raw = await readFile(historyPath(), "utf-8");
+  } catch (err) {
+    if (err.code === "ENOENT") return [];
+    throw new HistoryError(`Cannot read posts.json: ${err.message}`, { cause: err });
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    throw new HistoryError(`posts.json is not valid JSON, refusing to continue: ${err.message}`, { cause: err });
+  }
+  assertHistoryShape(parsed);
+  return parsed;
+}
+
+/** Atomic write: temp file + fsync + rename, so a crash can't leave a half-written file. */
 async function saveHistory(history) {
-  await mkdir(path.dirname(HISTORY_PATH), { recursive: true });
-  await writeFile(HISTORY_PATH, JSON.stringify(history, null, 2));
+  const file = historyPath();
+  await mkdir(path.dirname(file), { recursive: true });
+  const tmp = `${file}.${process.pid}.tmp`;
+  const handle = await open(tmp, "w");
+  try {
+    await handle.writeFile(`${JSON.stringify(history, null, 2)}\n`);
+    await handle.sync();
+  } finally {
+    await handle.close();
+  }
+  await rename(tmp, file);
+}
+
+/**
+ * Theme ids from the N most recent posts (newest first in storage).
+ * Posts known to have failed are skipped: they never reached Square, so the
+ * theme isn't "used". Returns fewer than N (down to an empty array) if
+ * history is short or missing.
+ */
+export async function getRecentThemes(n = 4) {
+  const history = await loadHistory();
+  return history
+    .filter((entry) => entry.status !== "failed")
+    .slice(0, n)
+    .map((entry) => entry.theme);
 }
 
 /**
  * Validate generated text. Returns { valid: true } or
- * { valid: false, reason: string } — never throws, so the caller can log
- * and skip a run cleanly instead of crashing the workflow.
+ * { valid: false, reason: string } for anything wrong with the TEXT.
+ * It still throws HistoryError if posts.json is corrupt, on purpose: that's
+ * an infrastructure problem, not something a regeneration can fix.
+ *
+ * `rawData` is the source data the LLM was given. When supplied, every
+ * cashtag and significant number must trace back to it (see grounding.mjs).
+ * GROUNDING_MODE=warn logs grounding failures instead of rejecting, useful
+ * while rolling this out.
  */
-/**
- * Theme ids from the N most recent posts (newest first in storage, so this
- * is just the first N entries). Returns fewer than N (down to an empty
- * array) if history is short or missing — callers should treat that as
- * "nothing to avoid yet", not an error.
- */
-export async function getRecentThemes(n = 4) {
-  const history = await loadHistory();
-  return history.slice(0, n).map((entry) => entry.theme);
-}
-
-export async function validatePost(text, theme) {
+export async function validatePost(text, theme, rawData) {
   if (!text || typeof text !== "string") {
     return { valid: false, reason: "Empty or non-string output from LLM" };
   }
@@ -110,10 +178,10 @@ export async function validatePost(text, theme) {
   }
 
   // Directional/predictive wording that reads like a call, even when framed
-  // as "watching". A real draft said "something brewing" and "keep an eye
-  // on the squeeze" for tokens whose range was only ~30% below normal.
+  // as "watching". Real drafts said "something brewing", "keep an eye on the
+  // squeeze", and (published) "watch the next resistance" / "could signal".
   const predictive = trimmed.match(
-    /\b(squeeze|brewing|coiled|about to (?:break|move|explode|pump|dump)|set to (?:break|move|explode)|imminent)\b/i
+    /\b(squeeze|brewing|coiled|resistance|about to (?:break|move|explode|pump|dump)|set to (?:break|move|explode)|imminent|(?:could|may|might) signal|watch the next)\b/i
   );
   if (predictive) {
     return { valid: false, reason: `Predictive language ("${predictive[0]}"), not allowed` };
@@ -131,7 +199,7 @@ export async function validatePost(text, theme) {
     "tokenized-stocks",
     "daily-recap",
   ];
-  const cashtags = new Set((trimmed.match(/\$[A-Z]{2,10}\b/g) ?? []).map((t) => t.toUpperCase()));
+  const cashtags = extractCashtags(trimmed);
 
   if (cashtagThemes.includes(theme) && cashtags.size === 0) {
     return { valid: false, reason: "No $CASHTAG found in output" };
@@ -142,6 +210,17 @@ export async function validatePost(text, theme) {
       valid: false,
       reason: `Too many cashtags (${cashtags.size}: ${[...cashtags].join(", ")}), Square rejects over ${MAX_CASHTAGS}`,
     };
+  }
+
+  if (rawData !== undefined) {
+    const grounding = checkGrounding(trimmed, theme, rawData);
+    if (!grounding.ok) {
+      if (process.env.GROUNDING_MODE === "warn") {
+        console.warn(`[grounding:warn] ${grounding.reason}`);
+      } else {
+        return { valid: false, reason: `Not grounded in source data: ${grounding.reason}` };
+      }
+    }
   }
 
   const history = await loadHistory();
@@ -159,19 +238,33 @@ export async function validatePost(text, theme) {
 }
 
 /**
- * Record a successfully published post so future runs can duplicate-check
- * against it. Call this AFTER a real publish succeeds, not before.
+ * Add a post to history and return the stored entry (with its `id`).
+ * status: "pending" (about to publish) | "published" | "unknown" | "failed".
  */
-export async function recordPost({ theme, text, postId, shareLink }) {
+export async function recordPost({ theme, text, postId, shareLink, status = "published" }) {
   const history = await loadHistory();
-  history.unshift({
+  const entry = {
+    id: randomUUID(),
     date: new Date().toISOString(),
     theme,
     text,
+    status,
     postId: postId ?? null,
     shareLink: shareLink ?? null,
-  });
+  };
+  history.unshift(entry);
   await saveHistory(history.slice(0, HISTORY_KEEP));
+  return entry;
+}
+
+/** Patch an existing entry by id (e.g. pending -> published). */
+export async function updatePost(id, patch) {
+  const history = await loadHistory();
+  const entry = history.find((e) => e.id === id);
+  if (!entry) throw new HistoryError(`History entry ${id} not found`);
+  Object.assign(entry, patch);
+  await saveHistory(history);
+  return entry;
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
