@@ -11,6 +11,7 @@ import {
 } from "./sources/market.mjs";
 import { getTokenizedStocksSnapshot } from "./sources/tokenized-stocks.mjs";
 import { getRecentThemes } from "./validate.mjs";
+import { fetchWithTimeout, TIMEOUTS } from "./http.mjs";
 
 // NOTE: trading-signal, crypto-market-rank, and meme-rush skills are
 // intentionally NOT imported here anymore. They surface tokens from
@@ -239,7 +240,7 @@ ${STYLE_RULES}`,
 // LLM calls — Groq primary, Gemini fallback.
 // ---------------------------------------------------------------------------
 async function callGroq(prompt) {
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const res = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -258,7 +259,7 @@ async function callGroq(prompt) {
       max_tokens: 4000,
       temperature: 0.9,
     }),
-  });
+  }, TIMEOUTS.llm);
 
   if (!res.ok) throw new Error(`Groq error ${res.status}: ${await res.text()}`);
   const json = await res.json();
@@ -284,16 +285,18 @@ async function callGroq(prompt) {
 }
 
 async function callGemini(prompt) {
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+  // API key goes in a header, not the URL, so it can never end up in logs.
+  const res = await fetchWithTimeout(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: { maxOutputTokens: 2400, temperature: 0.9 },
       }),
-    }
+    },
+    TIMEOUTS.llm
   );
 
   if (!res.ok) throw new Error(`Gemini error ${res.status}: ${await res.text()}`);
