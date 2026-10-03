@@ -24,9 +24,10 @@ import { fetchWithTimeout, TIMEOUTS } from "./http.mjs";
 // for manual research — just not wired into the auto-post pipeline.
 
 // ---------------------------------------------------------------------------
-// Theme registry — uniform random pick, no state file needed. All 7 themes
-// now pull from the same safe, Binance-listed data source, so there's no
-// reason to favor some over others; each has an equal 1/7 chance per run.
+// Theme registry — uniform random pick among themes that fit the time of day
+// (see THEME_HOURS_WIB) and weren't used in the last few posts. All 7 themes
+// pull from the same safe, Binance-listed data source, so there's no reason
+// to favor some over others.
 // ---------------------------------------------------------------------------
 const THEMES = [
   { id: "morning-brief", fetch: () => getMarketSnapshot(), label: "Morning Market Brief" },
@@ -49,10 +50,42 @@ const RECENT_THEMES_TO_AVOID = 4;
  * getRecentThemes just returns fewer entries to avoid — never an error,
  * and never fewer choices than "no history at all" would give.
  */
+// Themes whose wording only makes sense at certain times. Hours are WIB
+// (UTC+7), start inclusive / end exclusive; a window may wrap past midnight.
+// With the 6-hourly cron (07:17, 13:17, 19:17, 01:17 WIB) the morning brief
+// can only go out in the morning slot and the recap only in the evening/night
+// slots, and the windows are wide enough to survive GitHub's start delays.
+// Themes not listed here can run at any time.
+const THEME_HOURS_WIB = {
+  "morning-brief": { from: 5, to: 12 },
+  "daily-recap": { from: 18, to: 3 },
+};
+
+/** Does `themeId` make sense at time `now`? */
+export function themeFitsTime(themeId, now = new Date()) {
+  const window = THEME_HOURS_WIB[themeId];
+  if (!window) return true;
+  const hour = (now.getUTCHours() + 7) % 24;
+  return window.from < window.to
+    ? hour >= window.from && hour < window.to
+    : hour >= window.from || hour < window.to;
+}
+
+/**
+ * Pure selection: time-appropriate themes, minus the recently used ones.
+ * If that leaves nothing, repetition is allowed before a time-inappropriate
+ * theme is.
+ */
+export function selectTheme(recent, now = new Date(), random = Math.random) {
+  const fitting = THEMES.filter((t) => themeFitsTime(t.id, now));
+  const fresh = fitting.filter((t) => !recent.includes(t.id));
+  const pool = fresh.length > 0 ? fresh : fitting;
+  return pool[Math.floor(random() * pool.length)];
+}
+
 async function pickTheme() {
   const recent = await getRecentThemes(RECENT_THEMES_TO_AVOID);
-  const pool = THEMES.filter((t) => !recent.includes(t.id));
-  return pool[Math.floor(Math.random() * pool.length)];
+  return selectTheme(recent);
 }
 
 // ---------------------------------------------------------------------------
