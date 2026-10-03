@@ -13,18 +13,21 @@ Cron (GitHub Actions)
   → fetch market data (Binance public spot API, data-api.binance.vision)
   → generate post text (Groq, Gemini fallback)
   → sanitize (em dashes, unicode quotes, stablecoin cashtags)
-  → validate (length, cashtags, duplicates, banned patterns)
+  → validate (length, cashtags, banned patterns, grounding in the source data,
+    duplicates)
   → publish to Binance Square
   → commit post history back to the repo
+  → (optional) Telegram alert if the run failed
 ```
 
 ## How it works
 
-1. **Pick a theme**: one of 7, uniform random (`src/generate.mjs`), excluding
-   whichever themes appear in the last 4 published posts
-   (`getRecentThemes()` in `validate.mjs`). With 7 themes and at most 4
-   excluded, there are always at least 3 left to pick from — this never
-   errors out, even with no history yet.
+1. **Pick a theme**: one of 7, uniform random (`selectTheme()` in
+   `src/generate.mjs`) among the themes that fit the time of day (see "The 7
+   themes"), excluding whichever themes appear in the last 4 posts
+   (`getRecentThemes()` in `validate.mjs`; posts that failed don't count). If
+   that leaves nothing, a recent theme may repeat, but a mistimed one never
+   gets picked. This never errors out, even with no history yet.
 2. **Fetch data** for that theme (`src/sources/*.mjs`).
 3. **Generate text** with an LLM (Groq primary, Gemini fallback), using a
    per-theme prompt plus shared style rules (casual tone, cashtag format,
@@ -32,12 +35,20 @@ Cron (GitHub Actions)
 4. **Sanitize** the output deterministically (`sanitizeText()` in
    `generate.mjs`), because prompt instructions alone aren't reliable.
 5. **Validate** (`src/validate.mjs`): length, banned patterns, cashtag
-   count/presence, duplicate check against recent posts.
-6. If validation fails, **start over** (up to 3 attempts). Each attempt is a
-   fresh generation and may land on a different theme, it doesn't just
-   re-roll the same draft.
-7. **Publish** to Binance Square (`src/publish.mjs`), then record the post
-   in `data/posts.json` for future duplicate checks.
+   count/presence, **grounding** (`src/grounding.mjs`: every `$TICKER` and
+   significant number must exist in the data the LLM was given), and a
+   duplicate check against recent posts.
+6. If anything fails, **start over** (up to 3 attempts, `src/run.mjs`). Each
+   attempt is a fresh generation and may land on a different theme, it
+   doesn't just re-roll the same draft. This covers failed validation,
+   transient failures while fetching data or calling the LLMs (with growing
+   backoff), and a post that Square definitively rejects. A publish whose
+   outcome is unknown (timeout, 502, 504) is **never** retried, because the
+   post may be live and publishing again could duplicate it.
+7. **Publish** to Binance Square (`src/publish.mjs`). The post is written to
+   `data/posts.json` as `pending` *before* the call and updated to its final
+   status afterwards, so duplicate protection holds even if the run dies
+   mid-publish.
 8. The workflow commits the updated `data/posts.json` back to the repo so
    history persists across runs (GitHub Actions runners are ephemeral). A
    `concurrency` lock stops a manual run and the cron run from overlapping.
@@ -46,17 +57,23 @@ Cron (GitHub Actions)
 
 ```
 .github/workflows/square.yml   cron + manual trigger, concurrency lock, runs src/run.mjs
+.github/dependabot.yml         monthly update PRs for the (SHA-pinned) actions
 skills/square-post/            Binance's official posting skill (publishing only)
 src/
   sources/
     market.mjs                 Themes 1-5 and 7: Binance public market data
     tokenized-stocks.mjs       Theme 6: bStocks (tokenized equities), same API
   generate.mjs                 theme picker, prompts, LLM calls, sanitizeText
-  validate.mjs                 pre-publish checks + post history
-  publish.mjs                  publishes to Square, records history
+  validate.mjs                 pre-publish checks + post history storage
+  grounding.mjs                checks tickers/numbers against the source data
+  cashtags.mjs                 what counts as a $CASHTAG
+  http.mjs                     fetch wrapper with timeouts
+  publish.mjs                  publishes to Square, tracks status in history
   run.mjs                      entry point: generate → validate → publish (with retry)
+test/                          automated tests (node:test), run with `npm test`
 data/posts.json                auto-generated post history, don't create manually
-package.json                   type: module, engines: node >=22
+package.json                   type: module, engines: node >=22, test/start scripts
+CHANGELOG.md                   release notes
 .gitignore                     node_modules/, .env, *.log
 .env.example                   required env vars for local testing (no values)
 README.md                      this file
@@ -78,24 +95,28 @@ from Binance's public spot API, with no key and no other skill involved.
 |---|---|---|
 | 1 | Morning Market Brief | BTC/ETH/BNB 24h ticker (`market.mjs`) |
 | 2 | Leaders & Laggards | Top gainers vs losers in the dynamic basket |
-| 3 | Breakout Watch | Past-24h range vs 7-day average daily range (klines) |
-| 4 | The Quiet Ones | Same as above, inverted: unusually compressed range |
-| 5 | Relative Strength Check | ETH/BTC pair + average alt vs BTC (price performance, not capital flow) |
+| 3 | Breakout Watch | Past-24h range vs 7-day average daily range (klines); only tokens at 1.3x or more |
+| 4 | The Quiet Ones | Same as above, inverted: only tokens at 0.8x or less |
+| 5 | Relative Strength Check | ETH/BTC pair + median alt vs BTC (price performance, not capital flow) |
 | 6 | Tokenized Stocks Corner | bStocks read as regular spot tickers (`tokenized-stocks.mjs`) |
 | 7 | Daily Recap | BTC/ETH/BNB 24h ticker (`market.mjs`) |
 
 All themes pull exclusively from Binance-listed USDT pairs
 (`data-api.binance.vision`), with no DEX/on-chain token data anywhere in the
 pipeline (see "Not included" for why). Theme selection is uniform random
-(`THEMES` in `src/generate.mjs`) — all 7 themes now pull from the same
-safe data source, so each gets an equal chance per run, minus whichever
-were used in the last 4 posts (see "How it works" above).
+(`THEMES` in `src/generate.mjs`) — all 7 themes pull from the same safe
+data source, so each gets an equal chance, minus the ones that don't fit the
+time of day and whichever were used in the last 4 posts.
 
 Time of day matters for two themes (WIB, UTC+7): *Morning Market Brief* is only
 eligible 05:00-12:00 and *Daily Recap* only 18:00-03:00 (`THEME_HOURS_WIB` in
 `generate.mjs`). With the 6-hourly cron that means the 07:17 slot can pick the
 morning brief, the 19:17 and 01:17 slots can pick the recap, and 13:17 picks
 neither. All other themes can run at any time.
+
+Themes 3 and 4 only report genuine anomalies: tokens with fewer than 5 full
+days of history are skipped, and if nothing qualifies the theme fails and the
+run retries with another one (so quiet days produce fewer such posts).
 
 The basket behind themes 2-5 is dynamic, not a hardcoded list. Every run
 fetches all USDT pairs, drops stablecoin pairs and ranks the rest by 24h
@@ -118,16 +139,27 @@ Settings → Secrets and variables → Actions:
 | `BINANCE_SQUARE_OPENAPI_KEY` | Binance Square Developer/OpenAPI settings |
 | `GROQ_API_KEY` | [console.groq.com](https://console.groq.com) |
 | `GEMINI_API_KEY` | [aistudio.google.com](https://aistudio.google.com) |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | *Optional*, see "Failure alerts" below |
 
 Secrets never carry over to forks or template copies, so anyone reusing
 this repo needs their own keys (and their own Square key, otherwise posts
-go to *your* account). Also delete `data/posts.json` in a fresh copy so it
-starts with its own history.
+go to *your* account). A fork also needs to:
+
+- open the **Actions** tab and enable workflows (scheduled workflows are
+  off in forks by default);
+- set Settings → Actions → General → Workflow permissions to **Read and
+  write**;
+- reset history: delete `data/posts.json`, or set its content to `[]`, so it
+  starts with its own history.
+
+The actions in the workflow are pinned to commit SHAs of the official
+`actions/*` repos, so forks and copies run the same code without changes.
 
 ### 2. Workflow permissions
 
 `.github/workflows/square.yml` needs `permissions: contents: write` (already
-set) so it can commit `data/posts.json` back after a successful publish.
+set) so it can commit `data/posts.json` back after a successful publish. In a
+fork, the repo-level setting above must also allow write access.
 
 ### 3. Schedule
 
@@ -139,10 +171,18 @@ top of the hour when load is high. Adjust to taste.
 At 4 runs/day with up to 3 attempts each, worst case is ~12 LLM requests and
 roughly 60,000-70,000 tokens/day — comfortably under Groq's free-tier
 gpt-oss-120b limits (1,000 requests/day, 200,000 tokens/day) and Square's
-100 posts/day cap. The anti-repeat check (below) matters more at this
+100 posts/day cap. The anti-repeat check (see "How it works") matters more at this
 frequency: several runs can land within the same rolling-24h data window,
 so avoiding a repeated theme is what keeps back-to-back posts from reading
 near-identical.
+
+### 4. Failure alerts (optional)
+
+If a run fails (including a publish whose outcome is unknown), the last
+workflow step can message you on Telegram. Create a bot with @BotFather, get
+your chat id (for example from @userinfobot), and add the secrets
+`TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`. Without both secrets the step is
+skipped. The message only contains the repo name and a link to the run.
 
 ## Local testing
 
@@ -151,7 +191,7 @@ cp .env.example .env   # then fill in the keys
 node --env-file=.env src/run.mjs
 ```
 
-Automated tests (no network, no keys needed, ~10 s):
+Automated tests (no network, no keys needed):
 
 ```bash
 npm test
@@ -214,7 +254,10 @@ by hitting the real errors during development:
   tokens whose range was only ~30% below normal. Themes 3-4 now tell the
   model to scale its wording to the size of the gap and describe only what
   happened, and `validate.mjs` rejects words like "squeeze", "brewing" and
-  "coiled".
+  "coiled" (also "resistance", "could signal", "watch the next" after a
+  published post said "watch the next resistance"). The Morning Brief and
+  Daily Recap prompts no longer ask the model for "what to watch next"
+  either, since that instruction contradicted the no-predictions rule.
 - **Cashtags must match the tradable ticker, not the raw trading-pair
   symbol**: a real post wrote "$MARSCOINUSDT" and "$ZECUSDT" — Square
   actually parsed these fine (only the base asset rendered as a live
@@ -255,7 +298,7 @@ by hitting the real errors during development:
 
 ## Known limitations
 
-Deliberately left as-is for a one-post-a-day bot, but worth knowing:
+Deliberately left as-is for a small personal bot, but worth knowing:
 
 - `BSTOCKS` in `tokenized-stocks.mjs` is a hand-maintained list of 7
   tickers, while Binance keeps adding bStocks. It needs occasional manual
@@ -271,7 +314,11 @@ Deliberately left as-is for a one-post-a-day bot, but worth knowing:
 - If the publish call succeeds but updating its history entry fails, the
   entry stays `pending` (still protects against duplicates) and the run logs
   an error; it does not fail the run.
-- No failure alerting; a failed run is only visible in the Actions tab.
+- Grounding is strict by default, so a post that does its own arithmetic
+  (for example "3.5 points ahead") is rejected as untraceable. Set
+  `GROUNDING_MODE=warn` in the workflow if that costs too many posts.
+- Failure alerts need the optional Telegram secrets; without them a failed
+  run is only visible in the Actions tab.
 
 ## Not included / out of scope
 
