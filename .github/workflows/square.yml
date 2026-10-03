@@ -62,3 +62,24 @@ jobs:
           else
             echo "data/posts.json doesn't exist yet (no successful publish this run) — nothing to commit."
           fi
+
+      # Optional failure alert. Does nothing unless BOTH Telegram secrets are
+      # set, so forks and clones without them are unaffected. The message holds
+      # only the repo name and a link to the run: no secrets, no post content.
+      - name: Notify on failure (Telegram)
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "Telegram secrets not set, skipping alert."
+            exit 0
+          fi
+          curl -sS --max-time 20 -X POST \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Square autoposter FAILED in ${REPO}. Run: ${RUN_URL}" \
+            > /dev/null || echo "Alert could not be sent (ignored)."
