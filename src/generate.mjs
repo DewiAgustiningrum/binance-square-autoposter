@@ -133,8 +133,10 @@ You are a Binance Square crypto analyst. Write a short morning market brief
 using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Cover price action for BTC, ETH, BNB over the past 24 hours — what changed,
-what's worth watching next. Keep it under 1600 characters.
+Cover price action for BTC, ETH, BNB over the past 24 hours: what changed
+and what stood out (biggest move, widest range, heaviest volume). Describe
+what happened only, nothing about what comes next. Keep it under 1600
+characters.
 ${STYLE_RULES}`,
 
   "leaders-laggards": (data) => `
@@ -197,8 +199,9 @@ ${JSON.stringify(data, null, 2)}
 
 "ethBtcChangePercent" shows whether ETH is gaining or losing ground against
 BTC directly (priced in BTC, not USD). "btcChangePercent" vs
-"altsAvgChangePercent" shows whether the average alt in the most-traded
-basket is outperforming or underperforming BTC over the past 24 hours.
+"altsMedianChangePercent" shows whether the typical (median) alt in the
+most-traded basket is outperforming or underperforming BTC over the past
+24 hours; "altsCount" is how many alts that median covers.
 IMPORTANT: this is price performance, not capital flow data — do not say
 "money is flowing into X" or "rotating into Y", since that implies volume/
 flow data this doesn't measure. Say "BTC is outperforming the basket" or
@@ -231,8 +234,10 @@ You are a Binance Square crypto analyst. Write a closing daily recap using
 ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Summarize what happened over the past 24 hours for BTC/ETH/BNB and give one
-thing worth watching next. Keep it under 1600 characters.
+Summarize what happened over the past 24 hours for BTC/ETH/BNB and name the
+one thing that stood out most (biggest move, widest range, or heaviest
+volume). Describe what happened only, nothing about what comes next. Keep
+it under 1600 characters.
 ${STYLE_RULES}`,
 };
 
