@@ -91,6 +91,12 @@ pipeline (see "Not included" for why). Theme selection is uniform random
 safe data source, so each gets an equal chance per run, minus whichever
 were used in the last 4 posts (see "How it works" above).
 
+Time of day matters for two themes (WIB, UTC+7): *Morning Market Brief* is only
+eligible 05:00-12:00 and *Daily Recap* only 18:00-03:00 (`THEME_HOURS_WIB` in
+`generate.mjs`). With the 6-hourly cron that means the 07:17 slot can pick the
+morning brief, the 19:17 and 01:17 slots can pick the recap, and 13:17 picks
+neither. All other themes can run at any time.
+
 The basket behind themes 2-5 is dynamic, not a hardcoded list. Every run
 fetches all USDT pairs, drops stablecoin pairs and ranks the rest by 24h
 quote volume. Stablecoins are caught two ways: a name list (USDC, USD1,
@@ -265,7 +271,6 @@ Deliberately left as-is for a one-post-a-day bot, but worth knowing:
 - If the publish call succeeds but updating its history entry fails, the
   entry stays `pending` (still protects against duplicates) and the run logs
   an error; it does not fail the run.
-- Morning/recap themes are chosen at random, not tied to the time of day.
 - No failure alerting; a failed run is only visible in the Actions tab.
 
 ## Not included / out of scope
