@@ -10,6 +10,8 @@
 // runners included — they run on US Azure datacenters). data-api.binance.vision
 // is Binance's public read-only market-data mirror with the same response
 // shape and no geo-restriction.
+import { fetchWithTimeout } from "../http.mjs";
+
 const BASE_URL = "https://data-api.binance.vision";
 const SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT"];
 
@@ -47,7 +49,7 @@ function looksPegged(t) {
 }
 
 async function fetchTicker24hr(symbol) {
-  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
+  const res = await fetchWithTimeout(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
   if (!res.ok) {
     throw new Error(`Binance ticker fetch failed for ${symbol}: ${res.status}`);
   }
@@ -58,21 +60,24 @@ async function fetchTicker24hr(symbol) {
 // to know who's "top" at anything; there's no endpoint that returns
 // pre-ranked results, so we fetch everything then sort/filter ourselves.
 async function fetchAllTickers() {
-  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr`);
+  const res = await fetchWithTimeout(`${BASE_URL}/api/v3/ticker/24hr`);
   if (!res.ok) {
     throw new Error(`Binance all-tickers fetch failed: ${res.status}`);
   }
-  return res.json();
+  const all = await res.json();
+  if (!Array.isArray(all)) throw new Error("Binance all-tickers: unexpected response shape");
+  return all;
 }
 
 async function fetchKlines(symbol, interval = "1d", limit = 8) {
-  const res = await fetch(
+  const res = await fetchWithTimeout(
     `${BASE_URL}/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`
   );
   if (!res.ok) {
     throw new Error(`Binance klines fetch failed for ${symbol}: ${res.status}`);
   }
   const raw = await res.json();
+  if (!Array.isArray(raw)) throw new Error(`Binance klines for ${symbol}: unexpected response shape`);
   // Each row: [openTime, open, high, low, close, volume, closeTime, ...]
   return raw.map((k) => ({
     openTime: k[0],
@@ -93,6 +98,15 @@ async function fetchKlines(symbol, interval = "1d", limit = 8) {
 // LLM derive one from a raw pair symbol.
 function toCashtag(symbol) {
   return `$${symbol.replace(/USDT$/, "")}`;
+}
+
+// Median is robust to a single outlier (one +89% alt would drag a mean to
+// +18% and make "the typical alt" a lie).
+function median(numbers) {
+  const v = numbers.filter(Number.isFinite).sort((a, b) => a - b);
+  if (v.length === 0) return NaN;
+  const mid = Math.floor(v.length / 2);
+  return v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
 }
 
 function average(numbers) {
@@ -185,13 +199,23 @@ export async function getLeadersLaggards({ basketSize = 20, topN = 3 } = {}) {
  * other (e.g. computing "today so far" from an intraday kline query
  * instead of the rolling ticker) — not done here to keep this simple.
  */
+// A token needs this many full past days for its "usual range" to mean anything
+// (a listing from 2 days ago has no usual range).
+const MIN_HISTORY_DAYS = 5;
+// The prompts call 1.0-1.3 "basically normal" and 0.8-1.0 "basically normal",
+// so a theme built on them would be about nothing. Only genuine anomalies qualify.
+export const BREAKOUT_MIN_RATIO = 1.3;
+export const QUIET_MAX_RATIO = 0.8;
+
 async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
   const basket = await getDynamicBasket(basketSize);
 
-  const results = await Promise.all(
+  // allSettled: one pair's failing klines request shouldn't sink the theme.
+  const settled = await Promise.allSettled(
     basket.map(async (t) => {
       const klines = await fetchKlines(t.symbol, "1d", historyDays + 1);
       const pastDays = klines.slice(0, -1); // exclude today's still-forming candle
+      if (pastDays.length < MIN_HISTORY_DAYS) return null;
       const avgRangePct = average(pastDays.map((k) => ((k.high - k.low) / k.close) * 100));
       const last24hRangePct = ((t.highPrice - t.lowPrice) / t.lastPrice) * 100;
 
@@ -207,19 +231,28 @@ async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
     })
   );
 
-  return results.filter((r) => Number.isFinite(r.ratio));
+  return settled
+    .filter((r) => r.status === "fulfilled" && r.value)
+    .map((r) => r.value)
+    .filter((r) => Number.isFinite(r.ratio) && r.avgRangePct > 0);
 }
 
 /** Theme 3 — Breakout Watch: today's range is unusually WIDE vs normal. */
 export async function getBreakoutWatch({ basketSize = 10, historyDays = 7, topN = 3 } = {}) {
   const anomalies = await getRangeAnomalies({ basketSize, historyDays });
-  return anomalies.sort((a, b) => b.ratio - a.ratio).slice(0, topN);
+  return anomalies
+    .filter((a) => a.ratio >= BREAKOUT_MIN_RATIO)
+    .sort((a, b) => b.ratio - a.ratio)
+    .slice(0, topN);
 }
 
 /** Theme 4 — The Quiet Ones: today's range is unusually NARROW vs normal. */
 export async function getQuietMovers({ basketSize = 10, historyDays = 7, topN = 3 } = {}) {
   const anomalies = await getRangeAnomalies({ basketSize, historyDays });
-  return anomalies.sort((a, b) => a.ratio - b.ratio).slice(0, topN);
+  return anomalies
+    .filter((a) => a.ratio <= QUIET_MAX_RATIO)
+    .sort((a, b) => a.ratio - b.ratio)
+    .slice(0, topN);
 }
 
 /**
@@ -242,8 +275,8 @@ export async function getRelativeStrength({ basketSize = 20 } = {}) {
     ethBtcPrice: Number(ethBtc.lastPrice),
     ethBtcChangePercent: Number(ethBtc.priceChangePercent),
     btcChangePercent: btc?.priceChangePercent ?? null,
-    altsAvgChangePercent: average(alts.map((t) => t.priceChangePercent)),
-    basketSize: basket.length,
+    altsMedianChangePercent: median(alts.map((t) => t.priceChangePercent)),
+    altsCount: alts.length,
   };
 }
 

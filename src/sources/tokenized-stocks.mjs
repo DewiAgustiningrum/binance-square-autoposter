@@ -16,6 +16,8 @@
 // 24/7 alongside crypto, including outside normal market hours" — which is
 // arguably the more interesting story anyway.
 
+import { fetchWithTimeout } from "../http.mjs";
+
 const BASE_URL = "https://data-api.binance.vision";
 
 // Known bStocks USDT pairs as of the product's rollout. This list is NOT
@@ -36,28 +38,50 @@ const BSTOCKS = {
 const BSTOCK_SYMBOLS = Object.keys(BSTOCKS);
 
 async function fetchTicker24hr(symbol) {
-  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
+  const res = await fetchWithTimeout(`${BASE_URL}/api/v3/ticker/24hr?symbol=${symbol}`);
   if (!res.ok) {
     throw new Error(`bStock ticker fetch failed for ${symbol}: ${res.status}`);
   }
   return res.json();
 }
 
+// The prompt asks for 2-3 tokens; fewer than this and the LLM has to pad the
+// post, which is exactly when it starts inventing data.
+const MIN_TOKENS = 2;
+
+// Fisher-Yates. (sort(() => Math.random() - 0.5) is biased: it favours
+// the early positions, so some tickers were picked far more than others.)
+function shuffle(items) {
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /**
  * Fetch live data for a handful of bStocks. Picks a random subset each run
- * (rather than always the same ones) so the theme doesn't always talk
- * about the same 2-3 tickers. Symbols that fail to fetch (delisted,
- * renamed, typo in BSTOCK_SYMBOLS) are silently skipped, not fatal.
+ * (rather than always the same ones). A symbol that fails to fetch
+ * (delisted, renamed, transient error) is replaced by the next candidate
+ * instead of silently shrinking the dataset. If fewer than MIN_TOKENS can be
+ * fetched, this throws so the run can retry with another theme.
  */
 export async function getTokenizedStocksSnapshot({ count = 3 } = {}) {
-  const shuffled = [...BSTOCK_SYMBOLS].sort(() => Math.random() - 0.5);
-  const picks = shuffled.slice(0, count);
+  const queue = shuffle(BSTOCK_SYMBOLS);
+  const fetched = [];
 
-  const results = await Promise.allSettled(picks.map(fetchTicker24hr));
+  while (fetched.length < count && queue.length > 0) {
+    const batch = queue.splice(0, count - fetched.length);
+    const results = await Promise.allSettled(batch.map(fetchTicker24hr));
+    for (const r of results) if (r.status === "fulfilled") fetched.push(r.value);
+  }
 
-  return results
-    .filter((r) => r.status === "fulfilled")
-    .map((r) => r.value)
+  if (fetched.length < MIN_TOKENS) {
+    throw new Error(`bStocks: only ${fetched.length} of ${MIN_TOKENS} required tickers could be fetched`);
+  }
+
+  return fetched
     .map((t) => ({
       // Exact tradable ticker as a ready-made cashtag (e.g. "$NVDAB").
       // Without this the LLM derives "$NVDA" from the symbol, which isn't

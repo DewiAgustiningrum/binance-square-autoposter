@@ -3,7 +3,7 @@ name: Binance Square Auto Post
 on:
   workflow_dispatch: {} # manual trigger button in the Actions tab
   schedule:
-    - cron: "0 */6 * * *" # every 6h: 00:00/06:00/12:00/18:00 UTC = 07:00/13:00/19:00/01:00 WIB
+    - cron: "17 */6 * * *" # every 6h at :17 (00:17/06:17/12:17/18:17 UTC = 07:17/13:17/19:17/01:17 WIB); off the :00 peak, when GitHub delays or drops scheduled runs
 
 permissions:
   contents: write # needed to commit data/posts.json back to the repo
@@ -22,12 +22,13 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
+    timeout-minutes: 10 # a hung request must not hold the runner for the 6h default
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
 
@@ -47,7 +48,38 @@ jobs:
           if [ -f data/posts.json ]; then
             git add data/posts.json
             git diff --staged --quiet || git commit -m "chore: update post history [skip ci]"
-            git push
+            # A human push during the run would make a plain push non-fast-forward
+            # AFTER the post is already live, so rebase and retry.
+            for attempt in 1 2 3; do
+              if git pull --rebase origin "$GITHUB_REF_NAME" && git push; then
+                exit 0
+              fi
+              echo "push attempt $attempt failed, retrying..."
+              sleep $((attempt * 5))
+            done
+            echo "::error::Could not push data/posts.json after 3 attempts"
+            exit 1
           else
             echo "data/posts.json doesn't exist yet (no successful publish this run) — nothing to commit."
           fi
+
+      # Optional failure alert. Does nothing unless BOTH Telegram secrets are
+      # set, so forks and clones without them are unaffected. The message holds
+      # only the repo name and a link to the run: no secrets, no post content.
+      - name: Notify on failure (Telegram)
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "Telegram secrets not set, skipping alert."
+            exit 0
+          fi
+          curl -sS --max-time 20 -X POST \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Square autoposter FAILED in ${REPO}. Run: ${RUN_URL}" \
+            > /dev/null || echo "Alert could not be sent (ignored)."

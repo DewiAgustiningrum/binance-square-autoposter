@@ -11,6 +11,7 @@ import {
 } from "./sources/market.mjs";
 import { getTokenizedStocksSnapshot } from "./sources/tokenized-stocks.mjs";
 import { getRecentThemes } from "./validate.mjs";
+import { fetchWithTimeout, TIMEOUTS } from "./http.mjs";
 
 // NOTE: trading-signal, crypto-market-rank, and meme-rush skills are
 // intentionally NOT imported here anymore. They surface tokens from
@@ -23,9 +24,10 @@ import { getRecentThemes } from "./validate.mjs";
 // for manual research — just not wired into the auto-post pipeline.
 
 // ---------------------------------------------------------------------------
-// Theme registry — uniform random pick, no state file needed. All 7 themes
-// now pull from the same safe, Binance-listed data source, so there's no
-// reason to favor some over others; each has an equal 1/7 chance per run.
+// Theme registry — uniform random pick among themes that fit the time of day
+// (see THEME_HOURS_WIB) and weren't used in the last few posts. All 7 themes
+// pull from the same safe, Binance-listed data source, so there's no reason
+// to favor some over others.
 // ---------------------------------------------------------------------------
 const THEMES = [
   { id: "morning-brief", fetch: () => getMarketSnapshot(), label: "Morning Market Brief" },
@@ -48,10 +50,42 @@ const RECENT_THEMES_TO_AVOID = 4;
  * getRecentThemes just returns fewer entries to avoid — never an error,
  * and never fewer choices than "no history at all" would give.
  */
+// Themes whose wording only makes sense at certain times. Hours are WIB
+// (UTC+7), start inclusive / end exclusive; a window may wrap past midnight.
+// With the 6-hourly cron (07:17, 13:17, 19:17, 01:17 WIB) the morning brief
+// can only go out in the morning slot and the recap only in the evening/night
+// slots, and the windows are wide enough to survive GitHub's start delays.
+// Themes not listed here can run at any time.
+const THEME_HOURS_WIB = {
+  "morning-brief": { from: 5, to: 12 },
+  "daily-recap": { from: 18, to: 3 },
+};
+
+/** Does `themeId` make sense at time `now`? */
+export function themeFitsTime(themeId, now = new Date()) {
+  const window = THEME_HOURS_WIB[themeId];
+  if (!window) return true;
+  const hour = (now.getUTCHours() + 7) % 24;
+  return window.from < window.to
+    ? hour >= window.from && hour < window.to
+    : hour >= window.from || hour < window.to;
+}
+
+/**
+ * Pure selection: time-appropriate themes, minus the recently used ones.
+ * If that leaves nothing, repetition is allowed before a time-inappropriate
+ * theme is.
+ */
+export function selectTheme(recent, now = new Date(), random = Math.random) {
+  const fitting = THEMES.filter((t) => themeFitsTime(t.id, now));
+  const fresh = fitting.filter((t) => !recent.includes(t.id));
+  const pool = fresh.length > 0 ? fresh : fitting;
+  return pool[Math.floor(random() * pool.length)];
+}
+
 async function pickTheme() {
   const recent = await getRecentThemes(RECENT_THEMES_TO_AVOID);
-  const pool = THEMES.filter((t) => !recent.includes(t.id));
-  return pool[Math.floor(Math.random() * pool.length)];
+  return selectTheme(recent);
 }
 
 // ---------------------------------------------------------------------------
@@ -132,8 +166,10 @@ You are a Binance Square crypto analyst. Write a short morning market brief
 using ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Cover price action for BTC, ETH, BNB over the past 24 hours — what changed,
-what's worth watching next. Keep it under 1600 characters.
+Cover price action for BTC, ETH, BNB over the past 24 hours: what changed
+and what stood out (biggest move, widest range, heaviest volume). Describe
+what happened only, nothing about what comes next. Keep it under 1600
+characters.
 ${STYLE_RULES}`,
 
   "leaders-laggards": (data) => `
@@ -196,8 +232,9 @@ ${JSON.stringify(data, null, 2)}
 
 "ethBtcChangePercent" shows whether ETH is gaining or losing ground against
 BTC directly (priced in BTC, not USD). "btcChangePercent" vs
-"altsAvgChangePercent" shows whether the average alt in the most-traded
-basket is outperforming or underperforming BTC over the past 24 hours.
+"altsMedianChangePercent" shows whether the typical (median) alt in the
+most-traded basket is outperforming or underperforming BTC over the past
+24 hours; "altsCount" is how many alts that median covers.
 IMPORTANT: this is price performance, not capital flow data — do not say
 "money is flowing into X" or "rotating into Y", since that implies volume/
 flow data this doesn't measure. Say "BTC is outperforming the basket" or
@@ -230,8 +267,10 @@ You are a Binance Square crypto analyst. Write a closing daily recap using
 ONLY this data:
 ${JSON.stringify(data, null, 2)}
 
-Summarize what happened over the past 24 hours for BTC/ETH/BNB and give one
-thing worth watching next. Keep it under 1600 characters.
+Summarize what happened over the past 24 hours for BTC/ETH/BNB and name the
+one thing that stood out most (biggest move, widest range, or heaviest
+volume). Describe what happened only, nothing about what comes next. Keep
+it under 1600 characters.
 ${STYLE_RULES}`,
 };
 
@@ -239,7 +278,7 @@ ${STYLE_RULES}`,
 // LLM calls — Groq primary, Gemini fallback.
 // ---------------------------------------------------------------------------
 async function callGroq(prompt) {
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const res = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -258,7 +297,7 @@ async function callGroq(prompt) {
       max_tokens: 4000,
       temperature: 0.9,
     }),
-  });
+  }, TIMEOUTS.llm);
 
   if (!res.ok) throw new Error(`Groq error ${res.status}: ${await res.text()}`);
   const json = await res.json();
@@ -284,16 +323,18 @@ async function callGroq(prompt) {
 }
 
 async function callGemini(prompt) {
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+  // API key goes in a header, not the URL, so it can never end up in logs.
+  const res = await fetchWithTimeout(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: { maxOutputTokens: 2400, temperature: 0.9 },
       }),
-    }
+    },
+    TIMEOUTS.llm
   );
 
   if (!res.ok) throw new Error(`Gemini error ${res.status}: ${await res.text()}`);
@@ -362,6 +403,9 @@ function sanitizeText(text) {
 export async function generatePost() {
   const theme = await pickTheme();
   const data = await theme.fetch();
+  if (Array.isArray(data) && data.length === 0) {
+    throw new Error(`No source data for theme "${theme.id}"`);
+  }
   const prompt = THEME_PROMPTS[theme.id](data);
   const text = sanitizeText(await callLLM(prompt));
 
