@@ -47,7 +47,7 @@ test("digits inside tickers are not read as numbers", () => {
 });
 
 test("relative-strength allows $BTC/$ETH although data has no cashtag fields", () => {
-  const data = { ethBtcPrice: 0.032, ethBtcChangePercent: -1.24, btcChangePercent: 1.96, altsAvgChangePercent: -1.61, basketSize: 20 };
+  const data = { ethBtcPrice: 0.032, ethBtcChangePercent: -1.24, btcChangePercent: 1.96, altsMedianChangePercent: -1.61, altsCount: 19 };
   const ok = checkGrounding("$ETH is down 1.24% against $BTC, which gained 1.96%. Alts slipped 1.61%.", "relative-strength", data);
   assert.equal(ok.ok, true);
   assert.equal(checkGrounding("$SOL is down 1.24%.", "relative-strength", data).ok, false);
