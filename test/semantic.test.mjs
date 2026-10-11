@@ -222,3 +222,23 @@ test("regime: 'most alts were up' and the bare range number are accepted; a real
   const split = { ...MIXED, breadthUpPct: 53, breadthDownPct: 47 };
   assert.equal(checkSemantics("About half the alts were up, no clear majority either way.", "market-regime", split).ok, true);
 });
+
+import { sanitizeText } from "../src/generate.mjs";
+
+// Published 11 Oct run (Relative Strength): a tacked-on "Median alt change: -0.386%" line repeating a figure.
+test("sanitizeText: an en dash / minus sign before a number becomes a plain hyphen; ranges still work", () => {
+  assert.equal(sanitizeText("Median alt change: \u20130.386% across 19 coins."), "Median alt change: -0.386% across 19 coins.");
+  assert.equal(sanitizeText("down \u22122.5% today"), "down -2.5% today");
+  assert.equal(sanitizeText("range $768.34\u2013$771.52"), "range $768.34 to $771.52");
+});
+
+test("fatigue: rejects a 'Label: value' data-sheet line and a figure written twice (real 11 Oct post)", () => {
+  const post = "$BTC up 0.364% while the median alt slipped 0.386%. BTC is pulling ahead.\n\nMedian alt change: -0.386% across 19 coins.";
+  const r = checkFatigue(post);
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /data-sheet line/);
+  assert.equal(checkFatigue("$BTC up 0.364% while the median alt slipped 0.386%. BTC is pulling ahead.\n\nThat is 19 coins, ETH slipped 0.033% against BTC.").ok, true);
+  const twice = checkFatigue("$BTC held $83,076 today. It sat near $83,076 all day, a very tight session.");
+  assert.equal(twice.ok, false);
+  assert.match(twice.reason, /Repeats the figure 83076/);
+});
