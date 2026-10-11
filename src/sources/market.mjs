@@ -235,7 +235,10 @@ export function rollingRanges(hourly, days) {
 }
 
 async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
-  const basket = await getDynamicBasket(basketSize);
+  // Thin-volume extreme movers are dropped here too (not only in Leaders &
+  // Laggards): otherwise Breakout Watch surfaces them and the post is rejected
+  // by the extreme-mover guard, wasting an attempt.
+  const basket = (await getDynamicBasket(basketSize)).filter((t) => !isThinExtreme(t));
 
   // allSettled: one pair's failing klines request shouldn't sink the theme.
   const settled = await Promise.allSettled(
