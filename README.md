@@ -178,6 +178,7 @@ Optional **variables** (Settings → Secrets and variables → Actions →
 | Variable | Effect |
 |---|---|
 | `NEWS_CONTEXT` | `on` lets Leaders & Laggards, Morning Brief and Daily Recap mention one recent headline and enables theme 9. Off by default. Posts name the outlet and never contain links. |
+| `NEWS_ALIASES` | Names headlines use for a ticker, so headline matching works for mid-cap tokens: `STRK=Starknet,MAGIC=Treasure/Magic Eden` (several names separated by `/`). |
 | `BSTOCKS_EXTRA` | Extra bStocks beyond the built-in list, e.g. `AAPLBUSDT=Apple,MSFTBUSDT=Microsoft` (name optional). |
 
 Secrets never carry over to forks or template copies, so anyone reusing
