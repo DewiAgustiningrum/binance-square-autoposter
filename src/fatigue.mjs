@@ -15,6 +15,19 @@ const STOCK_CLOSINGS = [
   /24\/7\s+grind/i,
 ];
 
+// "Median alt change: -0.386% across 19 coins." tacked on as a data-sheet line.
+const LABEL_VALUE_LINE = /^[A-Z][A-Za-z ]{2,30}:\s*-?\$?\d/m;
+
+/** A figure with a decimal part or 4+ digits that is written twice in one post. */
+function repeatedFigure(text) {
+  const seen = new Map();
+  for (const m of text.matchAll(/\d[\d,]*\.\d+|\d{1,3}(?:,\d{3})+|\d{4,}/g)) {
+    const key = m[0].replace(/,/g, "");
+    seen.set(key, (seen.get(key) ?? 0) + 1);
+  }
+  return [...seen].find(([, n]) => n >= 2)?.[0] ?? null;
+}
+
 const CLOSING_SIMILARITY = 0.5;
 const CLOSINGS_COMPARED = 10;
 
@@ -53,6 +66,12 @@ export function checkFatigue(text, history = []) {
     const m = text.match(re);
     if (m) return { ok: false, reason: `Stock closing phrase ("${m[0]}") overused in past posts` };
   }
+
+  if (LABEL_VALUE_LINE.test(text)) {
+    return { ok: false, reason: 'Has a data-sheet line ("Label: value"); write it as a sentence' };
+  }
+  const dup = repeatedFigure(text);
+  if (dup) return { ok: false, reason: `Repeats the figure ${dup}; say each number once` };
 
   const mine = wordSet(lastSentence(text));
   for (const past of recentClosings(history)) {
