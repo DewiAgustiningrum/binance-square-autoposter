@@ -437,7 +437,7 @@ async function callLLM(prompt) {
 // got skipped. Prompt instructions are a request, this is the guarantee.
 // validate.mjs still rejects em dashes as a last-resort safety net, but
 // after this step it should essentially never fire.
-function sanitizeText(text) {
+export function sanitizeText(text) {
   return text
     // typographic characters LLMs like to emit -> plain ASCII
     .replace(/[\u2010\u2011]/g, "-") // unicode / non-breaking hyphens
@@ -447,6 +447,8 @@ function sanitizeText(text) {
     // ("average – ratio"); the model switched to it once em dashes got banned
     .replace(/(\d)\s*\u2013\s*(\$?\d)/g, "$1 to $2") // numeric range
     .replace(/\s+\u2013\s+/g, ", ")
+    // an en dash / minus sign used as a negative sign ("-0.386%") -> plain hyphen
+    .replace(/[\u2013\u2212](?=\$?\d)/g, "-")
     // em dash between two numbers is a range: "$768.34—$771.52" -> "to"
     .replace(/(\d)\s*\u2014\s*(\$?\d)/g, "$1 to $2")
     // em dash opening a line is a tacked-on aside: drop the dash itself
