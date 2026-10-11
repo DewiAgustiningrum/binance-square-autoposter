@@ -1,5 +1,29 @@
 [
   {
+    "id": "a06550c9-6726-44e0-acd1-5d41661da407",
+    "date": "2026-10-11T05:45:50.854Z",
+    "theme": "relative-strength",
+    "text": "$BTC up 0.364% in the last 24 h, while the median of the 19 most-traded alts slipped 0.386%. BTC's pulling ahead of the typical alt.\n\n$ETH's price in BTC fell 0.033%, meaning it's losing a tiny bit of ground against $BTC.\n\nOverall, the alt basket is underperforming both BTC and ETH's relative strength.\n\nMedian alt change: –0.386% across 19 coins.",
+    "status": "published",
+    "postId": 376038814705955,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376038814705955?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "ba1e39e4a8c0fc9c",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.03017,
+        "ethBtcChangePercent": -0.033,
+        "btcChangePercent": 0.364,
+        "altsMedianChangePercent": -0.386,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-11T05:45:50.235Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "61e12340-bf5c-473e-a662-b9affcdf3655",
     "date": "2026-10-10T21:43:07.808Z",
     "theme": "leaders-laggards",
