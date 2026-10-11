@@ -131,3 +131,20 @@ test("end to end: attributed headline passes; the same headline as a cause or wi
   assert.equal(r.valid, false);
   assert.match(r.reason, /link or web address/);
 });
+
+import { parseAliases } from "../src/sources/news.mjs";
+
+test("parseAliases: ticker=Name pairs, several names with '/', junk ignored", () => {
+  const r = parseAliases("strk=Starknet, $MAGIC=Treasure/Magic Eden, =x, BAD/../=Evil, AB=ok, LUMIA=");
+  assert.deepEqual(r, { STRK: ["Starknet"], MAGIC: ["Treasure", "Magic Eden"] });
+  assert.deepEqual(parseAliases(undefined), {});
+});
+
+test("NEWS_ALIASES lets a headline that only says the project name match its ticker", () => {
+  const hs = [{ source: "The Block", title: "Starknet unveils fee changes ahead of its next network upgrade", ageHours: 3 }];
+  assert.deepEqual(Object.keys(matchHeadlines(hs, ["$STRK"])), []);
+  process.env.NEWS_ALIASES = "STRK=Starknet";
+  try {
+    assert.deepEqual(Object.keys(matchHeadlines(hs, ["$STRK"])), ["$STRK"]);
+  } finally { delete process.env.NEWS_ALIASES; }
+});
