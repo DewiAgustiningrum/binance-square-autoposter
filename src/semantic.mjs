@@ -49,12 +49,18 @@ const WRONG_VENUE = /\btrad(?:e|es|ed|ing)\b[^.]{0,40}\bon\s+binance\s+square\b/
 const TIMING_CLAIMS = /\b(?:through(?:out)?\s+the\s+night|overnight|after[-\s]?hours|off[-\s]?hours|outside\s+(?:of\s+)?(?:regular\s+|normal\s+|nyse\s+|market\s+|trading\s+)+hours|after\s+(?:the\s+)?(?:regular\s+)?market\s+close|while\s+(?:regular\s+|us\s+|wall\s+street\s+)?markets?\s+(?:were|are)\s+(?:asleep|closed))\b/i;
 
 const FRACTIONS = [
-  [/\ba\s+third\b/i, 1 / 3], [/\btwo\s+thirds\b/i, 2 / 3], [/\ba\s+quarter\b/i, 0.25],
-  [/\bhalf\b/i, 0.5], [/\ba\s+fifth\b/i, 0.2], [/\ba\s+tenth\b/i, 0.1],
+  [/\b(?:a|one)[-\s]+third\b/i, 1 / 3], [/\btwo[-\s]+thirds\b/i, 2 / 3], [/\bthree[-\s]+quarters\b/i, 0.75],
+  [/\b(?:a|one)[-\s]+quarter\b/i, 0.25], [/\bhalf\b/i, 0.5], [/\b(?:a|one)[-\s]+fifth\b/i, 0.2], [/\b(?:a|one)[-\s]+tenth\b/i, 0.1],
 ];
-const FRACTION_WORD = "(a\\s+third|two\\s+thirds|a\\s+quarter|half|a\\s+fifth|a\\s+tenth)";
+const FRACTION_WORD = "((?:a|one)[-\\s]+third|two[-\\s]+thirds|three[-\\s]+quarters|(?:a|one)[-\\s]+quarter|half|(?:a|one)[-\\s]+fifth|(?:a|one)[-\\s]+tenth)";
 const TIGHTER = new RegExp(`${FRACTION_WORD}\\s+(tighter|narrower|smaller|lower|wider|bigger|larger)\\b`, "i");
 const OF_USUAL = new RegExp(`${FRACTION_WORD}\\s+of\\s+(?:its\\s+|the\\s+)?(?:usual|typical|normal|average)`, "i");
+// "70% tighter", "40% wider": a percentage claim, checked against the real ratio
+const PCT_TIGHTER = /(\d+(?:\.\d+)?)\s?%\s+(tighter|narrower|smaller|lower|wider|bigger|larger)\b/i;
+const PCT_TOL = 6; // percentage points; the model rounds (69.8 -> 70)
+// "five times its usual range", "2.7 x": a multiple of the usual range
+const WORD_NUM = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+const TIMES = /\b(\d+(?:\.\d+)?|two|three|four|five|six|seven|eight|nine|ten)\s?(?:\u00d7|x|times)(?![a-z])|\b(twice)\b/i;
 const RATIO_TOL = 0.07;
 
 function fractionOf(str) {
@@ -124,6 +130,23 @@ function checkRatio(text, facts) {
       const actual = wider ? ratio - 1 : 1 - ratio;
       if (claimed !== null && Math.abs(actual - claimed) > RATIO_TOL) {
         problems.push(`${subject}: "${rel[0]}" but the real difference is ${(actual * 100).toFixed(0)}%`);
+      }
+    }
+    const pct = sentence.match(PCT_TIGHTER);
+    if (pct) {
+      const claimed = Number(pct[1]);
+      const wider = /wider|bigger|larger/i.test(pct[2]);
+      const actual = (wider ? ratio - 1 : 1 - ratio) * 100;
+      if (Math.abs(actual - claimed) > PCT_TOL) {
+        problems.push(`${subject}: "${pct[0]}" but the real difference is ${actual.toFixed(0)}%`);
+      }
+    }
+    const times = sentence.match(TIMES);
+    if (times && ratio !== undefined) {
+      const raw = times[1] ?? times[2];
+      const claimed = /^twice$/i.test(raw) ? 2 : WORD_NUM[raw.toLowerCase()] ?? Number(raw);
+      if (Number.isFinite(claimed) && claimed > 1 && Math.abs(ratio - claimed) > Math.max(0.2, 0.1 * ratio)) {
+        problems.push(`${subject}: "${times[0]}" but today's range is ${ratio.toFixed(2)}x its usual`);
       }
     }
     const of = sentence.match(OF_USUAL);
