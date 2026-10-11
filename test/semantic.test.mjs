@@ -242,3 +242,31 @@ test("fatigue: rejects a 'Label: value' data-sheet line and a figure written twi
   assert.equal(twice.ok, false);
   assert.match(twice.reason, /Repeats the figure 83076/);
 });
+
+// Published 11 Oct run: "70% narrower" and "three-quarters tighter" were never checked against the data.
+const ZEC = [{ cashtag: "$ZEC", lastPrice: 1232, priceChangePercent: -0.4, last24hRangePct: 2.25, avgRangePct: 7.5, ratio: 0.3 }];
+
+test("ratio: percentage claims ('70% tighter') are checked, with rounding tolerance", () => {
+  assert.equal(checkSemantics("$ZEC's range is roughly 70% tighter than normal.", "quiet-movers", ZEC).ok, true);
+  const r = checkSemantics("$ZEC's range is roughly 40% tighter than normal.", "quiet-movers", ZEC);
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /real difference is 70%/);
+  assert.equal(checkSemantics("$ZEC's range is 70% wider than normal.", "quiet-movers", ZEC).ok, false);
+});
+
+test("ratio: 'three-quarters tighter', 'two-thirds tighter' (hyphenated) are parsed", () => {
+  assert.equal(checkSemantics("$ZEC's range is three-quarters tighter than usual.", "quiet-movers", ZEC).ok, true); // 75 vs 70
+  assert.equal(checkSemantics("$ZEC's range is two-thirds tighter than usual.", "quiet-movers", ZEC).ok, true); // 67 vs 70
+  assert.equal(checkSemantics("$ZEC's range is half as tight, about a third tighter than usual.", "quiet-movers", ZEC).ok, false); // 33 vs 70
+});
+
+test("ratio: 'N times' / 'N ×' multiples are checked against the ratio", () => {
+  const CFX = [{ cashtag: "$CFX", lastPrice: 0.0679, priceChangePercent: 29, last24hRangePct: 29.5, avgRangePct: 5.8, ratio: 5.09 }];
+  assert.equal(checkSemantics("$CFX swung about five times its usual daily range.", "breakout-watch", CFX).ok, true);
+  assert.equal(checkSemantics("$CFX swung 2.7 \u00d7 the normal range.", "breakout-watch", CFX).ok, false);
+  assert.equal(checkSemantics("$CFX swung twice its usual range.", "breakout-watch", CFX).ok, false);
+});
+
+test("ratio facts block tells the model to avoid fractions", () => {
+  assert.match(factsPromptBlock("quiet-movers", ZEC), /do NOT use fractions/);
+});
