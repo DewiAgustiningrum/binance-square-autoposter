@@ -105,13 +105,31 @@ export async function fetchHeadlines({ feeds = NEWS_FEEDS, now = new Date() } = 
     if (r.status === "fulfilled") all.push(...r.value);
     else console.error(`news feed "${feeds[i].name}" skipped: ${r.reason?.message ?? r.reason}`);
   });
-  return dedupe(all.sort((a, b) => a.ageHours - b.ageHours));
+  const fresh = dedupe(all.sort((a, b) => a.ageHours - b.ageHours));
+  const working = settled.filter((r) => r.status === "fulfilled").length;
+  console.log(`news: ${fresh.length} fresh headline(s) from ${working}/${feeds.length} feeds`);
+  return fresh;
 }
 
 // ---- matching headlines to the tokens in today's data ----------------------
 // Plain names are matched only for a few majors, case-sensitively, so that
 // words like "near" or "link" in ordinary prose never count as a token.
 const NAMES = { BTC: ["Bitcoin"], ETH: ["Ethereum"], SOL: ["Solana"], ADA: ["Cardano"], DOGE: ["Dogecoin"], XRP: ["XRP"], BNB: ["BNB"] };
+
+// Headlines usually say "Starknet", not "STRK". Add names without a code change
+// with the NEWS_ALIASES variable, e.g. "STRK=Starknet,MAGIC=Treasure/Magic Eden".
+// Several names for one ticker are separated by "/". Matching stays
+// case-sensitive and whole-word.
+export function parseAliases(raw) {
+  const out = {};
+  for (const part of String(raw ?? "").split(",")) {
+    const [sym, ...rest] = part.split("=");
+    const base = sym?.trim().toUpperCase().replace(/^\$/, "");
+    const names = rest.join("=").split("/").map((n) => n.trim()).filter((n) => n.length >= 3 && n.length <= 40);
+    if (base && /^[A-Z0-9]{2,20}$/.test(base) && names.length > 0) out[base] = names;
+  }
+  return out;
+}
 
 function collectCashtags(data, out = new Set()) {
   if (Array.isArray(data)) data.forEach((d) => collectCashtags(d, out));
@@ -126,7 +144,7 @@ export function matchHeadlines(headlines, cashtags) {
   const byToken = {};
   for (const tagName of cashtags) {
     const base = tagName.replace(/^\$/, "");
-    const words = [base, ...(NAMES[base] ?? [])];
+    const words = [base, ...(NAMES[base] ?? []), ...(parseAliases(process.env.NEWS_ALIASES)[base] ?? [])];
     const res = words
       .filter((w) => w.length >= 3)
       .map((w) => new RegExp(`(?<![A-Za-z0-9])\\$?${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![A-Za-z0-9])`));
@@ -142,7 +160,9 @@ export async function getNewsContext(data, { fetchImpl = fetchHeadlines } = {}) 
     const cashtags = [...collectCashtags(data)];
     if (cashtags.length === 0) return null;
     const byToken = matchHeadlines(await fetchImpl(), cashtags);
-    return Object.keys(byToken).length > 0 ? { byToken } : null;
+    const matched = Object.keys(byToken);
+    console.log(`news: ${matched.length} of ${cashtags.length} token(s) matched a headline${matched.length ? ` (${matched.join(", ")})` : ""}`);
+    return matched.length > 0 ? { byToken } : null;
   } catch (err) {
     console.error(`news context skipped: ${err.message}`);
     return null;
