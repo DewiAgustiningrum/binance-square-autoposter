@@ -132,3 +132,12 @@ test("buildRegime: throws without BTC or with too few alts (generate retries ano
   assert.throws(() => buildRegime([asset("AAAUSDT", 1), asset("BBBUSDT", 1)]), /BTC missing/);
   assert.throws(() => buildRegime([asset("BTCUSDT", 1), asset("AAAUSDT", 1)]), /too few alts/);
 });
+
+test("Breakout Watch drops thin-volume extreme movers at the source (real 11 Oct run: $STRK +55.9%)", async () => {
+  mock({
+    tickers: [tick("STRKUSDT", 46, 5e6, 55.9), tick("CFXUSDT", 30, 90e6, 29), tick("ETHUSDT", 3, 9e9, 0.5)],
+    kl: { STRKUSDT: hourly(7, 17, 46), CFXUSDT: hourly(7, 5.8, 29.5), ETHUSDT: hourly(7, 3, 3) },
+  });
+  const r = await getBreakoutWatch({ basketSize: 10 });
+  assert.deepEqual(r.map((x) => x.cashtag), ["$CFX"]);
+});
