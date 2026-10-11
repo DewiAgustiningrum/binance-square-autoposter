@@ -1,5 +1,51 @@
 [
   {
+    "id": "68157fb5-ba52-43c4-b2f8-e2f80ce80b2e",
+    "date": "2026-10-11T12:49:01.869Z",
+    "theme": "quiet-movers",
+    "text": "$BTC barely budged, trading around $83,130. Its 24-hour swing was only about 0.58%, roughly three-quarters tighter than the week-long average.\n\n$ZEC kept it tight too, hovering near $1,232. The daily range sat at 2.25%, which is about 70% narrower than usual.\n\n$ETH slipped a bit, stuck around $2,505. Its price moved less than 1% all day, making the swing about 68% tighter than the typical week.\n\nAll three pairs showed a much tighter range than normal in the last 24 hours.",
+    "status": "published",
+    "postId": 376142816882537,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376142816882537?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "3d168329444334ec",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 83129.94,
+          "priceChangePercent": 0.372,
+          "last24hRangePct": 0.5781912028325705,
+          "avgRangePct": 2.3230413068471947,
+          "ratio": 0.24889406879177928
+        },
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 1231.95,
+          "priceChangePercent": 0.43,
+          "last24hRangePct": 2.254961646170721,
+          "avgRangePct": 7.335773656993524,
+          "ratio": 0.30739247850442664
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2504.92,
+          "priceChangePercent": 0.337,
+          "last24hRangePct": 0.9373552847995151,
+          "avgRangePct": 2.903803333976924,
+          "ratio": 0.3228026064408962
+        }
+      ],
+      "sourceFetchedAt": "2026-10-11T12:49:01.308Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "a06550c9-6726-44e0-acd1-5d41661da407",
     "date": "2026-10-11T05:45:50.854Z",
     "theme": "relative-strength",
