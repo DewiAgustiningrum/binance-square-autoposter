@@ -16,6 +16,7 @@ Content-correctness release. Grounding already proved that numbers came from the
 - **Theme 8, Market Regime**: classifies the past 24h in code (broad rise/decline/mixed by how many alts moved the same way, and whether BTC or the typical alt did better).
 - **Theme 9, Data vs Narrative**: sets one market-wide headline beside the 24h data, with a supports / contradicts / mixed verdict computed in code. Only takes part when `NEWS_CONTEXT=on`.
 - **Optional headline context** (`src/sources/news.mjs`, `NEWS_CONTEXT=on`, off by default): five RSS feeds, title and outlet name only. Titles that contain links or instruction-like text are dropped. Posts may name the outlet and paraphrase or quote up to 12 words; copying 10+ words, stating a headline as the cause of a move, and links are rejected. Feed failures never block a post.
+- **`NEWS_ALIASES`** (Actions variable): names headlines use for a ticker (`STRK=Starknet`), since headlines rarely write mid-cap tickers. The run log now prints how many headlines were fetched and how many tokens matched.
 - **`BSTOCKS_EXTRA`** (Actions variable): add bStocks without a code change, for example `AAPLBUSDT=Apple,MSFTBUSDT=Microsoft`.
 - **Audit trail in `data/posts.json`**: each entry can carry `meta` with `sourceHash`, `sourceSnapshot` (when under 4,000 characters), `sourceFetchedAt`, `promptVersion`, `validatorVersion`, `provider`, `model` and, when used, `headlines` (outlet and title only).
 - Grounding understands "3.72 million" / "1.4 billion" / "5 thousand" as well as `M`, `B`, `K`.
