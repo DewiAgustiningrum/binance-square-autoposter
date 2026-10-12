@@ -57,3 +57,12 @@ test("if every fitting theme is recent, repeating beats a mistimed theme", () =>
   const t = selectTheme(all, wib(13, 17));
   assert.equal(themeFitsTime(t.id, wib(13, 17)), true);
 });
+
+import { feedbackBlock } from "../src/generate.mjs";
+
+test("feedbackBlock only speaks when the retry lands on the rejected theme", () => {
+  const rej = { theme: "tokenized-stocks", reason: "says assets trade on Binance Square" };
+  assert.match(feedbackBlock(rej, "tokenized-stocks"), /rejected: says assets trade on Binance Square/);
+  assert.equal(feedbackBlock(rej, "daily-recap"), "");
+  assert.equal(feedbackBlock(null, "daily-recap"), "");
+});
