@@ -20,6 +20,7 @@ Content-correctness release. Grounding already proved that numbers came from the
 - **`BSTOCKS_EXTRA`** (Actions variable): add bStocks without a code change, for example `AAPLBUSDT=Apple,MSFTBUSDT=Microsoft`.
 - **Audit trail in `data/posts.json`**: each entry can carry `meta` with `sourceHash`, `sourceSnapshot` (when under 4,000 characters), `sourceFetchedAt`, `promptVersion`, `validatorVersion`, `provider`, `model` and, when used, `headlines` (outlet and title only).
 - Grounding understands "3.72 million" / "1.4 billion" / "5 thousand" as well as `M`, `B`, `K`.
+- A retry avoids the theme whose draft was just rejected in the same run, and if it lands on that theme anyway the prompt includes the rejection reason.
 - Themes with no qualifying data (for example no unusually quiet token today) are skipped immediately, without calling the model or waiting for a retry.
 - Tests: 74 -> 146.
 
@@ -28,7 +29,8 @@ Content-correctness release. Grounding already proved that numbers came from the
 - LLM temperature 0.9 -> 0.5 (Groq and Gemini).
 - Prompts: verified-facts block added; hype words and mood closings are named as banned; the tone example no longer contains reusable phrases; the bStocks prompt no longer pushes "trades outside market hours" (the data cannot show when volume happened); the Morning Brief asks for range as a % of price and volume in USDT.
 - Breakout Watch and The Quiet Ones now compare like with like: hourly candles are cut into consecutive 24h windows counted back from now, and the latest window is compared with the average of the 7 before it. Before, a rolling-24h ticker range was compared with UTC calendar-day candles.
-- Leaders & Laggards no longer includes extreme moves on thin volume.
+- Leaders & Laggards, Breakout Watch and The Quiet Ones no longer include extreme moves on thin volume.
+- bStocks prompt no longer invites "trades 24/7" wording (the model turned it into "on Binance Square" three times in one run); bStock volumes are rounded to whole USDT.
 - Workflow passes `NEWS_CONTEXT` and `BSTOCKS_EXTRA` (both optional Actions variables). `.env.example` lists the Telegram, `BSTOCKS_EXTRA` and `NEWS_CONTEXT` variables.
 
 ### Fixed
