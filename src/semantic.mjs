@@ -223,11 +223,19 @@ function checkRegime(text, facts) {
   return problems;
 }
 
-const SAYS_SUPPORTS = /\b(?:data|numbers|tape|market)\s+(?:backs?|supports?|confirms?)\b|\bbacks?\s+(?:it\s+)?up\b|\b(?:supports?|confirms?)\s+the\s+(?:headline|story|narrative)\b/i;
-const SAYS_CONTRADICTS = /\bcontradicts?\b|\b(?:doesn'?t|does\s+not|didn'?t)\s+(?:back|support|match|confirm)\b|\bat\s+odds\b|\bruns?\s+against\b|\bpush(?:es)?\s+back\b|\bnot\s+what\s+the\s+data\b/i;
+const SAYS_SUPPORTS = /\b(?:data|numbers|tape|market)\s+(?:backs?|supports?|confirms?)\b|\bbacks?\s+(?:it\s+)?up\b|\b(?:supports?|confirms?)\s+the\s+(?:headline|story|narrative)\b|\b(?:matches?|consistent\s+with|in\s+line\s+with|lines?\s+up\s+with)\s+the\s+(?:headline|story|narrative)\b/i;
+const SAYS_CONTRADICTS = /\bcontradicts?\b|\b(?:doesn'?t|does\s+not|didn'?t)\s+(?:back|support|match|confirm)\b|\bat\s+odds\b|\bruns?\s+against\b|\bpush(?:es)?\s+back\b|\bnot\s+what\s+the\s+data\b|\bopposite\b|\bother\s+way\b|\bagainst\s+the\s+(?:headline|story|narrative)\b/i;
+
+const SAYS_PARTLY = /\b(?:partly|partially|only\s+in\s+part|only\s+partly|mixed)\b/i;
 
 function checkNarrative(text, facts) {
   const problems = checkRegime(text, facts);
+  if (!SAYS_SUPPORTS.test(text) && !SAYS_CONTRADICTS.test(text) && !SAYS_PARTLY.test(text)) {
+    problems.push('does not state the verdict in plain words ("supports", "contradicts" or "only partly matches")');
+  }
+  if (SAYS_PARTLY.test(text) && facts.agreement !== "mixed" && !SAYS_SUPPORTS.test(text) && !SAYS_CONTRADICTS.test(text)) {
+    problems.push(`calls it only a partial match, but the verdict is ${facts.agreement}`);
+  }
   if (SAYS_SUPPORTS.test(text) && facts.agreement !== "supports") problems.push(`says the data backs the headline, but the verdict is ${facts.agreement}`);
   if (SAYS_CONTRADICTS.test(text) && facts.agreement !== "contradicts") problems.push(`says the data contradicts the headline, but the verdict is ${facts.agreement}`);
   return problems;
