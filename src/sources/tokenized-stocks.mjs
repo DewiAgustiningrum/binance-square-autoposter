@@ -117,7 +117,7 @@ export async function getTokenizedStocksSnapshot({ count = 3 } = {}) {
       highPrice: Number(t.highPrice),
       lowPrice: Number(t.lowPrice),
       // quote volume only: raw base volume got confused with USDT volume
-      volumeUSDT: Number(t.quoteVolume),
+      volumeUSDT: Math.round(Number(t.quoteVolume)), // whole USDT: raw values like 865602.18675 read badly in posts
     }));
 }
 
