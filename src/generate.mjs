@@ -318,9 +318,13 @@ Rules for this theme:
 - These are tokenized versions, not the shares themselves. Say "tokenized
   stock" or "bStock", never "shares", "contracts", or "the stock itself".
 - Prices and volumes are in USDT; write USDT as plain text, never $USDT.
-- You may say these trade 24/7 as a fact about the product. Do NOT claim the
-  given move or volume happened overnight, after hours, or while US markets
-  were closed: the data is a 24h total and does not show when it happened.
+- You do not need to mention trading hours. If you do, say they trade on
+  Binance (the exchange), never "on Binance Square" (Square is the social
+  feed, not a venue). Do NOT claim the given move or volume happened
+  overnight, after hours, or while US markets were closed: the data is a 24h
+  total and does not show when it happened.
+- Do not end with a general statement about the product or trading hours;
+  end on a concrete number or comparison from the data.
 - Cover 2-3 tokens. Keep it under 1600 characters.
 ${STYLE_RULES}`,
 
@@ -469,8 +473,14 @@ export function sanitizeText(text) {
 // ---------------------------------------------------------------------------
 // Main entry point.
 // ---------------------------------------------------------------------------
-export async function generatePost() {
-  const skipped = [];
+/** Note for the prompt when a retry lands on the theme that was just rejected. */
+export function feedbackBlock(lastRejection, themeId) {
+  if (!lastRejection || lastRejection.theme !== themeId) return "";
+  return `\nYour previous draft for this theme was rejected: ${lastRejection.reason}. Fix exactly that and do not repeat it.\n`;
+}
+
+export async function generatePost({ avoidThemes = [], lastRejection = null } = {}) {
+  const skipped = [...avoidThemes];
   let theme;
   let data;
   for (let i = 0; i < MAX_THEME_SKIPS; i++) {
@@ -492,7 +502,7 @@ export async function generatePost() {
       : newsEnabled() && NEWS_THEMES.has(theme.id)
         ? await getNewsContext(data)
         : null;
-  const prompt = THEME_PROMPTS[theme.id](data) + factsPromptBlock(theme.id, data) + anomalyPromptBlock(data) + (theme.id === "data-vs-narrative" ? "" : newsPromptBlock(news));
+  const prompt = THEME_PROMPTS[theme.id](data) + factsPromptBlock(theme.id, data) + anomalyPromptBlock(data) + feedbackBlock(lastRejection, theme.id) + (theme.id === "data-vs-narrative" ? "" : newsPromptBlock(news));
   const llm = await callLLM(prompt);
   const text = sanitizeText(llm.text);
 
