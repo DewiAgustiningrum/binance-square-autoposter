@@ -1,5 +1,33 @@
 [
   {
+    "id": "9d8ac882-881d-430f-9d7b-23c559f0be85",
+    "date": "2026-10-12T15:23:30.799Z",
+    "theme": "breakout-watch",
+    "text": "$STRK slid down to $0.0929, dropping about 20.5% in the last 24 hrs. Its price swung through a 37.2% range, which is roughly 84% wider than its typical week-long daily range. That's a noticeably wider move, almost twice what you'd expect on an average day.",
+    "status": "published",
+    "postId": 376534676427725,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376534676427725?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "8f8b8b9927ec1564",
+      "sourceSnapshot": [
+        {
+          "symbol": "STRKUSDT",
+          "cashtag": "$STRK",
+          "lastPrice": 0.09291,
+          "priceChangePercent": -20.501,
+          "last24hRangePct": 37.22957701000968,
+          "avgRangePct": 20.256520015889382,
+          "ratio": 1.8379058683725777
+        }
+      ],
+      "sourceFetchedAt": "2026-10-12T15:23:30.085Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "0c60dbbd-f9e2-477a-ad77-827f05ab8284",
     "date": "2026-10-12T05:56:40.841Z",
     "theme": "data-vs-narrative",
