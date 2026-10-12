@@ -54,6 +54,11 @@ export async function run({
   baseDelayMs = Number(process.env.RETRY_DELAY_MS ?? BASE_DELAY_MS),
 } = {}) {
   let lastFailure = "unknown";
+  // Themes whose draft was rejected in THIS run, and the last reason: the next
+  // attempt avoids those themes (re-rolling the same one tends to repeat the
+  // same mistake) and, if it lands on the same theme anyway, is told why.
+  const rejectedThemes = [];
+  let lastRejection = null;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     console.log(`--- Attempt ${attempt}/${maxAttempts} ---`);
@@ -62,7 +67,7 @@ export async function run({
     // 1. generate (can fail transiently: Binance, Groq+Gemini, thin data)
     let draft;
     try {
-      draft = await generate();
+      draft = await generate({ avoidThemes: [...rejectedThemes], lastRejection });
     } catch (err) {
       lastFailure = `generate failed: ${err.message}`;
       console.error(lastFailure);
@@ -83,6 +88,8 @@ export async function run({
     if (!validation.valid) {
       lastFailure = `validation failed: ${validation.reason}`;
       console.error(`Validation failed: ${validation.reason}`);
+      rejectedThemes.push(theme);
+      lastRejection = { theme, reason: validation.reason };
       if (!isLast) console.error("Regenerating...\n");
       continue;
     }
