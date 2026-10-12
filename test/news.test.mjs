@@ -148,3 +148,12 @@ test("NEWS_ALIASES lets a headline that only says the project name match its tic
     assert.deepEqual(Object.keys(matchHeadlines(hs, ["$STRK"])), ["$STRK"]);
   } finally { delete process.env.NEWS_ALIASES; }
 });
+
+test("words in quotation marks must really be in a headline (real 12 Oct post)", () => {
+  const news = { byToken: { market: [{ source: "CoinDesk", title: "Bitcoin shrugs off ETF outflows and slips below $84K as traders wait", ageHours: 2 }] } };
+  const fake = checkNews('CoinDesk reported "Bitcoin shrugs off ETF outflows, trades above $84K."', news);
+  assert.equal(fake.ok, false);
+  assert.match(fake.reason, /not in the headline/);
+  assert.equal(checkNews('CoinDesk reported "Bitcoin shrugs off ETF outflows" as traders wait.', news).ok, true);
+  assert.equal(checkNews('CoinDesk said bitcoin "slips" lower.', news).ok, true); // one word: scare quotes are fine
+});
