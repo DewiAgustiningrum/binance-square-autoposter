@@ -20,6 +20,7 @@ Content-correctness release. Grounding already proved that numbers came from the
 - **`BSTOCKS_EXTRA`** (Actions variable): add bStocks without a code change, for example `AAPLBUSDT=Apple,MSFTBUSDT=Microsoft`.
 - **Audit trail in `data/posts.json`**: each entry can carry `meta` with `sourceHash`, `sourceSnapshot` (when under 4,000 characters), `sourceFetchedAt`, `promptVersion`, `validatorVersion`, `provider`, `model` and, when used, `headlines` (outlet and title only).
 - Grounding understands "3.72 million" / "1.4 billion" / "5 thousand" as well as `M`, `B`, `K`.
+- Data vs Narrative: a headline with contrast, hedging or negation ("shrugs off", "fails to", "despite", "even as") is not used because its direction cannot be read by keywords, and a direction word only counts when it is close to the market term ("Bitcoin ... as oil falls" is not a falling market); the post must state the verdict with "supports", "contradicts" or "only partly matches"; and anything in quotation marks must appear in the headline word for word.
 - A retry avoids the theme whose draft was just rejected in the same run, and if it lands on that theme anyway the prompt includes the rejection reason.
 - Themes with no qualifying data (for example no unusually quiet token today) are skipped immediately, without calling the model or waiting for a retry.
 - Tests: 74 -> 146.
