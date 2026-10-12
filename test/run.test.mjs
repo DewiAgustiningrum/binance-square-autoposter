@@ -118,3 +118,16 @@ test("buildMeta records provider, model, prompt version and a stable source hash
   assert.deepEqual(a.sourceSnapshot, draft.rawData);
   assert.equal(a.sourceHash, buildMeta({ ...draft }).sourceHash);
 });
+
+test("after a rejected draft the next attempt avoids that theme and is told why", async () => {
+  const seen = [];
+  const { deps } = harness({
+    generate: async (opts) => { seen.push(opts); return { ...DRAFT, theme: seen.length === 1 ? "tokenized-stocks" : "daily-recap" }; },
+    validate: async (_t, theme) => (theme === "tokenized-stocks" ? { valid: false, reason: "says assets trade on Binance Square" } : { valid: true }),
+  });
+  const r = await silently(() => run(deps));
+  assert.equal(r.exitCode, 0);
+  assert.deepEqual(seen[0], { avoidThemes: [], lastRejection: null });
+  assert.deepEqual(seen[1].avoidThemes, ["tokenized-stocks"]);
+  assert.deepEqual(seen[1].lastRejection, { theme: "tokenized-stocks", reason: "says assets trade on Binance Square" });
+});
