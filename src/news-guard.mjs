@@ -41,10 +41,16 @@ export function checkNews(text, news) {
     }
   }
 
-  // 2. long quotes
+  // 2. quotes: not too long, and what is in quotation marks must really be in a headline
+  const flat = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const headlineText = headlines.map((h) => flat(h.title));
   for (const m of text.matchAll(/"([^"]+)"|\u201c([^\u201d]+)\u201d/g)) {
-    const n = words(m[1] ?? m[2]).length;
+    const quoted = m[1] ?? m[2];
+    const n = words(quoted).length;
     if (n > MAX_QUOTE_WORDS) return { ok: false, reason: `Quotes ${n} words, the limit is ${MAX_QUOTE_WORDS}` };
+    if (n >= 3 && !headlineText.some((h) => h.includes(flat(quoted)))) {
+      return { ok: false, reason: "Puts words in quotation marks that are not in the headline; paraphrase without quotes or quote it exactly" };
+    }
   }
 
   // 3. causal wording next to a headline mention
