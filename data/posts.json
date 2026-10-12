@@ -1,5 +1,47 @@
 [
   {
+    "id": "0c60dbbd-f9e2-477a-ad77-827f05ab8284",
+    "date": "2026-10-12T05:56:40.841Z",
+    "theme": "data-vs-narrative",
+    "text": "CoinDesk reported \"Bitcoin shrugs off ETF outflows, trades above $84K.\"\n\n$BTC rose 1.19% in the last 24 h, while the median alt jumped 4.78%.\n\n19 alts tracked: 95% up, 5% down, so most tokens outperformed BTC.\n\nThe data moves opposite the headline's vibe.",
+    "status": "published",
+    "postId": 376395372014899,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376395372014899?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "c769e91946cf4cd8",
+      "sourceSnapshot": {
+        "headline": {
+          "source": "CoinDesk",
+          "title": "Bitcoin shrugs off ETF outflows to trade above $84,000 as oil falls",
+          "ageHours": 1.1
+        },
+        "headlineTone": "down",
+        "regime": {
+          "btcChangePercent": 1.19,
+          "altsMedianChangePercent": 4.78,
+          "altsCount": 19,
+          "breadthUpPct": 95,
+          "breadthDownPct": 5,
+          "medianRangePct": 7.65,
+          "direction": "broad-up",
+          "leadership": "alts-ahead"
+        },
+        "agreement": "contradicts"
+      },
+      "sourceFetchedAt": "2026-10-12T05:56:40.009Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0",
+      "headlines": [
+        {
+          "source": "CoinDesk",
+          "title": "Bitcoin shrugs off ETF outflows to trade above $84,000 as oil falls"
+        }
+      ]
+    }
+  },
+  {
     "id": "68157fb5-ba52-43c4-b2f8-e2f80ce80b2e",
     "date": "2026-10-11T12:49:01.869Z",
     "theme": "quiet-movers",
