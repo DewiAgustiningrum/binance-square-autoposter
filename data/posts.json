@@ -1,5 +1,32 @@
 [
   {
+    "id": "0b4989fb-cd35-4766-a055-7c2750d5b513",
+    "date": "2026-10-13T14:10:48.623Z",
+    "theme": "market-regime",
+    "text": "$BTC up 0.66% while most alts got hammered, 95% fell, only 5% nudged higher. The median alt dropped 4.23%, so Bitcoin held up better than the pack. Around 19 alts were tracked, and their typical 24-hour swing was about 10.47% high-low. That's a broad decline across the market, with Bitcoin the only token showing a modest gain. The alt crowd was clearly in the red zone.",
+    "status": "published",
+    "postId": 376870702992380,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376870702992380?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "a7e3e5799cd7c877",
+      "sourceSnapshot": {
+        "btcChangePercent": 0.66,
+        "altsMedianChangePercent": -4.23,
+        "altsCount": 19,
+        "breadthUpPct": 5,
+        "breadthDownPct": 95,
+        "medianRangePct": 10.47,
+        "direction": "broad-down",
+        "leadership": "btc-ahead"
+      },
+      "sourceFetchedAt": "2026-10-13T14:10:48.051Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "3829a0fd-d814-49fb-84d8-60bfe5437937",
     "date": "2026-10-13T00:39:01.908Z",
     "theme": "morning-brief",
