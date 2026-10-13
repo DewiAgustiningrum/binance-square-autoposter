@@ -200,6 +200,11 @@ const MAJORITY_PCT = 60;
 const RANGE_JUDGEMENT = /\b(?:modest|tame|calm|quiet|muted|subdued|wide|wild|large|small|narrow|big|huge|massive|choppy)\b/i;
 const RANGE_WORD = /\b(?:range|swings?)\b/i;
 
+// "Bitcoin the only token showing a gain" is false if any alt rose; "every alt fell" is
+// false if any alt did not. The breadth percentages say exactly how many did.
+const ONLY_UP = /\b(?:the\s+)?only\s+(?:token|coin|asset|one|major|name)\b[^.]{0,40}\b(?:gain|gains|green|higher|up|rise|rising|rose|positive)\b|\b(?:only|just)\s+(?:\$?btc|bitcoin)\b[^.]{0,30}\b(?:gain|gains|green|higher|up|rise|rising|rose|positive)\b/i;
+const ALL_DOWN = /\b(?:all|every|each)\s+(?:of\s+)?(?:the\s+)?(?:alts?|altcoins?|tokens?|coins?)\b[^.]{0,25}\b(?:fell|down|dropped|red|lower|declined|slid)\b|\bnot\s+a\s+single\s+(?:alt|altcoin|token|coin)\b[^.]{0,25}\b(?:up|green|higher|gain)/i;
+
 function checkRegime(text, facts) {
   const problems = checkRelative(text, facts);
   if (NO_MAJORITY.test(text)) {
@@ -213,6 +218,12 @@ function checkRegime(text, facts) {
       problems.push("judges the size of the typical range (modest/wide/...) with no baseline; state the number only");
       break;
     }
+  }
+  if (ONLY_UP.test(text) && facts.breadthUpPct > 0) {
+    problems.push(`says only one token rose, but ${facts.breadthUpPct}% of the alts were also up`);
+  }
+  if (ALL_DOWN.test(text) && (facts.breadthDownPct ?? 100) < 100) {
+    problems.push(`says every alt fell, but only ${facts.breadthDownPct}% of the alts were down`);
   }
   if (LABEL_LEAK.test(text)) problems.push("pastes an internal label (e.g. broad-down) into the post; say it in plain words");
   if (LED_THE_FALL.test(text)) problems.push('says someone "led the drop"; ambiguous, say who fell more or who held up better');
