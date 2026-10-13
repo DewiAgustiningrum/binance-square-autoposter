@@ -1,5 +1,14 @@
 [
   {
+    "id": "b741340e-ee7e-46cb-8ecb-7b2602ab034e",
+    "date": "2026-10-13T22:51:06.099Z",
+    "theme": "morning-brief",
+    "text": "$BTC bounced back to $83,548.9, up 1.165% in 24 h. It hit a high of $84,168 before sliding to a low of $81,033.66, the widest swing of the three. Volume hit about 15,490 BTC, translating to $1.29 B in quote volume.\n\n$ETH nudged up 1.17% to $2,513.53. The pair's range was tighter, $2,538.52 top, $2,409.09 bottom. Trading was hefty: roughly 289,528 ETH, or $721 M in USDT.\n\n$BNB inched higher, +0.205% to $743.61. Its day was flat compared with the others, staying between $748 and $722.4. It moved about 99,403 BNB, about $73.5 M in quote volume.\n\nOverall, $BTC showed the biggest price swing and the most quote volume, while $ETH led on sheer token volume. $BNB was the quietest, barely moving on both price and volume. No wild action beyond that.",
+    "status": "published",
+    "postId": 376998570640697,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376998570640697?r=HDVH95ZN&l=id"
+  },
+  {
     "id": "7cee579c-46a8-48d6-9c99-62049c286f38",
     "date": "2026-10-13T14:18:46.774Z",
     "theme": "daily-recap",
@@ -259,14 +268,5 @@
     "status": "published",
     "postId": 373365181510700,
     "shareLink": "https://app.binance.com/uni-qr/cpos/373365181510700?r=HDVH95ZN&l=id"
-  },
-  {
-    "id": "2fb55344-ae41-453a-9f6e-467ce257ac87",
-    "date": "2026-10-03T08:04:48.423Z",
-    "theme": "leaders-laggards",
-    "text": "$SAND jumped 28% to $0.0765, blasting past its $0.057 low and flashing a $85 M quote volume. $QNT also pushed up, up 16% to $268.96, holding near the top of its $224-$270 range with $73 M traded. Meanwhile $PUMP slipped 9% to $0.0055, hovering close to its $0.0051 trough after a brief peek at $0.0062 and pulling in $47 M. The winners are sprinting ahead while the loser is barely hanging on. Looks like a typical day of a few rockets and one deflator.",
-    "status": "published",
-    "postId": 373241811437265,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/373241811437265?r=HDVH95ZN&l=id"
   }
 ]
