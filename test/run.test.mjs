@@ -131,3 +131,11 @@ test("after a rejected draft the next attempt avoids that theme and is told why"
   assert.deepEqual(seen[1].avoidThemes, ["tokenized-stocks"]);
   assert.deepEqual(seen[1].lastRejection, { theme: "tokenized-stocks", reason: "says assets trade on Binance Square" });
 });
+
+test("buildMeta marks which supplied headlines the post actually names", async () => {
+  const { buildMeta } = await import("../src/run.mjs");
+  const draft = { rawData: [], fetchedAt: "x", promptVersion: "2.0", news: { byToken: { $BTC: [{ source: "Cointelegraph", title: "Bitcoin miners face widening AI financing costs" }, { source: "Decrypt", title: "Fear and Greed Index drops to August lows" }] } } };
+  const m = buildMeta(draft, "Cointelegraph noted miners face higher financing costs.");
+  assert.deepEqual(m.headlines.map((h) => [h.source, h.used]), [["Cointelegraph", true], ["Decrypt", false]]);
+  assert.equal(buildMeta({ rawData: [], fetchedAt: "x", promptVersion: "2.0" }, "text").headlines, undefined);
+});
