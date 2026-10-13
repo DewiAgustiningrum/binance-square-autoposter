@@ -270,3 +270,16 @@ test("ratio: 'N times' / 'N ×' multiples are checked against the ratio", () => 
 test("ratio facts block tells the model to avoid fractions", () => {
   assert.match(factsPromptBlock("quiet-movers", ZEC), /do NOT use fractions/);
 });
+
+// Published 13 Oct Morning Brief: "the biggest absolute change of the three" was never checked.
+test("'biggest absolute change' is checked like 'biggest move' (real 13 Oct data)", () => {
+  const rows = [
+    { cashtag: "$BTC", lastPrice: 81552.93, priceChangePercent: -2.8, highPrice: 84352, lowPrice: 81260.81, quoteVolume: 1.166e9 },
+    { cashtag: "$ETH", lastPrice: 2432.77, priceChangePercent: -4.3, highPrice: 2579.88, lowPrice: 2413.65, quoteVolume: 7.56e8 },
+    { cashtag: "$BNB", lastPrice: 728.63, priceChangePercent: -3.36, highPrice: 758.03, lowPrice: 725, quoteVolume: 8.65e7 },
+  ];
+  assert.equal(checkSemantics("$ETH fell 4.3%, the biggest absolute change of the three.", "morning-brief", rows).ok, true);
+  const r = checkSemantics("$BTC fell 2.8%, the biggest absolute change of the three.", "morning-brief", rows);
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /\$BTC called the biggest move, but \$ETH had it/);
+});
