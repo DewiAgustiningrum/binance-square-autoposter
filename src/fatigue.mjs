@@ -3,7 +3,7 @@
 // closing sentence that repeats one used in recent posts. Complements the
 // word-overlap duplicate check in validate.mjs, which only sees whole-post copies.
 
-const HYPE = /\b(?:explod\w*|rocket\w*|skyrocket\w*|moon(?:ing|ed)?|parabolic|bloodbath|to\s+the\s+moon)\b/i;
+const HYPE = /\b(?:explod\w*|rocket\w*|skyrocket\w*|moon(?:ing|ed)?|parabolic|bloodbath|hammered|carnage|slaughter(?:ed)?|obliterated|wiped\s+out|to\s+the\s+moon)\b/i;
 
 // Stock closings observed repeatedly in published posts.
 const STOCK_CLOSINGS = [
