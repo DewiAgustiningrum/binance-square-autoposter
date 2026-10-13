@@ -21,7 +21,7 @@ export const VALIDATOR_VERSION = "2.0";
 
 // Audit trail stored with each history entry: lets a published number be
 // traced back to the exact source data and settings that produced it.
-export function buildMeta(draft) {
+export function buildMeta(draft, text = "") {
   const json = JSON.stringify(draft.rawData ?? null);
   return {
     sourceHash: createHash("sha256").update(json).digest("hex").slice(0, 16),
@@ -31,8 +31,8 @@ export function buildMeta(draft) {
     provider: draft.provider,
     model: draft.model,
     validatorVersion: VALIDATOR_VERSION,
-    // outlet + title only, never links; empty when no headline context was used
-    headlines: draft.news ? Object.values(draft.news.byToken).flat().map((h) => ({ source: h.source, title: h.title })) : undefined,
+    // outlet + title only, never links; `used` = the post names that outlet. Absent when no headline context was supplied
+    headlines: draft.news ? Object.values(draft.news.byToken).flat().map((h) => ({ source: h.source, title: h.title, used: text.includes(h.source) })) : undefined,
   };
 }
 
@@ -96,7 +96,7 @@ export async function run({
 
     // 3. publish
     try {
-      const result = await publish({ theme, text, meta: buildMeta(draft) });
+      const result = await publish({ theme, text, meta: buildMeta(draft, text) });
       console.log(`Published on attempt ${attempt}. status=${result.status} id=${result.id ?? "n/a"} link=${result.shareLink ?? "n/a"}`);
       if (result.status === "unknown") {
         // Non-zero on purpose: the run must not look green. The post is probably
