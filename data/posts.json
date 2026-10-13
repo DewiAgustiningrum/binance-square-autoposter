@@ -1,5 +1,33 @@
 [
   {
+    "id": "3874f816-5045-41a4-9fc5-c4a6b4d5354a",
+    "date": "2026-10-13T22:44:34.006Z",
+    "theme": "quiet-movers",
+    "text": "$NEAR's been moving in a tighter box today, its 24-hour swing was about 34% tighter than the typical week-long range. The token slipped a bit, down roughly 1.1%, and closed around $5.07.",
+    "status": "published",
+    "postId": 376996964883068,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376996964883068?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "a805d797accbac74",
+      "sourceSnapshot": [
+        {
+          "symbol": "NEARUSDT",
+          "cashtag": "$NEAR",
+          "lastPrice": 5.074,
+          "priceChangePercent": -1.092,
+          "last24hRangePct": 9.422432485708665,
+          "avgRangePct": 14.25778337532496,
+          "ratio": 0.6608623681304816
+        }
+      ],
+      "sourceFetchedAt": "2026-10-13T22:44:33.302Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "0b4989fb-cd35-4766-a055-7c2750d5b513",
     "date": "2026-10-13T14:10:48.623Z",
     "theme": "market-regime",
