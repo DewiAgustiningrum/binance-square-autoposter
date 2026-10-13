@@ -157,3 +157,20 @@ test("words in quotation marks must really be in a headline (real 12 Oct post)",
   assert.equal(checkNews('CoinDesk reported "Bitcoin shrugs off ETF outflows" as traders wait.', news).ok, true);
   assert.equal(checkNews('CoinDesk said bitcoin "slips" lower.', news).ok, true); // one word: scare quotes are fine
 });
+
+test("news prompt asks for a separate closing sentence and exact quotes", () => {
+  const block = newsPromptBlock({ byToken: { $BTC: [{ source: "Cointelegraph", title: "Bitcoin miners face higher AI-related financing costs", ageHours: 3 }] } });
+  assert.match(block, /Separately, CoinDesk reported/);
+  assert.match(block, /word for word/);
+});
+
+// Headlines supplied for the published 13 Oct Morning Brief (from meta.headlines).
+test("speculative, prediction and question-style headlines are dropped; plain reporting is kept", () => {
+  assert.ok(cleanTitle("Bitcoin miners face widening AI financing costs as lenders scrutinize deals"));
+  assert.ok(cleanTitle("Bitmine Adds $32M in Ethereum as Tom Lee Says Firm Is Nearly 'Done Stacking'"));
+  assert.equal(cleanTitle("Bitmine adds 12,532 ETH as Tom Lee flags potential \u2018largest-ever\u2019 crypto bull market"), null);
+  assert.equal(cleanTitle("Bitcoin Spooked? Crypto Fear and Greed Index Drops to Pre-Rally August Lows"), null);
+  assert.equal(cleanTitle("Bitcoin could hit $100,000 by year end, analyst says"), null);
+  assert.equal(cleanTitle("Exchange token reportedly under review by regulators"), null);
+  assert.equal(cleanTitle("Fed eyes rate cut as inflation cools in September"), null);
+});
