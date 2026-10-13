@@ -283,3 +283,26 @@ test("'biggest absolute change' is checked like 'biggest move' (real 13 Oct data
   assert.equal(r.ok, false);
   assert.match(r.reason, /\$BTC called the biggest move, but \$ETH had it/);
 });
+
+// Published 13 Oct Market Regime post (snapshot: 95% of 19 alts down, 5% up = 1 alt).
+const REG_DOWN = { btcChangePercent: 0.66, altsMedianChangePercent: -4.23, altsCount: 19, breadthUpPct: 5, breadthDownPct: 95, medianRangePct: 10.47, direction: "broad-down", leadership: "btc-ahead" };
+
+test("regime (real 13 Oct post): 'Bitcoin the only token showing a gain' is false when 5% of alts rose", () => {
+  const text = "$BTC up 0.66% while 95% of alts fell. That's a broad decline across the market, with Bitcoin the only token showing a modest gain.";
+  const r = checkSemantics(text, "market-regime", REG_DOWN);
+  assert.equal(r.ok, false);
+  assert.match(r.reason, /only one token rose/);
+});
+
+test("regime: 'only' and 'every alt fell' are fine when they are true", () => {
+  const allDown = { ...REG_DOWN, breadthUpPct: 0, breadthDownPct: 100 };
+  assert.equal(checkSemantics("$BTC was the only token in the green; every alt fell.", "market-regime", allDown).ok, true);
+  assert.equal(checkSemantics("Every alt fell today.", "market-regime", REG_DOWN).ok, false); // 95% down, one rose
+  assert.equal(checkSemantics("$BTC rose 0.66% while 95% of the 19 alts fell.", "market-regime", REG_DOWN).ok, true);
+});
+
+test("fatigue: emotive words like 'hammered' and 'carnage' are rejected; 'crushing volume' is not touched", () => {
+  assert.equal(checkFatigue("Most alts got hammered today.").ok, false);
+  assert.equal(checkFatigue("Pure carnage across the alt market.").ok, false);
+  assert.equal(checkFatigue("$BTC kept crushing volume at $576 M USDT.").ok, true);
+});
