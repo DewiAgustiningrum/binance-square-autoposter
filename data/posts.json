@@ -1,5 +1,29 @@
 [
   {
+    "id": "c7b54ea6-49c5-49d2-88ee-480554b3d205",
+    "date": "2026-10-14T12:00:14.273Z",
+    "theme": "relative-strength",
+    "text": "$ETH is nudging up against $BTC, +0.067% in the BTC pair. Meanwhile $BTC's own 24-hour gain is only +0.136%, while the median alt in the 19-coin basket is up about +1.09%. So the typical alt is pulling ahead of Bitcoin, even though ETH is tightening its spread versus BTC.",
+    "status": "published",
+    "postId": 377192509210682,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377192509210682?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "823de0297093aba4",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.03001,
+        "ethBtcChangePercent": 0.067,
+        "btcChangePercent": 0.136,
+        "altsMedianChangePercent": 1.09,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-14T12:00:13.464Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "9cd95965-eb84-414f-b488-5d5ddc32cf38",
     "date": "2026-10-14T04:53:02.262Z",
     "theme": "breakout-watch",
