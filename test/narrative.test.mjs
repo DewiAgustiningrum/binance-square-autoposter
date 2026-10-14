@@ -115,7 +115,7 @@ test("narrative verdict must be stated in plain words and match the computed agr
 test("headlineTone only counts direction words near the market term (real 12 Oct headline)", () => {
   assert.equal(headlineTone("Bitcoin shrugs off ETF outflows to trade above $84,000 as oil falls"), null); // contrast word
   assert.equal(headlineTone("Bitcoin trades above $84,000 as oil falls"), null); // 'falls' is far from, and about, something else
-  assert.equal(headlineTone("Oil falls as Bitcoin climbs toward $85,000"), "up");
+  assert.equal(headlineTone("Oil falls as Bitcoin climbs toward $85,000"), null); // both directions: too easy to attach to the wrong subject
   assert.equal(headlineTone("Bitcoin slides below $80,000 as traders sell off"), "down");
   assert.equal(headlineTone("Oil prices climb while the ETF filing is delayed"), null); // no market term
 });
@@ -126,4 +126,20 @@ test("the real published draft would now be rejected on two counts (fake quote, 
   const text = "CoinDesk reported \"Bitcoin shrugs off ETF outflows, trades above $84K.\"\n\n$BTC rose 1.19% in the last 24 h, while the median alt jumped 4.78%.\n\n19 alts tracked: 95% up, 5% down, so most tokens outperformed BTC.\n\nThe data moves opposite the headline's vibe.";
   assert.equal(checkNews(text, { byToken: { market: [{ source: "CoinDesk", title, ageHours: 1.1 }] } }).ok, false);
   assert.equal(headlineTone(title), null); // so this headline would never have been chosen
+});
+
+// 13 Oct run: "Strive reports $208M in warrant exercises as Bitcoin holdings jump 11%" was read as a rising market.
+test("headlineTone: 'Bitcoin holdings/miners/ETF inflows jump' is not the price going up", () => {
+  assert.equal(headlineTone("Strive reports $208M in warrant exercises as Bitcoin holdings jump 11%"), null);
+  assert.equal(headlineTone("Bitcoin miners jump after hashrate record"), null);
+  assert.equal(headlineTone("Bitcoin ETF inflows climb for a third day"), null);
+  assert.equal(headlineTone("Bitcoin treasury firm adds 500 BTC as holdings rise"), null);
+});
+
+test("headlineTone: the market itself moving is still read", () => {
+  assert.equal(headlineTone("Bitcoin rallies toward a new record high"), "up");
+  assert.equal(headlineTone("Bitcoin price drops below $80,000"), "down");
+  assert.equal(headlineTone("Crypto market slumps as traders sell off"), "down");
+  assert.equal(headlineTone("Ethereum jumps as network upgrade nears"), "up");
+  assert.equal(headlineTone("BTC falls sharply after weak data"), "down");
 });
