@@ -1,5 +1,82 @@
 [
   {
+    "id": "4aa9ada3-5f08-4152-b7c5-6bf30a71d9f1",
+    "date": "2026-10-14T17:17:29.858Z",
+    "theme": "leaders-laggards",
+    "text": "$WAL jumped 61.1% to $0.0613 on 30.57 M USDT volume, a one-day outlier. $TRX inched up 2.07% to $0.3346 with 54.75 M USDT changing hands, showing the market's broader modest gain. Meanwhile $ENA slipped 6.38% to $0.198 on 42.04 M USDT volume, the biggest loser in the set. All three moves happened within the same 24-hour window.",
+    "status": "published",
+    "postId": 377270478601587,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377270478601587?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "1cb6320922b381d7",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "WALUSDT",
+            "cashtag": "$WAL",
+            "lastPrice": 0.0613,
+            "priceChangePercent": 61.104,
+            "highPrice": 0.06233,
+            "lowPrice": 0.03763,
+            "quoteVolume": 30569010.401923
+          },
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3346,
+            "priceChangePercent": 2.074,
+            "highPrice": 0.3346,
+            "lowPrice": 0.3272,
+            "quoteVolume": 54748092.99613
+          },
+          {
+            "symbol": "QNTUSDT",
+            "cashtag": "$QNT",
+            "lastPrice": 207.83,
+            "priceChangePercent": 1.718,
+            "highPrice": 222.82,
+            "lowPrice": 200.71,
+            "quoteVolume": 25210023.22452
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "ENAUSDT",
+            "cashtag": "$ENA",
+            "lastPrice": 0.198,
+            "priceChangePercent": -6.383,
+            "highPrice": 0.2145,
+            "lowPrice": 0.1875,
+            "quoteVolume": 42040969.084713
+          },
+          {
+            "symbol": "UNIUSDT",
+            "cashtag": "$UNI",
+            "lastPrice": 7.22,
+            "priceChangePercent": -4.8,
+            "highPrice": 7.68,
+            "lowPrice": 7.129,
+            "quoteVolume": 46386527.84141
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1162.5,
+            "priceChangePercent": -3.866,
+            "highPrice": 1286.54,
+            "lowPrice": 1142.21,
+            "quoteVolume": 229491335.39376
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-14T17:17:28.887Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "c7b54ea6-49c5-49d2-88ee-480554b3d205",
     "date": "2026-10-14T12:00:14.273Z",
     "theme": "relative-strength",
