@@ -1,5 +1,33 @@
 [
   {
+    "id": "9cd95965-eb84-414f-b488-5d5ddc32cf38",
+    "date": "2026-10-14T04:53:02.262Z",
+    "theme": "breakout-watch",
+    "text": "$TRX swung about 40% wider than its usual daily range, hitting a 1.51% spread in the last 24 hours. The price nudged up to $0.3314, up 0.39% on the day. That's a noticeably wider move compared to its week-average range.",
+    "status": "published",
+    "postId": 377087519703620,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377087519703620?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "731d053ec3ae864e",
+      "sourceSnapshot": [
+        {
+          "symbol": "TRXUSDT",
+          "cashtag": "$TRX",
+          "lastPrice": 0.3314,
+          "priceChangePercent": 0.394,
+          "last24hRangePct": 1.5092061575611244,
+          "avgRangePct": 1.0797599751533318,
+          "ratio": 1.3977237462861216
+        }
+      ],
+      "sourceFetchedAt": "2026-10-14T04:53:01.707Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "3874f816-5045-41a4-9fc5-c4a6b4d5354a",
     "date": "2026-10-13T22:44:34.006Z",
     "theme": "quiet-movers",
