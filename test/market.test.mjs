@@ -1,6 +1,6 @@
 import test, { afterEach } from "node:test";
 import assert from "node:assert/strict";
-import { getBreakoutWatch, getQuietMovers, getRelativeStrength } from "../src/sources/market.mjs";
+import { getBreakoutWatch, getQuietMovers, getRelativeStrength, rollingRanges } from "../src/sources/market.mjs";
 
 const realFetch = globalThis.fetch;
 afterEach(() => { globalThis.fetch = realFetch; });
@@ -10,11 +10,14 @@ const tick = (symbol, rangePct, qv, change = 1) => ({
   symbol, lastPrice: "100", highPrice: String(100 + rangePct / 2), lowPrice: String(100 - rangePct / 2),
   priceChangePercent: String(change), quoteVolume: String(qv),
 });
-// 1d klines: `pastDays` full days of `avgRange`% plus today's forming candle (dropped by the code).
-const klines = (pastDays, avgRange) => [
-  ...Array.from({ length: pastDays }, (_, i) => [i, "100", String(100 + avgRange / 2), String(100 - avgRange / 2), "100", "1"]),
-  [99, "100", "101", "99", "100", "1"],
-];
+// Hourly klines (oldest first): `pastDays` full 24h windows whose range is `avgRange`%,
+// then the latest 24h window with range `currentRange`%. The range sits in the first
+// candle of each window; the other 23 candles are flat at 100.
+const candle = (hi, lo) => [0, "100", String(hi), String(lo), "100", "1"];
+const hourly = (pastDays, avgRange, currentRange) => {
+  const window = (r) => [candle(100 + r / 2, 100 - r / 2), ...Array.from({ length: 23 }, () => candle(100, 100))];
+  return [...Array.from({ length: pastDays }, () => window(avgRange)).flat(), ...window(currentRange)];
+};
 
 function mock({ tickers, kl = {}, failKlines = [] }) {
   globalThis.fetch = async (url) => {
@@ -22,7 +25,9 @@ function mock({ tickers, kl = {}, failKlines = [] }) {
     if (u.pathname.endsWith("/klines")) {
       const s = u.searchParams.get("symbol");
       if (failKlines.includes(s)) return new Response("err", { status: 500 });
-      return new Response(JSON.stringify(kl[s] ?? klines(7, 5)));
+      const t = tickers.find((x) => x.symbol === s);
+      const current = t ? Number(t.highPrice) - Number(t.lowPrice) : 5; // price is 100, so range% = high - low
+      return new Response(JSON.stringify(kl[s] ?? hourly(7, 5, current)));
     }
     if (u.pathname.endsWith("/ticker/24hr") && !u.searchParams.get("symbol")) return new Response(JSON.stringify(tickers));
     if (u.searchParams.get("symbol") === "ETHBTC") return new Response(JSON.stringify({ lastPrice: "0.03", priceChangePercent: "-1.2" }));
@@ -51,7 +56,7 @@ test("nothing anomalous -> empty list (generate.mjs turns that into a retry with
 test("a fresh listing without enough history is excluded, not ranked on noise", async () => {
   mock({
     tickers: [tick("NEWUSDT", 20, 9e9), tick("OLDUSDT", 10, 8e9)],
-    kl: { NEWUSDT: klines(2, 5) }, // only 2 full past days
+    kl: { NEWUSDT: hourly(2, 5, 20) }, // only 2 full past days
   });
   const r = await getBreakoutWatch({ basketSize: 10 });
   assert.deepEqual(r.map((x) => x.cashtag), ["$OLD"]);
@@ -70,4 +75,69 @@ test("relative-strength uses the median alt, so one outlier can't fake a trend",
   assert.equal(r.altsCount, 4);
   assert.equal(r.btcChangePercent, 2);
   assert.equal("basketSize" in r, false);
+});
+
+test("rollingRanges: windows are 24 candles back from now, so a spike 30h ago is NOT in the latest window", () => {
+  const flat = () => ({ high: 100, low: 100, close: 100 });
+  const hourlyArr = Array.from({ length: 24 * 8 }, flat);
+  hourlyArr[hourlyArr.length - 31] = { high: 110, low: 90, close: 100 }; // 30h ago -> window 1
+  const r = rollingRanges(hourlyArr, 7);
+  assert.equal(r.current, 0);
+  assert.equal(r.past[0], 20);
+  assert.equal(r.past.length, 7);
+});
+
+test("rollingRanges: too little history returns null", () => {
+  const flat = () => ({ high: 100, low: 100, close: 100 });
+  assert.equal(rollingRanges(Array.from({ length: 24 * 4 }, flat), 7), null);
+});
+
+test("ratio uses hourly klines for BOTH sides (current range comes from klines, not the ticker)", async () => {
+  // ticker says a tiny range, klines say the latest 24h is wide: the ratio must follow the klines
+  mock({ tickers: [tick("AAAUSDT", 0.1, 9e9)], kl: { AAAUSDT: hourly(7, 5, 10) } });
+  const r = await getBreakoutWatch({ basketSize: 10 });
+  assert.equal(r.length, 1);
+  assert.equal(Math.round(r[0].ratio * 100) / 100, 2);
+});
+
+import { buildRegime } from "../src/sources/market.mjs";
+
+const asset = (symbol, change, range = 4) => ({ symbol, lastPrice: 100, priceChangePercent: change, highPrice: 100 + range / 2, lowPrice: 100 - range / 2, quoteVolume: 1e9 });
+
+test("buildRegime: broad-up and alt-led", () => {
+  const basket = [asset("BTCUSDT", 1), ...[3, 3.5, 2.8, 3.2, 2.5, 4, 3.1, 2.9, -0.5, 3.3].map((c, i) => asset(`A${i}USDT`, c))];
+  const r = buildRegime(basket);
+  assert.equal(r.direction, "broad-up");
+  assert.equal(r.leadership, "alts-ahead");
+  assert.equal(r.breadthUpPct, 90);
+  assert.equal(r.breadthDownPct, 10);
+  assert.equal(r.altsCount, 10);
+});
+
+test("buildRegime: broad-down and btc-led", () => {
+  const basket = [asset("BTCUSDT", -0.5), ...[-3, -2.5, -3.2, -2, -2.8, 0.2, -3.1].map((c, i) => asset(`A${i}USDT`, c))];
+  const r = buildRegime(basket);
+  assert.equal(r.direction, "broad-down");
+  assert.equal(r.leadership, "btc-ahead");
+});
+
+test("buildRegime: mixed and in-line", () => {
+  const basket = [asset("BTCUSDT", 0.5), ...[1, -1, 0.8, -0.9, 0.6, -0.4].map((c, i) => asset(`A${i}USDT`, c))];
+  const r = buildRegime(basket);
+  assert.equal(r.direction, "mixed");
+  assert.equal(r.leadership, "in-line");
+});
+
+test("buildRegime: throws without BTC or with too few alts (generate retries another theme)", () => {
+  assert.throws(() => buildRegime([asset("AAAUSDT", 1), asset("BBBUSDT", 1)]), /BTC missing/);
+  assert.throws(() => buildRegime([asset("BTCUSDT", 1), asset("AAAUSDT", 1)]), /too few alts/);
+});
+
+test("Breakout Watch drops thin-volume extreme movers at the source (real 11 Oct run: $STRK +55.9%)", async () => {
+  mock({
+    tickers: [tick("STRKUSDT", 46, 5e6, 55.9), tick("CFXUSDT", 30, 90e6, 29), tick("ETHUSDT", 3, 9e9, 0.5)],
+    kl: { STRKUSDT: hourly(7, 17, 46), CFXUSDT: hourly(7, 5.8, 29.5), ETHUSDT: hourly(7, 3, 3) },
+  });
+  const r = await getBreakoutWatch({ basketSize: 10 });
+  assert.deepEqual(r.map((x) => x.cashtag), ["$CFX"]);
 });

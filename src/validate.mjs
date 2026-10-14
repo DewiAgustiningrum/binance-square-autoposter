@@ -14,6 +14,10 @@ import { randomUUID } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { extractCashtags } from "./cashtags.mjs";
+import { checkSemantics } from "./semantic.mjs";
+import { checkFatigue } from "./fatigue.mjs";
+import { checkAnomaly } from "./anomaly.mjs";
+import { checkNoUrls, checkNews, headlineNumberSources } from "./news-guard.mjs";
 import { checkGrounding } from "./grounding.mjs";
 
 const MAX_LENGTH = 1850; // confirmed limit is 1900; prompts target 1600
@@ -150,7 +154,7 @@ export async function getRecentThemes(n = 4) {
  * GROUNDING_MODE=warn logs grounding failures instead of rejecting, useful
  * while rolling this out.
  */
-export async function validatePost(text, theme, rawData) {
+export async function validatePost(text, theme, rawData, ctx = {}) {
   if (!text || typeof text !== "string") {
     return { valid: false, reason: "Empty or non-string output from LLM" };
   }
@@ -176,6 +180,10 @@ export async function validatePost(text, theme, rawData) {
   if (/—/.test(trimmed) || /\s–\s/.test(trimmed)) {
     return { valid: false, reason: "Contains an em/en dash used as a separator, forbidden by style rules" };
   }
+
+  // No links or web addresses in any post (house rule), news context or not.
+  const urls = checkNoUrls(trimmed);
+  if (!urls.ok) return { valid: false, reason: urls.reason };
 
   // Directional/predictive wording that reads like a call, even when framed
   // as "watching". Real drafts said "something brewing", "keep an eye on the
@@ -213,7 +221,9 @@ export async function validatePost(text, theme, rawData) {
   }
 
   if (rawData !== undefined) {
-    const grounding = checkGrounding(trimmed, theme, rawData);
+    // numbers written in a supplied headline count as sourced
+    const groundingData = ctx.news ? [rawData, { headlineNumbers: headlineNumberSources(ctx.news) }] : rawData;
+    const grounding = checkGrounding(trimmed, theme, groundingData);
     if (!grounding.ok) {
       if (process.env.GROUNDING_MODE === "warn") {
         console.warn(`[grounding:warn] ${grounding.reason}`);
@@ -223,7 +233,27 @@ export async function validatePost(text, theme, rawData) {
     }
   }
 
+  if (rawData !== undefined) {
+    const semantic = checkSemantics(trimmed, theme, rawData);
+    if (!semantic.ok) {
+      if (process.env.SEMANTIC_MODE === "warn") {
+        console.warn(`[semantic:warn] ${semantic.reason}`);
+      } else {
+        return { valid: false, reason: `Contradicts source data: ${semantic.reason}` };
+      }
+    }
+  }
+
+  if (rawData !== undefined) {
+    const anomaly = checkAnomaly(trimmed, rawData, { allowNews: Boolean(ctx.news) });
+    if (!anomaly.ok) return { valid: false, reason: anomaly.reason };
+  }
+
+  const newsCheck = checkNews(trimmed, ctx.news);
+  if (!newsCheck.ok) return { valid: false, reason: newsCheck.reason };
+
   const history = await loadHistory();
+
   for (const past of history) {
     const similarity = wordOverlapRatio(trimmed, past.text);
     if (similarity >= DUPLICATE_SIMILARITY_THRESHOLD) {
@@ -234,6 +264,11 @@ export async function validatePost(text, theme, rawData) {
     }
   }
 
+  const fatigue = checkFatigue(trimmed, history);
+  if (!fatigue.ok) {
+    return { valid: false, reason: fatigue.reason };
+  }
+
   return { valid: true };
 }
 
@@ -241,7 +276,7 @@ export async function validatePost(text, theme, rawData) {
  * Add a post to history and return the stored entry (with its `id`).
  * status: "pending" (about to publish) | "published" | "unknown" | "failed".
  */
-export async function recordPost({ theme, text, postId, shareLink, status = "published" }) {
+export async function recordPost({ theme, text, postId, shareLink, status = "published", meta }) {
   const history = await loadHistory();
   const entry = {
     id: randomUUID(),
@@ -251,6 +286,7 @@ export async function recordPost({ theme, text, postId, shareLink, status = "pub
     status,
     postId: postId ?? null,
     shareLink: shareLink ?? null,
+    ...(meta ? { meta } : {}),
   };
   history.unshift(entry);
   await saveHistory(history.slice(0, HISTORY_KEEP));

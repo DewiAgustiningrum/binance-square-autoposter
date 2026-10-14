@@ -15,6 +15,26 @@
 import { generatePost } from "./generate.mjs";
 import { validatePost, HistoryError } from "./validate.mjs";
 import { publishPost } from "./publish.mjs";
+import { createHash } from "node:crypto";
+
+export const VALIDATOR_VERSION = "2.0";
+
+// Audit trail stored with each history entry: lets a published number be
+// traced back to the exact source data and settings that produced it.
+export function buildMeta(draft, text = "") {
+  const json = JSON.stringify(draft.rawData ?? null);
+  return {
+    sourceHash: createHash("sha256").update(json).digest("hex").slice(0, 16),
+    sourceSnapshot: json.length <= 4000 ? draft.rawData : undefined,
+    sourceFetchedAt: draft.fetchedAt,
+    promptVersion: draft.promptVersion,
+    provider: draft.provider,
+    model: draft.model,
+    validatorVersion: VALIDATOR_VERSION,
+    // outlet + title only, never links; `used` = the post names that outlet. Absent when no headline context was supplied
+    headlines: draft.news ? Object.values(draft.news.byToken).flat().map((h) => ({ source: h.source, title: h.title, used: text.includes(h.source) })) : undefined,
+  };
+}
 
 const MAX_ATTEMPTS = 3;
 const BASE_DELAY_MS = 5_000;
@@ -34,6 +54,11 @@ export async function run({
   baseDelayMs = Number(process.env.RETRY_DELAY_MS ?? BASE_DELAY_MS),
 } = {}) {
   let lastFailure = "unknown";
+  // Themes whose draft was rejected in THIS run, and the last reason: the next
+  // attempt avoids those themes (re-rolling the same one tends to repeat the
+  // same mistake) and, if it lands on the same theme anyway, is told why.
+  const rejectedThemes = [];
+  let lastRejection = null;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     console.log(`--- Attempt ${attempt}/${maxAttempts} ---`);
@@ -42,7 +67,7 @@ export async function run({
     // 1. generate (can fail transiently: Binance, Groq+Gemini, thin data)
     let draft;
     try {
-      draft = await generate();
+      draft = await generate({ avoidThemes: [...rejectedThemes], lastRejection });
     } catch (err) {
       lastFailure = `generate failed: ${err.message}`;
       console.error(lastFailure);
@@ -59,20 +84,25 @@ export async function run({
     console.log(`Draft:\n${text}\n`);
 
     // 2. validate (HistoryError propagates: it's infrastructure, not text)
-    const validation = await validate(text, theme, rawData);
+    const validation = await validate(text, theme, rawData, { news: draft.news });
     if (!validation.valid) {
       lastFailure = `validation failed: ${validation.reason}`;
       console.error(`Validation failed: ${validation.reason}`);
+      rejectedThemes.push(theme);
+      lastRejection = { theme, reason: validation.reason };
       if (!isLast) console.error("Regenerating...\n");
       continue;
     }
 
     // 3. publish
     try {
-      const result = await publish({ theme, text });
+      const result = await publish({ theme, text, meta: buildMeta(draft, text) });
       console.log(`Published on attempt ${attempt}. status=${result.status} id=${result.id ?? "n/a"} link=${result.shareLink ?? "n/a"}`);
       if (result.status === "unknown") {
-        console.warn("::warning::Square returned 504: post probably went through but is NOT confirmed. Check Square manually.");
+        // Non-zero on purpose: the run must not look green. The post is probably
+        // live (so we never retry), but it is unconfirmed and a human must check.
+        console.error("::error::Square returned 504: post probably went through but is NOT confirmed. Check Square manually.");
+        return { exitCode: 2, result };
       }
       return { exitCode: 0, result };
     } catch (err) {

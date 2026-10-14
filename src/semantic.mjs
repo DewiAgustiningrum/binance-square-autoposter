@@ -1,0 +1,281 @@
+// src/semantic.mjs
+// Checks that RELATIONSHIPS stated in a post agree with the data, which
+// grounding.mjs deliberately does not do (it only matches number magnitudes).
+// Conservative by design: it only judges claims it can attribute to a ticker,
+// and stays silent otherwise, so it rejects wrong claims rather than style.
+
+import { extractCashtags } from "./cashtags.mjs";
+import { buildFacts, rangePct } from "./facts.mjs";
+
+const EPS = 1e-9;
+
+// Sentence split that keeps "$1,234.56" and "1.3" intact.
+function sentences(text) {
+  return text
+    .split(/\n+|(?<=[.!?])\s+(?=[A-Z$])/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function clauses(sentence) {
+  return sentence.split(/[,;]|\band\b|\bwhile\b|\bbut\b/i).map((c) => c.trim()).filter(Boolean);
+}
+
+// Mentions of known assets in a clause, with or without "$" ("BTC", "$BTC"),
+// in order of appearance. Plain uppercase only, so "bitcoin" prose is ignored.
+function mentionedAssets(clause, known) {
+  const found = [];
+  for (const tag of known) {
+    const base = tag.slice(1);
+    const re = new RegExp(`(?<![A-Za-z0-9])\\$?${base}(?![A-Za-z0-9])`, "g");
+    for (const m of clause.matchAll(re)) found.push({ tag, index: m.index });
+  }
+  return found.sort((a, b) => a.index - b.index).map((f) => f.tag);
+}
+
+// ---- claim patterns ------------------------------------------------------
+const RANGE_MOST = /\b(?:widest|broadest|wildest|biggest|largest)\s+(?:\w+\s+){0,2}(?:swing|range|band|spread)\b|\bmost\s+volatile\b|\b(?:widest|broadest|wildest)\b|\brange\s+stole\s+the\s+show\b/i;
+const RANGE_LEAST = /\b(?:narrowest|tightest|smallest)\s+(?:\w+\s+){0,2}(?:swing|range|band|spread)\b|\bleast\s+volatile\b|\b(?:tightest|narrowest)\b/i;
+const VOLUME_MOST = /\b(?:biggest|largest|heftiest|highest|heaviest|most)\s+(?:\w+\s+){0,2}(?:volume|trade\s+flow|flow|turnover)\b|\bpumped\s+the\s+most\s+volume\b|\bchewing\s+through\s+the\s+most\s+volume\b/i;
+const VOLUME_QUOTE = /\b(?:dollar|usdt|quote|notional)\b/i;
+const MOVE_MOST = /\b(?:biggest|largest|sharpest)\s+(?:\w+\s+){0,2}(?:move|change)\b/i;
+const DROP_MOST = /\b(?:biggest|largest|sharpest|steepest)\s+(?:\w+\s+){0,2}(?:drop|fall|loss|hit|decline)\b|\bdropped\s+the\s+hardest\b|\bfell\s+the\s+hardest\b/i;
+const GAIN_MOST = /\b(?:biggest|largest|sharpest)\s+(?:\w+\s+){0,2}(?:gain|jump|rise|rally)\b/i;
+const NO_DATA_CLAIMS = /\b(?:trade\s+count|number\s+of\s+trades|trades\s+count)\b/i;
+// Binance Square is the social feed, not where assets trade.
+// bStocks trade 24/7: "closed at" reads like a stock-exchange close, but the price is a rolling 24h ticker.
+const FAKE_CLOSE = /\bclos(?:ed|ing)\s+(?:at|the\s+(?:day|session))\b/i;
+const WRONG_VENUE = /\btrad(?:e|es|ed|ing)\b[^.]{0,40}\bon\s+binance\s+square\b/i;
+const TIMING_CLAIMS = /\b(?:through(?:out)?\s+the\s+night|overnight|after[-\s]?hours|off[-\s]?hours|outside\s+(?:of\s+)?(?:regular\s+|normal\s+|nyse\s+|market\s+|trading\s+)+hours|after\s+(?:the\s+)?(?:regular\s+)?market\s+close|while\s+(?:regular\s+|us\s+|wall\s+street\s+)?markets?\s+(?:were|are)\s+(?:asleep|closed))\b/i;
+
+const FRACTIONS = [
+  [/\b(?:a|one)[-\s]+third\b/i, 1 / 3], [/\btwo[-\s]+thirds\b/i, 2 / 3], [/\bthree[-\s]+quarters\b/i, 0.75],
+  [/\b(?:a|one)[-\s]+quarter\b/i, 0.25], [/\bhalf\b/i, 0.5], [/\b(?:a|one)[-\s]+fifth\b/i, 0.2], [/\b(?:a|one)[-\s]+tenth\b/i, 0.1],
+];
+const FRACTION_WORD = "((?:a|one)[-\\s]+third|two[-\\s]+thirds|three[-\\s]+quarters|(?:a|one)[-\\s]+quarter|half|(?:a|one)[-\\s]+fifth|(?:a|one)[-\\s]+tenth)";
+const TIGHTER = new RegExp(`${FRACTION_WORD}\\s+(tighter|narrower|smaller|lower|wider|bigger|larger)\\b`, "i");
+const OF_USUAL = new RegExp(`${FRACTION_WORD}\\s+of\\s+(?:its\\s+|the\\s+)?(?:usual|typical|normal|average)`, "i");
+// "70% tighter", "40% wider": a percentage claim, checked against the real ratio
+const PCT_TIGHTER = /(\d+(?:\.\d+)?)\s?%\s+(tighter|narrower|smaller|lower|wider|bigger|larger)\b/i;
+const PCT_TOL = 6; // percentage points; the model rounds (69.8 -> 70)
+// "five times its usual range", "2.7 x": a multiple of the usual range
+const WORD_NUM = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+const TIMES = /\b(\d+(?:\.\d+)?|two|three|four|five|six|seven|eight|nine|ten)\s?(?:\u00d7|x|times)(?![a-z])|\b(twice)\b/i;
+const RATIO_TOL = 0.07;
+
+function fractionOf(str) {
+  for (const [re, v] of FRACTIONS) if (re.test(str)) return v;
+  return null;
+}
+
+// ---- checks ---------------------------------------------------------------
+function checkSnapshot(text, facts) {
+  let current = null; // most recent cashtag seen, carries across sentences
+  const problems = [];
+  const known = facts.cashtags;
+
+  for (const sentence of sentences(text)) {
+    for (const clause of clauses(sentence)) {
+      const tags = mentionedAssets(clause, known);
+      if (tags.length > 0) current = tags[tags.length - 1];
+      const subject = tags.length > 0 ? tags[0] : current;
+
+      if (RANGE_MOST.test(clause) && subject && facts.widestRange) {
+        if (Math.abs(facts.rangePct[subject] - facts.widestRange.score) > EPS) {
+          problems.push(`${subject} called the widest range, but ${facts.widestRange.cashtag} had it (${facts.widestRange.score.toFixed(2)}% of price)`);
+        }
+      }
+      if (RANGE_LEAST.test(clause) && subject && facts.narrowestRange) {
+        if (Math.abs(facts.rangePct[subject] - facts.narrowestRange.score) > EPS) {
+          problems.push(`${subject} called the narrowest range, but ${facts.narrowestRange.cashtag} had it`);
+        }
+      }
+      if (VOLUME_MOST.test(clause)) {
+        if (!VOLUME_QUOTE.test(clause)) {
+          problems.push("volume ranked without a USDT/dollar qualifier (token units are not comparable across assets)");
+        } else if (subject && facts.largestQuoteVolume && subject !== facts.largestQuoteVolume.cashtag) {
+          problems.push(`${subject} called the largest dollar volume, but ${facts.largestQuoteVolume.cashtag} had it`);
+        }
+      }
+      if (MOVE_MOST.test(clause) && subject && facts.largestAbsMove && subject !== facts.largestAbsMove.cashtag) {
+        problems.push(`${subject} called the biggest move, but ${facts.largestAbsMove.cashtag} had it`);
+      }
+      if (DROP_MOST.test(clause) && subject && facts.biggestDecliner && subject !== facts.biggestDecliner.cashtag) {
+        problems.push(`${subject} called the biggest drop, but ${facts.biggestDecliner.cashtag} had it`);
+      }
+      if (GAIN_MOST.test(clause) && subject && facts.biggestGainer && subject !== facts.biggestGainer.cashtag) {
+        problems.push(`${subject} called the biggest gain, but ${facts.biggestGainer.cashtag} had it`);
+      }
+    }
+  }
+  return problems;
+}
+
+function checkRatio(text, facts) {
+  let current = null;
+  const problems = [];
+  const entries = Object.keys(facts.ratios);
+
+  for (const sentence of sentences(text)) {
+    const tags = [...extractCashtags(sentence)].filter((t) => entries.includes(t));
+    if (tags.length > 0) current = tags[0];
+    const subject = tags.length > 0 ? tags[0] : current;
+    if (!subject) continue;
+    const ratio = facts.ratios[subject];
+
+    const rel = sentence.match(TIGHTER);
+    if (rel) {
+      const claimed = fractionOf(rel[1]);
+      const wider = /wider|bigger|larger/i.test(rel[2]);
+      const actual = wider ? ratio - 1 : 1 - ratio;
+      if (claimed !== null && Math.abs(actual - claimed) > RATIO_TOL) {
+        problems.push(`${subject}: "${rel[0]}" but the real difference is ${(actual * 100).toFixed(0)}%`);
+      }
+    }
+    const pct = sentence.match(PCT_TIGHTER);
+    if (pct) {
+      const claimed = Number(pct[1]);
+      const wider = /wider|bigger|larger/i.test(pct[2]);
+      const actual = (wider ? ratio - 1 : 1 - ratio) * 100;
+      if (Math.abs(actual - claimed) > PCT_TOL) {
+        problems.push(`${subject}: "${pct[0]}" but the real difference is ${actual.toFixed(0)}%`);
+      }
+    }
+    const times = sentence.match(TIMES);
+    if (times && ratio !== undefined) {
+      const raw = times[1] ?? times[2];
+      const claimed = /^twice$/i.test(raw) ? 2 : WORD_NUM[raw.toLowerCase()] ?? Number(raw);
+      if (Number.isFinite(claimed) && claimed > 1 && Math.abs(ratio - claimed) > Math.max(0.2, 0.1 * ratio)) {
+        problems.push(`${subject}: "${times[0]}" but today's range is ${ratio.toFixed(2)}x its usual`);
+      }
+    }
+    const of = sentence.match(OF_USUAL);
+    if (of) {
+      const claimed = fractionOf(of[1]);
+      if (claimed !== null && Math.abs(ratio - claimed) > RATIO_TOL) {
+        problems.push(`${subject}: "${of[0]}" but today's range is ${ratio.toFixed(2)}x its usual`);
+      }
+    }
+  }
+  return problems;
+}
+
+const MARKET = "(?:broader\\s+market|alts?|altcoins?|basket|median)";
+const BTC_WORD = "(?:\\$?btc|bitcoin)";
+const WIN = "(?:ahead\\s+of|outperform\\w*|beat\\w*|beating|stronger\\s+than|pulling\\s+ahead\\s+of)";
+const BTC_AHEAD = new RegExp(`${BTC_WORD}(?:'s)?\\b[^.]{0,30}\\b${WIN}\\b[^.]{0,30}\\b${MARKET}`, "i");
+const ALTS_AHEAD = new RegExp(`\\b${MARKET}\\b[^.]{0,30}\\b${WIN}\\b[^.]{0,20}${BTC_WORD}\\b`, "i");
+
+function checkRelative(text, facts) {
+  const problems = [];
+  for (const sentence of sentences(text)) {
+    for (const clause of clauses(sentence)) {
+      if (BTC_AHEAD.test(clause) && !facts.btcAheadOfAlts) {
+        problems.push("says BTC is ahead of the alts/market, but the median alt is not behind BTC");
+      }
+      if (ALTS_AHEAD.test(clause) && !facts.altsAheadOfBtc) {
+        problems.push("says the alts are ahead of BTC, but the data shows otherwise");
+      }
+    }
+  }
+  return problems;
+}
+
+const ALT_LED = /\balt[-\s]?led\b/i;
+const BTC_LED = /\b(?:btc|bitcoin)[-\s]?led\b/i;
+// "BTC is leading the drop" is read both ways (fell the most / held up best),
+// so it is rejected outright instead of being judged.
+const LED_THE_FALL = /\b(?:led|leading|leads?)\s+the\s+(?:drop|decline|sell-?off|fall|losses|dump|slide)\b/i;
+// Internal label tokens must be written as plain words, not pasted into prose.
+const LABEL_LEAK = /\b(?:broad-up|broad-down|alts-ahead|btc-ahead|in-line)\b/i;
+const BROAD_UP = /\b(?:broad|market-?wide|across\s+the\s+board)\s+(?:rally|rebound|gains?|strength|green)\b/i;
+const BROAD_DOWN = /\b(?:broad|market-?wide|across\s+the\s+board)\s+(?:sell-?off|decline|losses|weakness|red|drop)\b/i;
+
+// "No clear majority" is false when most alts did move one way (the "mixed"
+// label only means fewer than 70% did).
+const NO_MAJORITY = /\bno\s+(?:clear\s+)?majority\b/i;
+const MAJORITY_PCT = 60;
+// The data has no baseline for "normal" volatility, so the typical range cannot
+// be called modest, wide, calm, etc.; only its number can be stated.
+const RANGE_JUDGEMENT = /\b(?:modest|tame|calm|quiet|muted|subdued|wide|wild|large|small|narrow|big|huge|massive|choppy)\b/i;
+const RANGE_WORD = /\b(?:range|swings?)\b/i;
+
+// "Bitcoin the only token showing a gain" is false if any alt rose; "every alt fell" is
+// false if any alt did not. The breadth percentages say exactly how many did.
+const ONLY_UP = /\b(?:the\s+)?only\s+(?:token|coin|asset|one|major|name)\b[^.]{0,40}\b(?:gain|gains|green|higher|up|rise|rising|rose|positive)\b|\b(?:only|just)\s+(?:\$?btc|bitcoin)\b[^.]{0,30}\b(?:gain|gains|green|higher|up|rise|rising|rose|positive)\b/i;
+const ALL_DOWN = /\b(?:all|every|each)\s+(?:of\s+)?(?:the\s+)?(?:alts?|altcoins?|tokens?|coins?)\b[^.]{0,25}\b(?:fell|down|dropped|red|lower|declined|slid)\b|\bnot\s+a\s+single\s+(?:alt|altcoin|token|coin)\b[^.]{0,25}\b(?:up|green|higher|gain)/i;
+
+function checkRegime(text, facts) {
+  const problems = checkRelative(text, facts);
+  if (NO_MAJORITY.test(text)) {
+    const down = facts.breadthDownPct ?? 100 - facts.breadthUpPct;
+    if (Math.max(facts.breadthUpPct, down) >= MAJORITY_PCT) {
+      problems.push(`says "no clear majority", but ${Math.max(facts.breadthUpPct, down)}% of alts moved the same way; say "most alts" instead`);
+    }
+  }
+  for (const sentence of sentences(text)) {
+    if (RANGE_WORD.test(sentence) && RANGE_JUDGEMENT.test(sentence)) {
+      problems.push("judges the size of the typical range (modest/wide/...) with no baseline; state the number only");
+      break;
+    }
+  }
+  if (ONLY_UP.test(text) && facts.breadthUpPct > 0) {
+    problems.push(`says only one token rose, but ${facts.breadthUpPct}% of the alts were also up`);
+  }
+  if (ALL_DOWN.test(text) && (facts.breadthDownPct ?? 100) < 100) {
+    problems.push(`says every alt fell, but only ${facts.breadthDownPct}% of the alts were down`);
+  }
+  if (LABEL_LEAK.test(text)) problems.push("pastes an internal label (e.g. broad-down) into the post; say it in plain words");
+  if (LED_THE_FALL.test(text)) problems.push('says someone "led the drop"; ambiguous, say who fell more or who held up better');
+  if (ALT_LED.test(text) && facts.leadership !== "alts-ahead") problems.push(`calls it alt-led, but leadership is ${facts.leadership}`);
+  if (BTC_LED.test(text) && facts.leadership !== "btc-ahead") problems.push(`calls it BTC-led, but leadership is ${facts.leadership}`);
+  if (BROAD_UP.test(text) && facts.direction !== "broad-up") problems.push(`calls it a broad rally, but direction is ${facts.direction} (${facts.breadthUpPct}% of alts up)`);
+  if (BROAD_DOWN.test(text) && facts.direction !== "broad-down") problems.push(`calls it a broad sell-off, but direction is ${facts.direction} (${facts.breadthUpPct}% of alts up)`);
+  return problems;
+}
+
+const SAYS_SUPPORTS = /\b(?:data|numbers|tape|market)\s+(?:backs?|supports?|confirms?)\b|\bbacks?\s+(?:it\s+)?up\b|\b(?:supports?|confirms?)\s+the\s+(?:headline|story|narrative)\b|\b(?:matches?|consistent\s+with|in\s+line\s+with|lines?\s+up\s+with)\s+the\s+(?:headline|story|narrative)\b/i;
+const SAYS_CONTRADICTS = /\bcontradicts?\b|\b(?:doesn'?t|does\s+not|didn'?t)\s+(?:back|support|match|confirm)\b|\bat\s+odds\b|\bruns?\s+against\b|\bpush(?:es)?\s+back\b|\bnot\s+what\s+the\s+data\b|\bopposite\b|\bother\s+way\b|\bagainst\s+the\s+(?:headline|story|narrative)\b/i;
+
+const SAYS_PARTLY = /\b(?:partly|partially|only\s+in\s+part|only\s+partly|mixed)\b/i;
+
+function checkNarrative(text, facts) {
+  const problems = checkRegime(text, facts);
+  if (!SAYS_SUPPORTS.test(text) && !SAYS_CONTRADICTS.test(text) && !SAYS_PARTLY.test(text)) {
+    problems.push('does not state the verdict in plain words ("supports", "contradicts" or "only partly matches")');
+  }
+  if (SAYS_PARTLY.test(text) && facts.agreement !== "mixed" && !SAYS_SUPPORTS.test(text) && !SAYS_CONTRADICTS.test(text)) {
+    problems.push(`calls it only a partial match, but the verdict is ${facts.agreement}`);
+  }
+  if (SAYS_SUPPORTS.test(text) && facts.agreement !== "supports") problems.push(`says the data backs the headline, but the verdict is ${facts.agreement}`);
+  if (SAYS_CONTRADICTS.test(text) && facts.agreement !== "contradicts") problems.push(`says the data contradicts the headline, but the verdict is ${facts.agreement}`);
+  return problems;
+}
+
+/**
+ * @returns {{ ok: true } | { ok: false, reason: string }}
+ */
+export function checkSemantics(text, theme, rawData) {
+  const problems = [];
+
+  if (NO_DATA_CLAIMS.test(text)) problems.push("mentions trade counts, which the data does not contain");
+  if (theme === "tokenized-stocks" && FAKE_CLOSE.test(text)) problems.push('says "closed at", but the price is a rolling 24h ticker, not a session close');
+  if (WRONG_VENUE.test(text)) problems.push("says assets trade on Binance Square (Square is the social feed; they trade on Binance)");
+  if (theme === "tokenized-stocks" && TIMING_CLAIMS.test(text)) {
+    problems.push("claims activity happened overnight/after hours; 24h volume does not show when it happened");
+  }
+
+  const facts = buildFacts(theme, rawData);
+  if (facts?.kind === "snapshot") problems.push(...checkSnapshot(text, facts));
+  if (facts?.kind === "ratio") problems.push(...checkRatio(text, facts));
+  if (facts?.kind === "relative") problems.push(...checkRelative(text, facts));
+  if (facts?.kind === "regime") problems.push(...checkRegime(text, facts));
+  if (facts?.kind === "narrative") problems.push(...checkNarrative(text, facts));
+
+  if (problems.length > 0) {
+    return { ok: false, reason: [...new Set(problems)].slice(0, 3).join("; ") };
+  }
+  return { ok: true };
+}
+
+export { rangePct };

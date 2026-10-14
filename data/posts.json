@@ -1,0 +1,152 @@
+[
+  {
+    "id": "9cd95965-eb84-414f-b488-5d5ddc32cf38",
+    "date": "2026-10-14T04:53:02.262Z",
+    "theme": "breakout-watch",
+    "text": "$TRX swung about 40% wider than its usual daily range, hitting a 1.51% spread in the last 24 hours. The price nudged up to $0.3314, up 0.39% on the day. That's a noticeably wider move compared to its week-average range.",
+    "status": "published",
+    "postId": 377087519703620,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377087519703620?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "731d053ec3ae864e",
+      "sourceSnapshot": [
+        {
+          "symbol": "TRXUSDT",
+          "cashtag": "$TRX",
+          "lastPrice": 0.3314,
+          "priceChangePercent": 0.394,
+          "last24hRangePct": 1.5092061575611244,
+          "avgRangePct": 1.0797599751533318,
+          "ratio": 1.3977237462861216
+        }
+      ],
+      "sourceFetchedAt": "2026-10-14T04:53:01.707Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
+    "id": "3874f816-5045-41a4-9fc5-c4a6b4d5354a",
+    "date": "2026-10-13T22:44:34.006Z",
+    "theme": "quiet-movers",
+    "text": "$NEAR's been moving in a tighter box today, its 24-hour swing was about 34% tighter than the typical week-long range. The token slipped a bit, down roughly 1.1%, and closed around $5.07.",
+    "status": "published",
+    "postId": 376996964883068,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376996964883068?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "a805d797accbac74",
+      "sourceSnapshot": [
+        {
+          "symbol": "NEARUSDT",
+          "cashtag": "$NEAR",
+          "lastPrice": 5.074,
+          "priceChangePercent": -1.092,
+          "last24hRangePct": 9.422432485708665,
+          "avgRangePct": 14.25778337532496,
+          "ratio": 0.6608623681304816
+        }
+      ],
+      "sourceFetchedAt": "2026-10-13T22:44:33.302Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
+    "id": "0b4989fb-cd35-4766-a055-7c2750d5b513",
+    "date": "2026-10-13T14:10:48.623Z",
+    "theme": "market-regime",
+    "text": "$BTC up 0.66% while most alts got hammered, 95% fell, only 5% nudged higher. The median alt dropped 4.23%, so Bitcoin held up better than the pack. Around 19 alts were tracked, and their typical 24-hour swing was about 10.47% high-low. That's a broad decline across the market, with Bitcoin the only token showing a modest gain. The alt crowd was clearly in the red zone.",
+    "status": "published",
+    "postId": 376870702992380,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376870702992380?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "a7e3e5799cd7c877",
+      "sourceSnapshot": {
+        "btcChangePercent": 0.66,
+        "altsMedianChangePercent": -4.23,
+        "altsCount": 19,
+        "breadthUpPct": 5,
+        "breadthDownPct": 95,
+        "medianRangePct": 10.47,
+        "direction": "broad-down",
+        "leadership": "btc-ahead"
+      },
+      "sourceFetchedAt": "2026-10-13T14:10:48.051Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
+    "id": "3829a0fd-d814-49fb-84d8-60bfe5437937",
+    "date": "2026-10-13T00:39:01.908Z",
+    "theme": "morning-brief",
+    "text": "$BTC slipped 2.8% to $81,552.93, trading between $84,352 high and $81,260.81 low. Its 24-hour range was about 3.8% of price, and it handled the most USDT volume at roughly $1.166 billion.\n\n$ETH fell 4.3% to $2,432.77, the biggest absolute change of the three. The coin swung from $2,579.88 down to $2,413.65, a 6.83% range, the widest slice. Quote volume hit $756 million.\n\n$BNB dropped 3.36% to $728.63, bouncing between $758.03 and $725.00, a 4.53% spread. Its USDT turnover was about $86.5 million.\n\nCointelegraph noted miners are seeing higher AI-related financing costs.",
+    "status": "published",
+    "postId": 376671200747892,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/376671200747892?r=HWHSII2G&l=en",
+    "meta": {
+      "sourceHash": "6d54efcaf67055e6",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 81552.93,
+          "priceChangePercent": -2.787,
+          "highPrice": 84352,
+          "lowPrice": 81260.81,
+          "volume": 14031.52618,
+          "quoteVolume": 1166178058.7890556
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2432.77,
+          "priceChangePercent": -4.322,
+          "highPrice": 2579.88,
+          "lowPrice": 2413.65,
+          "volume": 299494.2861,
+          "quoteVolume": 756307178.360895
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 728.63,
+          "priceChangePercent": -3.362,
+          "highPrice": 758.03,
+          "lowPrice": 725,
+          "volume": 115829.94,
+          "quoteVolume": 86498020.71082
+        }
+      ],
+      "sourceFetchedAt": "2026-10-13T00:39:00.341Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0",
+      "headlines": [
+        {
+          "source": "Cointelegraph",
+          "title": "Bitcoin miners face widening AI financing costs as lenders scrutinize deals"
+        },
+        {
+          "source": "Decrypt",
+          "title": "Bitcoin Spooked? Crypto Fear and Greed Index Drops to Pre-Rally August Lows"
+        },
+        {
+          "source": "The Block",
+          "title": "Bitmine adds 12,532 ETH as Tom Lee flags potential ‘largest-ever’ crypto bull market"
+        },
+        {
+          "source": "Decrypt",
+          "title": "Bitmine Adds $32M in Ethereum as Tom Lee Says Firm Is Nearly 'Done Stacking'"
+        }
+      ]
+    }
+  }
+]

@@ -11,6 +11,7 @@
 // is Binance's public read-only market-data mirror with the same response
 // shape and no geo-restriction.
 import { fetchWithTimeout } from "../http.mjs";
+import { isThinExtreme } from "../anomaly.mjs";
 
 const BASE_URL = "https://data-api.binance.vision";
 const SYMBOLS = ["BTCUSDT", "ETHUSDT", "BNBUSDT"];
@@ -172,7 +173,9 @@ export async function getDynamicBasket(size = 20) {
  * not just a flat ranking.
  */
 export async function getLeadersLaggards({ basketSize = 20, topN = 3 } = {}) {
-  const basket = await getDynamicBasket(basketSize);
+  // Thin-liquidity extreme movers (e.g. +126% on a small volume) are dropped
+  // here so the bot never promotes a pump; see anomaly.mjs.
+  const basket = (await getDynamicBasket(basketSize)).filter((t) => !isThinExtreme(t));
   const sorted = [...basket].sort((a, b) => b.priceChangePercent - a.priceChangePercent);
 
   return {
@@ -190,14 +193,11 @@ export async function getLeadersLaggards({ basketSize = 20, topN = 3 } = {}) {
  * fetches klines per token — 10 extra calls is fine, 20+ starts adding
  * meaningful latency.
  *
- * Caveat (not fully resolved): `last24hRangePct` comes from ticker/24hr,
- * a rolling window ending now — e.g. if it's 09:00, that's 09:00 yesterday
- * to 09:00 today. `avgRangePct` comes from daily klines, which are UTC
- * calendar-day candles (00:00-00:00). These aren't quite the same window,
- * so the ratio is directionally useful but not a precise apples-to-apples
- * comparison. Fixing properly would mean switching one side to match the
- * other (e.g. computing "today so far" from an intraday kline query
- * instead of the rolling ticker) — not done here to keep this simple.
+ * Both sides now use the SAME kind of window: hourly klines are cut into
+ * consecutive 24-hour windows counted back from now (window 0 = the last 24h,
+ * window 1 = the 24h before that, and so on). The old version compared the
+ * rolling-24h ticker range with UTC calendar-day candles, which are different
+ * windows, so the ratio was only directionally right.
  */
 // A token needs this many full past days for its "usual range" to mean anything
 // (a listing from 2 days ago has no usual range).
@@ -207,17 +207,47 @@ const MIN_HISTORY_DAYS = 5;
 export const BREAKOUT_MIN_RATIO = 1.3;
 export const QUIET_MAX_RATIO = 0.8;
 
+const WINDOW_HOURS = 24;
+
+/**
+ * Cuts hourly candles (oldest first, last one = the forming hour) into
+ * consecutive 24h windows counted back from the newest candle.
+ * Returns the range % of the latest window and of each earlier window
+ * (up to `days`), or null if there are fewer than MIN_HISTORY_DAYS earlier
+ * windows. Range % = (highest high - lowest low) / last close of the window.
+ */
+export function rollingRanges(hourly, days) {
+  const windows = [];
+  for (let k = 0; k <= days; k++) {
+    const end = hourly.length - WINDOW_HOURS * k;
+    const start = end - WINDOW_HOURS;
+    if (start < 0) break;
+    const slice = hourly.slice(start, end);
+    const high = Math.max(...slice.map((c) => c.high));
+    const low = Math.min(...slice.map((c) => c.low));
+    const ref = slice[slice.length - 1].close;
+    if (!(ref > 0)) return null;
+    windows.push(((high - low) / ref) * 100);
+  }
+  const past = windows.slice(1);
+  if (past.length < MIN_HISTORY_DAYS) return null;
+  return { current: windows[0], past };
+}
+
 async function getRangeAnomalies({ basketSize = 10, historyDays = 7 } = {}) {
-  const basket = await getDynamicBasket(basketSize);
+  // Thin-volume extreme movers are dropped here too (not only in Leaders &
+  // Laggards): otherwise Breakout Watch surfaces them and the post is rejected
+  // by the extreme-mover guard, wasting an attempt.
+  const basket = (await getDynamicBasket(basketSize)).filter((t) => !isThinExtreme(t));
 
   // allSettled: one pair's failing klines request shouldn't sink the theme.
   const settled = await Promise.allSettled(
     basket.map(async (t) => {
-      const klines = await fetchKlines(t.symbol, "1d", historyDays + 1);
-      const pastDays = klines.slice(0, -1); // exclude today's still-forming candle
-      if (pastDays.length < MIN_HISTORY_DAYS) return null;
-      const avgRangePct = average(pastDays.map((k) => ((k.high - k.low) / k.close) * 100));
-      const last24hRangePct = ((t.highPrice - t.lowPrice) / t.lastPrice) * 100;
+      const hourly = await fetchKlines(t.symbol, "1h", WINDOW_HOURS * (historyDays + 1));
+      const ranges = rollingRanges(hourly, historyDays);
+      if (!ranges) return null;
+      const avgRangePct = average(ranges.past);
+      const last24hRangePct = ranges.current;
 
       return {
         symbol: t.symbol,
@@ -278,6 +308,51 @@ export async function getRelativeStrength({ basketSize = 20 } = {}) {
     altsMedianChangePercent: median(alts.map((t) => t.priceChangePercent)),
     altsCount: alts.length,
   };
+}
+
+/**
+ * Theme 8 - Market Regime.
+ * Classifies the last 24h from the basket in code, so the LLM explains labels
+ * instead of inventing them: direction (how broad the move is) and leadership
+ * (whether the typical alt did better or worse than BTC; on a down day "ahead" means it fell LESS). Descriptive only, no
+ * forecast. Thresholds are deliberately plain and live here, not in a prompt.
+ */
+export const BROAD_BREADTH_PCT = 70; // share of alts moving the same way to call a move "broad"
+export const LEADERSHIP_SPREAD_PCT = 1; // median-alt minus BTC change needed to call someone "leading"
+
+const round2 = (n) => Math.round(n * 100) / 100;
+
+export function buildRegime(basket) {
+  const btc = basket.find((t) => t.symbol === "BTCUSDT");
+  const alts = basket.filter((t) => t.symbol !== "BTCUSDT");
+  if (!btc) throw new Error("market-regime: BTC missing from basket");
+  if (alts.length < 5) throw new Error("market-regime: too few alts to classify");
+
+  const altsMedian = median(alts.map((t) => t.priceChangePercent));
+  const breadthUpPct = Math.round((alts.filter((t) => t.priceChangePercent > 0).length / alts.length) * 100);
+  const breadthDownPct = Math.round((alts.filter((t) => t.priceChangePercent < 0).length / alts.length) * 100);
+  const medianRangePct = median(alts.map((t) => ((t.highPrice - t.lowPrice) / t.lastPrice) * 100));
+  const spread = altsMedian - btc.priceChangePercent;
+
+  const direction =
+    breadthUpPct >= BROAD_BREADTH_PCT ? "broad-up" : breadthUpPct <= 100 - BROAD_BREADTH_PCT ? "broad-down" : "mixed";
+  const leadership =
+    spread >= LEADERSHIP_SPREAD_PCT ? "alts-ahead" : spread <= -LEADERSHIP_SPREAD_PCT ? "btc-ahead" : "in-line";
+
+  return {
+    btcChangePercent: round2(btc.priceChangePercent),
+    altsMedianChangePercent: round2(altsMedian),
+    altsCount: alts.length,
+    breadthUpPct,
+    breadthDownPct,
+    medianRangePct: round2(medianRangePct),
+    direction,
+    leadership,
+  };
+}
+
+export async function getMarketRegime({ basketSize = 20 } = {}) {
+  return buildRegime(await getDynamicBasket(basketSize));
 }
 
 // Standalone test: `node src/sources/market.mjs`

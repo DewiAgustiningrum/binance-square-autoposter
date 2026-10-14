@@ -101,7 +101,41 @@ test("HistoryError is fatal and propagates", async () => {
   await assert.rejects(silently(() => run(deps)), HistoryError);
 });
 
-test("504 'unknown' result is a (warned) success, exit 0", async () => {
-  const { deps } = harness({ publish: async () => ({ id: null, shareLink: null, status: "unknown" }) });
-  assert.equal((await silently(() => run(deps))).exitCode, 0);
+test("504 'unknown' result exits non-zero (so the run is not green) and is not retried", async () => {
+  const { calls, deps } = harness({ publish: async () => { calls.publish++; return { id: null, shareLink: null, status: "unknown" }; } });
+  const r = await silently(() => run(deps));
+  assert.equal(r.exitCode, 2);
+  assert.equal(calls.publish, 1);
+});
+
+test("buildMeta records provider, model, prompt version and a stable source hash", async () => {
+  const { buildMeta } = await import("../src/run.mjs");
+  const draft = { rawData: [{ cashtag: "$BTC", lastPrice: 1 }], fetchedAt: "2026-10-10T00:00:00.000Z", promptVersion: "2.0", provider: "gemini", model: "gemini-2.5-flash" };
+  const a = buildMeta(draft);
+  assert.equal(a.provider, "gemini");
+  assert.equal(a.model, "gemini-2.5-flash");
+  assert.equal(a.sourceFetchedAt, "2026-10-10T00:00:00.000Z");
+  assert.deepEqual(a.sourceSnapshot, draft.rawData);
+  assert.equal(a.sourceHash, buildMeta({ ...draft }).sourceHash);
+});
+
+test("after a rejected draft the next attempt avoids that theme and is told why", async () => {
+  const seen = [];
+  const { deps } = harness({
+    generate: async (opts) => { seen.push(opts); return { ...DRAFT, theme: seen.length === 1 ? "tokenized-stocks" : "daily-recap" }; },
+    validate: async (_t, theme) => (theme === "tokenized-stocks" ? { valid: false, reason: "says assets trade on Binance Square" } : { valid: true }),
+  });
+  const r = await silently(() => run(deps));
+  assert.equal(r.exitCode, 0);
+  assert.deepEqual(seen[0], { avoidThemes: [], lastRejection: null });
+  assert.deepEqual(seen[1].avoidThemes, ["tokenized-stocks"]);
+  assert.deepEqual(seen[1].lastRejection, { theme: "tokenized-stocks", reason: "says assets trade on Binance Square" });
+});
+
+test("buildMeta marks which supplied headlines the post actually names", async () => {
+  const { buildMeta } = await import("../src/run.mjs");
+  const draft = { rawData: [], fetchedAt: "x", promptVersion: "2.0", news: { byToken: { $BTC: [{ source: "Cointelegraph", title: "Bitcoin miners face widening AI financing costs" }, { source: "Decrypt", title: "Fear and Greed Index drops to August lows" }] } } };
+  const m = buildMeta(draft, "Cointelegraph noted miners face higher financing costs.");
+  assert.deepEqual(m.headlines.map((h) => [h.source, h.used]), [["Cointelegraph", true], ["Decrypt", false]]);
+  assert.equal(buildMeta({ rawData: [], fetchedAt: "x", promptVersion: "2.0" }, "text").headlines, undefined);
 });

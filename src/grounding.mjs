@@ -19,9 +19,12 @@ import { extractCashtags, stripCashtags } from "./cashtags.mjs";
 // field in that theme's data (relative-strength is computed from BTC and ETH).
 const THEME_EXTRA_CASHTAGS = {
   "relative-strength": ["$BTC", "$ETH"],
+  // regime data is a computed summary (BTC vs the alts as a group), no per-asset rows
+  "market-regime": ["$BTC"],
+  "data-vs-narrative": ["$BTC"],
 };
 
-const SUFFIX_MULT = { k: 1e3, m: 1e6, b: 1e9 };
+const SUFFIX_MULT = { k: 1e3, m: 1e6, b: 1e9, thousand: 1e3, million: 1e6, billion: 1e9 };
 
 /** All cashtag fields found anywhere in the source data. */
 export function collectSourceCashtags(data, out = new Set()) {
@@ -55,8 +58,8 @@ export function collectSourceNumbers(data, out = []) {
   return out;
 }
 
-// $1,234.56 | 12.3% | 1.42 B | 12.8k | 0.00583
-const NUMBER_RE = /(\$)?(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(\s?%|\s?[KkMmBb](?![A-Za-z]))?/g;
+// $1,234.56 | 12.3% | 1.42 B | 1.42 billion | 3.72 million | 12.8k | 0.00583
+const NUMBER_RE = /(\$)?(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(\s?%|\s?(?:thousand|million|billion)\b|\s?[KkMmBb](?![A-Za-z]))?/g;
 
 /** Numbers in `text` that the grounding check cares about. */
 export function extractSignificantNumbers(text) {

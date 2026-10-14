@@ -1,0 +1,83 @@
+// src/fatigue.mjs
+// Guards against repetitive voice: hype words, stock closing phrases, and a
+// closing sentence that repeats one used in recent posts. Complements the
+// word-overlap duplicate check in validate.mjs, which only sees whole-post copies.
+
+const HYPE = /\b(?:explod\w*|rocket\w*|skyrocket\w*|moon(?:ing|ed)?|parabolic|bloodbath|hammered|carnage|slaughter(?:ed)?|obliterated|wiped\s+out|to\s+the\s+moon)\b/i;
+
+// Stock closings observed repeatedly in published posts.
+const STOCK_CLOSINGS = [
+  /nothing\s+(?:wild|dramatic)/i,
+  /no\s+big\s+drama/i,
+  /quiet\s+grind/i,
+  /calm\s+day/i,
+  /rough\s+shuffle/i,
+  /24\/7\s+grind/i,
+];
+
+// "Median alt change: -0.386% across 19 coins." tacked on as a data-sheet line.
+const LABEL_VALUE_LINE = /^[A-Z][A-Za-z ]{2,30}:\s*-?\$?\d/m;
+
+/** A figure with a decimal part or 4+ digits that is written twice in one post. */
+function repeatedFigure(text) {
+  const seen = new Map();
+  for (const m of text.matchAll(/\d[\d,]*\.\d+|\d{1,3}(?:,\d{3})+|\d{4,}/g)) {
+    const key = m[0].replace(/,/g, "");
+    seen.set(key, (seen.get(key) ?? 0) + 1);
+  }
+  return [...seen].find(([, n]) => n >= 2)?.[0] ?? null;
+}
+
+const CLOSING_SIMILARITY = 0.5;
+const CLOSINGS_COMPARED = 10;
+
+function lastSentence(text) {
+  const parts = text.trim().split(/(?<=[.!?])\s+/).filter(Boolean);
+  return parts[parts.length - 1] ?? "";
+}
+
+function wordSet(s) {
+  return new Set(s.toLowerCase().replace(/[^\w\s]/g, "").split(/\s+/).filter((w) => w.length > 2));
+}
+
+function jaccard(a, b) {
+  if (a.size === 0 || b.size === 0) return 0;
+  let shared = 0;
+  for (const w of a) if (b.has(w)) shared++;
+  return shared / (a.size + b.size - shared);
+}
+
+/** Texts of the most recent posts that were (or may have been) published. */
+export function recentClosings(history, n = CLOSINGS_COMPARED) {
+  return history
+    .filter((p) => p.status !== "failed")
+    .slice(0, n)
+    .map((p) => lastSentence(p.text));
+}
+
+/**
+ * @returns {{ ok: true } | { ok: false, reason: string }}
+ */
+export function checkFatigue(text, history = []) {
+  const hype = text.match(HYPE);
+  if (hype) return { ok: false, reason: `Hype wording ("${hype[0]}"), not allowed` };
+
+  for (const re of STOCK_CLOSINGS) {
+    const m = text.match(re);
+    if (m) return { ok: false, reason: `Stock closing phrase ("${m[0]}") overused in past posts` };
+  }
+
+  if (LABEL_VALUE_LINE.test(text)) {
+    return { ok: false, reason: 'Has a data-sheet line ("Label: value"); write it as a sentence' };
+  }
+  const dup = repeatedFigure(text);
+  if (dup) return { ok: false, reason: `Repeats the figure ${dup}; say each number once` };
+
+  const mine = wordSet(lastSentence(text));
+  for (const past of recentClosings(history)) {
+    if (jaccard(mine, wordSet(past)) >= CLOSING_SIMILARITY) {
+      return { ok: false, reason: "Closing sentence too similar to a recent post's closing" };
+    }
+  }
+  return { ok: true };
+}
