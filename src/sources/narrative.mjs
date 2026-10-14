@@ -15,27 +15,29 @@ const MARKET_WIDE = /\b(?:Bitcoin|BTC|Ethereum|ETH|crypto(?:currency|currencies)
 // keyword matcher cannot tell which way it goes: such headlines are not used.
 const AMBIGUOUS = /\b(?:shrug(?:s|ged)?|despite|even\s+(?:as|though|if)|but|however|fail(?:s|ed)?|while|though|yet|still|hold(?:s|ing)?|steady|flat|mixed|unchanged|recover(?:s|ed|y)?|no|not|never)\b|n't\b/i;
 
-// Only words close to the market term count: "Bitcoin ... as oil falls" is about
-// oil, not about the market. Window: 1 word before to 4 words after the term.
+// Direction counts only when it is said OF the market: the market term must be
+// followed directly by a direction word ("Bitcoin rallies", "Crypto market
+// slumps", "Bitcoin price drops"). "Bitcoin holdings jump 11%", "Bitcoin miners
+// jump" or "Bitcoin ETF inflows climb" are about something else, not the price.
 const MARKET_TERM = /^(?:Bitcoin|BTC|Ethereum|ETH|crypto(?:currency|currencies)?|market)$/;
-const WINDOW_BEFORE = 1;
-const WINDOW_AFTER = 4;
-
-function marketWindow(title) {
-  const words = title.split(/\s+/);
-  const idx = words.findIndex((w) => MARKET_TERM.test(w.replace(/[^A-Za-z]/g, "")));
-  if (idx === -1) return null;
-  return words.slice(Math.max(0, idx - WINDOW_BEFORE), idx + WINDOW_AFTER + 1).join(" ");
-}
+const FILLER = new Set(["price", "prices", "market", "markets", "the", "is", "are", "has", "have", "just", "now", "again", "quickly", "sharply"]);
 
 /** "up", "down", or null when the headline gives no single, unambiguous direction about the market. */
 export function headlineTone(title) {
   if (AMBIGUOUS.test(title)) return null;
-  const near = marketWindow(title);
-  if (near === null) return null;
-  const up = UP.test(near);
-  const down = DOWN.test(near);
-  return up === down ? null : up ? "up" : "down";
+  // both directions anywhere ("Oil falls as Bitcoin climbs"): too easy to attach to the wrong subject
+  if (UP.test(title) && DOWN.test(title)) return null;
+  const words = title.split(/\s+/).map((w) => w.replace(/[^A-Za-z-]/g, ""));
+  const tones = new Set();
+  words.forEach((w, i) => {
+    if (!MARKET_TERM.test(w)) return;
+    let j = i + 1;
+    while (j < words.length && FILLER.has(words[j].toLowerCase())) j++;
+    const next = words[j] ?? "";
+    if (UP.test(next)) tones.add("up");
+    else if (DOWN.test(next)) tones.add("down");
+  });
+  return tones.size === 1 ? [...tones][0] : null;
 }
 
 /** Most recent market-wide headline with a single clear direction. */
