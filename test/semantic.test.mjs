@@ -306,3 +306,7 @@ test("fatigue: emotive words like 'hammered' and 'carnage' are rejected; 'crushi
   assert.equal(checkFatigue("Pure carnage across the alt market.").ok, false);
   assert.equal(checkFatigue("$BTC kept crushing volume at $576 M USDT.").ok, true);
 });
+
+test("ratio facts block forbids inventing dollar highs/lows (13 Oct Breakout Watch draft)", () => {
+  assert.match(factsPromptBlock("breakout-watch", [{ cashtag: "$BTC", ratio: 1.59 }]), /never state a price range, band or high\/low in dollars/);
+});
