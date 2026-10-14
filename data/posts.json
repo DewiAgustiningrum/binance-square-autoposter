@@ -1,5 +1,33 @@
 [
   {
+    "id": "6b624d33-4f0e-4765-8eab-d35051dbb219",
+    "date": "2026-10-14T21:45:41.243Z",
+    "theme": "quiet-movers",
+    "text": "$NEAR is sitting at $4.832, down about 4.7% in the last 24 hours. Its price swing was roughly 40% tighter than the typical week-long range, moving within an 8.75% band instead of the usual 14.7%. That's a noticeably narrower move, but still active. No other tokens hit the same tight-range criteria today.",
+    "status": "published",
+    "postId": 377336388753956,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377336388753956?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "5733bd2d080dbc72",
+      "sourceSnapshot": [
+        {
+          "symbol": "NEARUSDT",
+          "cashtag": "$NEAR",
+          "lastPrice": 4.832,
+          "priceChangePercent": -4.732,
+          "last24hRangePct": 8.754139072847684,
+          "avgRangePct": 14.704743557550595,
+          "ratio": 0.5953275579806087
+        }
+      ],
+      "sourceFetchedAt": "2026-10-14T21:45:39.961Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "4aa9ada3-5f08-4152-b7c5-6bf30a71d9f1",
     "date": "2026-10-14T17:17:29.858Z",
     "theme": "leaders-laggards",
