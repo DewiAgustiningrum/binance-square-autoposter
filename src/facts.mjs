@@ -132,6 +132,7 @@ export function factsPromptBlock(theme, data) {
       const pct = Math.abs(1 - r) * 100;
       lines.push(`- ${k}: today's range is ${r < 1 ? `${pct.toFixed(0)}% tighter` : `${pct.toFixed(0)}% wider`} than its 7-day average (${r.toFixed(2)}x)`);
     }
+    lines.push("- the data has no high or low prices for these tokens: never state a price range, band or high/low in dollars (only the last price and the percentages above)");
     lines.push('- write these as a percentage ("75% tighter") or a multiple ("about 5 times"); do NOT use fractions such as "a third tighter" or "half as wide" unless the line above says about 33% or 50%');
   } else if (f.kind === "relative") {
     lines.push(`- BTC ${fmt(f.btcChange)} vs median alt ${fmt(f.altsMedianChange)}: ${f.btcAheadOfAlts ? "BTC is ahead of the median alt" : f.altsAheadOfBtc ? "the median alt is ahead of BTC" : "level"}`);
