@@ -1,5 +1,14 @@
 [
   {
+    "id": "0ca07ee8-116a-4fe6-bbb2-1216252deed0",
+    "date": "2026-10-14T04:59:46.844Z",
+    "theme": "quiet-movers",
+    "text": "$BNB's 24-hour swing was about 1.5%, roughly a third tighter than its typical 3.3% range. $ETH barely budged either, moving just under 2% versus its usual 4.3%, that's also about a third tighter. Meanwhile $XRP slipped a bit less than usual, 2.4% today compared with a 4.7% average, so it's somewhat tighter. All three stayed pretty flat, nothing wild on the board.",
+    "status": "published",
+    "postId": 377089176623135,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377089176623135?r=HDVH95ZN&l=id"
+  },
+  {
     "id": "b741340e-ee7e-46cb-8ecb-7b2602ab034e",
     "date": "2026-10-13T22:51:06.099Z",
     "theme": "morning-brief",
@@ -259,14 +268,5 @@
     "status": "published",
     "postId": 373437890347566,
     "shareLink": "https://app.binance.com/uni-qr/cpos/373437890347566?r=HDVH95ZN&l=id"
-  },
-  {
-    "id": "0079934e-6d02-4732-8ec0-300ade5955d1",
-    "date": "2026-10-03T16:26:48.448Z",
-    "theme": "breakout-watch",
-    "text": "$SAND jumped about twice its usual daily swing, ripping a 32% range while its typical spread sits near 12%. The token closed the day up 20% at $0.07645. That's a lot more movement than we normally see. Nothing else crazy on the board.",
-    "status": "published",
-    "postId": 373365181510700,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/373365181510700?r=HDVH95ZN&l=id"
   }
 ]
