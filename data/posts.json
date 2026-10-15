@@ -1,5 +1,54 @@
 [
   {
+    "id": "6d333e20-68c7-47ef-b1fd-3b5b06272eb7",
+    "date": "2026-10-15T04:48:19.340Z",
+    "theme": "morning-brief",
+    "text": "$BTC slipped 2.54% to $81,614, its 24-hour swing was about 4.8% between a high of $84,146.72 and a low of $80,226.35. Quote-volume topped the list at roughly $1.86 B.\n\n$ETH took the biggest hit, down 5.24% to $2,383.23. It covered the widest range, about 8.91%, from $2,530.44 down to $2,318. The drop was the largest absolute move among the three.\n\n$BNB fell 2.94% to $723.6, trading between $747 and $708.64, a 5.30% range. Its quote-volume was about $99 M.",
+    "status": "published",
+    "postId": 377440255330670,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377440255330670?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "b79f927398c6b203",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 81614,
+          "priceChangePercent": -2.542,
+          "highPrice": 84146.72,
+          "lowPrice": 80226.35,
+          "volume": 22583.50677,
+          "quoteVolume": 1855607076.5638802
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2383.23,
+          "priceChangePercent": -5.242,
+          "highPrice": 2530.44,
+          "lowPrice": 2318,
+          "volume": 441842.8636,
+          "quoteVolume": 1072974671.694449
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 723.6,
+          "priceChangePercent": -2.942,
+          "highPrice": 747,
+          "lowPrice": 708.64,
+          "volume": 135938.652,
+          "quoteVolume": 99050773.70152
+        }
+      ],
+      "sourceFetchedAt": "2026-10-15T04:48:18.602Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "6b624d33-4f0e-4765-8eab-d35051dbb219",
     "date": "2026-10-14T21:45:41.243Z",
     "theme": "quiet-movers",
