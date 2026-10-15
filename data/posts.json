@@ -1,5 +1,82 @@
 [
   {
+    "id": "38ac10c6-4831-4eb6-871e-05753d8a55ca",
+    "date": "2026-10-15T21:28:39.350Z",
+    "theme": "leaders-laggards",
+    "text": "$STRK jumped 16.2% to $0.08915, riding a tight range between $0.0718 and $0.09874 with over $63 M in USDT volume. $NEAR also rose, up 10.8% to $5.33, swinging from $4.527 low to $5.44 high on $222 M of trades. Meanwhile $PUMP slipped 3.5% to $0.004595, its low hit $0.00421 and it still moved $47.7 M in USDT. The leaders' gains outpaced the laggard's loss, and $PUMP ended the day down 3.547%.",
+    "status": "published",
+    "postId": 377686096839156,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377686096839156?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c7e4653a874988aa",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "STRKUSDT",
+            "cashtag": "$STRK",
+            "lastPrice": 0.08915,
+            "priceChangePercent": 16.217,
+            "highPrice": 0.09874,
+            "lowPrice": 0.0718,
+            "quoteVolume": 63993827.4255304
+          },
+          {
+            "symbol": "NEARUSDT",
+            "cashtag": "$NEAR",
+            "lastPrice": 5.33,
+            "priceChangePercent": 10.765,
+            "highPrice": 5.44,
+            "lowPrice": 4.527,
+            "quoteVolume": 222484548.1673
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1246.5,
+            "priceChangePercent": 9.548,
+            "highPrice": 1248.4,
+            "lowPrice": 1075,
+            "quoteVolume": 286538742.76424
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "PUMPUSDT",
+            "cashtag": "$PUMP",
+            "lastPrice": 0.004595,
+            "priceChangePercent": -3.547,
+            "highPrice": 0.004811,
+            "lowPrice": 0.00421,
+            "quoteVolume": 47657842.639819
+          },
+          {
+            "symbol": "SPCXBUSDT",
+            "cashtag": "$SPCXB",
+            "lastPrice": 148.85,
+            "priceChangePercent": -2.04,
+            "highPrice": 152.3,
+            "lowPrice": 140.93,
+            "quoteVolume": 51743847.06605
+          },
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3325,
+            "priceChangePercent": -0.15,
+            "highPrice": 0.3332,
+            "lowPrice": 0.3295,
+            "quoteVolume": 39712901.58626
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-15T21:28:38.682Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "83be5db5-9bc4-4ea0-b723-e06aed8f6b1e",
     "date": "2026-10-15T17:06:46.696Z",
     "theme": "relative-strength",
