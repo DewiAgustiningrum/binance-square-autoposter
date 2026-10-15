@@ -1,5 +1,51 @@
 [
   {
+    "id": "34652917-e8d4-41cd-9315-a4020d6c303b",
+    "date": "2026-10-15T11:37:41.771Z",
+    "theme": "tokenized-stocks",
+    "text": "$SNDKB slipped to 1,344.79 USDT, down 6.89% from its 24h high of 1,463.17 USDT. The token moved about 10.3% in range and pulled in the biggest USDT volume at 39,187,206.\n\n$CRCLB took the biggest hit, dropping 7.821% to 77.08 USDT. Its 12.35% swing from a low of 75 USDT up to 84.52 USDT was the widest band of the three.\n\n$CBRSB held tighter, trading around 136.9 USDT after a 6.566% dip, with a 9.88% range between 134.82 USDT and 148.34 USDT.",
+    "status": "published",
+    "postId": 377540862857048,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377540862857048?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "aecd51b7f881708f",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 1344.79,
+          "priceChangePercent": -6.89,
+          "highPrice": 1463.17,
+          "lowPrice": 1324.77,
+          "volumeUSDT": 39187206
+        },
+        {
+          "cashtag": "$CBRSB",
+          "name": "Cerebras",
+          "lastPriceUSDT": 136.9,
+          "priceChangePercent": -6.566,
+          "highPrice": 148.34,
+          "lowPrice": 134.82,
+          "volumeUSDT": 1805001
+        },
+        {
+          "cashtag": "$CRCLB",
+          "name": "Circle",
+          "lastPriceUSDT": 77.08,
+          "priceChangePercent": -7.821,
+          "highPrice": 84.52,
+          "lowPrice": 75,
+          "volumeUSDT": 30784369
+        }
+      ],
+      "sourceFetchedAt": "2026-10-15T11:37:41.085Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "6d333e20-68c7-47ef-b1fd-3b5b06272eb7",
     "date": "2026-10-15T04:48:19.340Z",
     "theme": "morning-brief",
