@@ -1,5 +1,29 @@
 [
   {
+    "id": "2cf17c68-be16-4cdc-9006-5a1d80f2c041",
+    "date": "2026-10-16T11:31:42.913Z",
+    "theme": "relative-strength",
+    "text": "$ETH is pulling a bit of ground on $BTC, up 2.878% in BTC terms while $BTC itself rose 2.108% over the last 24 h. The median alt in the most-traded basket jumped 5.03%, outpacing $BTC's gain. That median reflects 19 alts, so the typical alt is ahead of Bitcoin right now. End of day: $ETH's BTC-price is 0.03003.",
+    "status": "published",
+    "postId": 377893287189872,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377893287189872?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "9bd6ed8573b06d5b",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.03003,
+        "ethBtcChangePercent": 2.878,
+        "btcChangePercent": 2.108,
+        "altsMedianChangePercent": 5.03,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-16T11:31:41.984Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d698c5e9-b6ce-4321-8625-922f00fe4463",
     "date": "2026-10-16T04:38:34.917Z",
     "theme": "breakout-watch",
