@@ -1,5 +1,33 @@
 [
   {
+    "id": "77634ac1-68bc-4188-9da2-f8ba75cc4c42",
+    "date": "2026-10-16T21:17:04.862Z",
+    "theme": "quiet-movers",
+    "text": "$NEAR slipped to $5.011 and dropped about 6.4% in the last day. Its price swing was roughly 26% tighter than the typical 7-day range, so the market was a bit calmer than usual. No other token made the cut this round.",
+    "status": "published",
+    "postId": 378037147198352,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378037147198352?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "603440c1ededaf9b",
+      "sourceSnapshot": [
+        {
+          "symbol": "NEARUSDT",
+          "cashtag": "$NEAR",
+          "lastPrice": 5.011,
+          "priceChangePercent": -6.424,
+          "last24hRangePct": 9.439233685891036,
+          "avgRangePct": 12.730977723872725,
+          "ratio": 0.7414382375511415
+        }
+      ],
+      "sourceFetchedAt": "2026-10-16T21:17:04.180Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "2cf17c68-be16-4cdc-9006-5a1d80f2c041",
     "date": "2026-10-16T11:31:42.913Z",
     "theme": "relative-strength",
