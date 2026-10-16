@@ -1,5 +1,51 @@
 [
   {
+    "id": "d698c5e9-b6ce-4321-8625-922f00fe4463",
+    "date": "2026-10-16T04:38:34.917Z",
+    "theme": "breakout-watch",
+    "text": "$ZEC jumped about 8.5% to $1,212.46 and swung roughly 44% wider than its usual daily range, a noticeably wider move.\n\n$BTC barely budged, up 0.6% at $82,090, but its 24-hour range was 39% broader than the week-average, so it's also in that \"noticeably wider\" zone.\n\n$UNI rose 5.4% to $7.416, its range stretched 38% beyond the norm, another clear case of a wider-than-usual day.",
+    "status": "published",
+    "postId": 377791756649799,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/377791756649799?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "8b8b29ab0d1c0103",
+      "sourceSnapshot": [
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 1212.46,
+          "priceChangePercent": 8.472,
+          "last24hRangePct": 14.76749748445309,
+          "avgRangePct": 10.232309357268027,
+          "ratio": 1.4432223429565985
+        },
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 82090,
+          "priceChangePercent": 0.617,
+          "last24hRangePct": 3.4524299659665934,
+          "avgRangePct": 2.4850073084439357,
+          "ratio": 1.3893037474116885
+        },
+        {
+          "symbol": "UNIUSDT",
+          "cashtag": "$UNI",
+          "lastPrice": 7.416,
+          "priceChangePercent": 5.386,
+          "last24hRangePct": 10.949298813376487,
+          "avgRangePct": 7.940265419433406,
+          "ratio": 1.378958792306693
+        }
+      ],
+      "sourceFetchedAt": "2026-10-16T04:38:34.172Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "38ac10c6-4831-4eb6-871e-05753d8a55ca",
     "date": "2026-10-15T21:28:39.350Z",
     "theme": "leaders-laggards",
