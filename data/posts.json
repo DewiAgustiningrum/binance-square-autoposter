@@ -1,5 +1,29 @@
 [
   {
+    "id": "370e5c5f-54bd-47bb-ab50-51612188f323",
+    "date": "2026-10-17T20:40:37.117Z",
+    "theme": "relative-strength",
+    "text": "$ETH is gaining on $BTC, up 0.271% in BTC terms. Meanwhile $BTC slipped 0.12% over 24 h, but that's still better than the median alt, which fell 0.33% across the 19-coin basket. So BTC's outpacing the typical alt, while ETH is tightening the gap against Bitcoin.",
+    "status": "published",
+    "postId": 378382080510608,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378382080510608?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "6e66adae98aafed5",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02964,
+        "ethBtcChangePercent": 0.271,
+        "btcChangePercent": -0.119,
+        "altsMedianChangePercent": -0.329,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-17T20:40:36.287Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "50394b9d-adff-4f6e-b8b2-20f4806b822c",
     "date": "2026-10-17T15:40:36.578Z",
     "theme": "tokenized-stocks",
