@@ -1,0 +1,48 @@
+[
+  {
+    "id": "50394b9d-adff-4f6e-b8b2-20f4806b822c",
+    "date": "2026-10-17T15:40:36.578Z",
+    "theme": "tokenized-stocks",
+    "text": "$CBRSB slid to 126.75 USDT, down 4.195% and carving out the widest 24h range at about 5%, its high hit 132.62 USDT and low sat at 126.31 USDT.\n\nTesla's $TSLAB is still the heavyweight on volume, moving 351.88 USDT after a 2.345% dip; it traded between 349.9 USDT and 360.43 USDT and pumped 7,018,611 USDT in the last 24 h.\n\nNvidia's $NVDAB dropped 1.692% to 214.41 USDT, with a tighter 2.13% range, high of 218.3 USDT and low of 213.74 USDT.\n\nVolume for $TSLAB topped 7 million USDT.",
+    "status": "published",
+    "postId": 378308349693459,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378308349693459?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "7aa569a2543a1506",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$CBRSB",
+          "name": "Cerebras",
+          "lastPriceUSDT": 126.75,
+          "priceChangePercent": -4.195,
+          "highPrice": 132.62,
+          "lowPrice": 126.31,
+          "volumeUSDT": 700895
+        },
+        {
+          "cashtag": "$TSLAB",
+          "name": "Tesla",
+          "lastPriceUSDT": 351.88,
+          "priceChangePercent": -2.345,
+          "highPrice": 360.43,
+          "lowPrice": 349.9,
+          "volumeUSDT": 7018611
+        },
+        {
+          "cashtag": "$NVDAB",
+          "name": "Nvidia",
+          "lastPriceUSDT": 214.41,
+          "priceChangePercent": -1.692,
+          "highPrice": 218.3,
+          "lowPrice": 213.74,
+          "volumeUSDT": 3335716
+        }
+      ],
+      "sourceFetchedAt": "2026-10-17T15:40:35.571Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  }
+]
