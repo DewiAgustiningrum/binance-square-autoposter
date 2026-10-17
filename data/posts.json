@@ -1,5 +1,32 @@
 [
   {
+    "id": "3b5b5878-9d71-4747-a7b7-319a78f22050",
+    "date": "2026-10-17T10:51:39.830Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped 0.61% while every alt in the sample was down, 100% breadth on the downside. The median alt fell 3.09%, so $BTC held up better than the typical coin. Nineteen alts moved, all losing ground, and their typical 24-hour range was 6.48%. That's a full-blown sell-off across the board, with $BTC the least hurt. No alt managed to buck the trend.",
+    "status": "published",
+    "postId": 378237338181922,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378237338181922?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "32ef9d4bc80f18ae",
+      "sourceSnapshot": {
+        "btcChangePercent": -0.61,
+        "altsMedianChangePercent": -3.09,
+        "altsCount": 19,
+        "breadthUpPct": 0,
+        "breadthDownPct": 100,
+        "medianRangePct": 6.48,
+        "direction": "broad-down",
+        "leadership": "btc-ahead"
+      },
+      "sourceFetchedAt": "2026-10-17T10:51:39.203Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "77634ac1-68bc-4188-9da2-f8ba75cc4c42",
     "date": "2026-10-16T21:17:04.862Z",
     "theme": "quiet-movers",
