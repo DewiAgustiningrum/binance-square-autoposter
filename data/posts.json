@@ -1,5 +1,54 @@
 [
   {
+    "id": "dddd1f20-c7fa-480a-a659-479289ba957a",
+    "date": "2026-10-18T11:15:49.888Z",
+    "theme": "daily-recap",
+    "text": "$BTC edged up 0.5% to $82,090.62, nudged a touch higher after hitting $82,295.47 and then slipping to a low of $80,819.66.\n\n$ETH slipped 0.9% to $2,418.52, swinging between $2,439.35 and $2,356.79, the widest 24-hour range of the three.\n\n$BNB inched up 0.3% to $723.82, trading flat around its high of $723.99 and low of $710.15.\n\nThe biggest mover in raw terms was $BTC, which logged $635,050,640.96 in USDT quote volume.",
+    "status": "published",
+    "postId": 378597172662171,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378597172662171?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "d0de43bf7b998659",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 82090.62,
+          "priceChangePercent": 0.537,
+          "highPrice": 82295.47,
+          "lowPrice": 80819.66,
+          "volume": 7780.64094,
+          "quoteVolume": 635050640.9609231
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2418.52,
+          "priceChangePercent": -0.854,
+          "highPrice": 2439.35,
+          "lowPrice": 2356.79,
+          "volume": 133316.0114,
+          "quoteVolume": 321169835.485244
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 723.82,
+          "priceChangePercent": 0.276,
+          "highPrice": 723.99,
+          "lowPrice": 710.15,
+          "volume": 76490.344,
+          "quoteVolume": 54952393.32702
+        }
+      ],
+      "sourceFetchedAt": "2026-10-18T11:15:48.912Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "07fcb929-86b5-48f5-9334-b925f78aef9d",
     "date": "2026-10-18T04:41:16.311Z",
     "theme": "leaders-laggards",
