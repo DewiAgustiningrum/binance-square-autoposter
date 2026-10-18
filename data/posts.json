@@ -1,5 +1,51 @@
 [
   {
+    "id": "0a8dd847-5bd0-46f4-9d1d-3706a3ae1354",
+    "date": "2026-10-18T15:55:33.375Z",
+    "theme": "quiet-movers",
+    "text": "$HYPE slipped to $77.57, its 24-hour swing only 3.05% versus a typical 4.44%, that's about 31% tighter than usual.\n\n$BTC hovered around $81,132, moving just 1.82% today while it normally swings near 2.48%, so the range was roughly 27% tighter.\n\n$XRP sat at $1.274, trading in a 2.95% band compared with its 3.84% average, making the day about 23% tighter.\n\nAll three tokens stayed well within a narrower window than they normally do.",
+    "status": "published",
+    "postId": 378665917193595,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378665917193595?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "094c75daf711d3c0",
+      "sourceSnapshot": [
+        {
+          "symbol": "HYPEUSDT",
+          "cashtag": "$HYPE",
+          "lastPrice": 77.57,
+          "priceChangePercent": -1.222,
+          "last24hRangePct": 3.054911059551437,
+          "avgRangePct": 4.442314214744405,
+          "ratio": 0.6876845967833469
+        },
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 81131.82,
+          "priceChangePercent": -0.235,
+          "last24hRangePct": 1.8187587961125775,
+          "avgRangePct": 2.47593683064192,
+          "ratio": 0.7345739897738182
+        },
+        {
+          "symbol": "XRPUSDT",
+          "cashtag": "$XRP",
+          "lastPrice": 1.274,
+          "priceChangePercent": -1.37,
+          "last24hRangePct": 2.9501765398195436,
+          "avgRangePct": 3.844132533117879,
+          "ratio": 0.7674492266859306
+        }
+      ],
+      "sourceFetchedAt": "2026-10-18T15:55:32.661Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "dddd1f20-c7fa-480a-a659-479289ba957a",
     "date": "2026-10-18T11:15:49.888Z",
     "theme": "daily-recap",
