@@ -1,5 +1,82 @@
 [
   {
+    "id": "05228677-da87-4da0-a41e-5c2079eed9e0",
+    "date": "2026-10-19T22:25:19.950Z",
+    "theme": "leaders-laggards",
+    "text": "$WLD jumped 10.94% to $0.5303, hitting a high of $0.5361 while volume topped $36.6 M. $TRX barely budged, down 0.57% to $0.3313, stuck between $0.3306 and $0.3334 with $23.3 M traded. Meanwhile $BTC edged up 0.64% to $82,142, trading in a $81,513-$83,158 range and pulling over $1.1 B in volume.",
+    "status": "published",
+    "postId": 379115605225898,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379115605225898?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "d1dbb81f20c02df8",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "WLDUSDT",
+            "cashtag": "$WLD",
+            "lastPrice": 0.5303,
+            "priceChangePercent": 10.941,
+            "highPrice": 0.5361,
+            "lowPrice": 0.4768,
+            "quoteVolume": 36684877.32499
+          },
+          {
+            "symbol": "PUMPUSDT",
+            "cashtag": "$PUMP",
+            "lastPrice": 0.004485,
+            "priceChangePercent": 10.034,
+            "highPrice": 0.004589,
+            "lowPrice": 0.004068,
+            "quoteVolume": 33176945.405305
+          },
+          {
+            "symbol": "SNDKBUSDT",
+            "cashtag": "$SNDKB",
+            "lastPrice": 1380.22,
+            "priceChangePercent": 6.513,
+            "highPrice": 1408.17,
+            "lowPrice": 1288.92,
+            "quoteVolume": 39144389.09071
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3313,
+            "priceChangePercent": -0.57,
+            "highPrice": 0.3334,
+            "lowPrice": 0.3306,
+            "quoteVolume": 23251963.55538
+          },
+          {
+            "symbol": "XRPUSDT",
+            "cashtag": "$XRP",
+            "lastPrice": 1.3072,
+            "priceChangePercent": 0.562,
+            "highPrice": 1.322,
+            "lowPrice": 1.2936,
+            "quoteVolume": 93644571.23011
+          },
+          {
+            "symbol": "BTCUSDT",
+            "cashtag": "$BTC",
+            "lastPrice": 82142,
+            "priceChangePercent": 0.64,
+            "highPrice": 83158,
+            "lowPrice": 81513.62,
+            "quoteVolume": 1105768770.875021
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-19T22:25:19.275Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "a2fd219a-a47f-4b5a-954b-f81b045b9378",
     "date": "2026-10-19T13:28:00.416Z",
     "theme": "tokenized-stocks",
