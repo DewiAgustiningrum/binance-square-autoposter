@@ -1,5 +1,51 @@
 [
   {
+    "id": "a2fd219a-a47f-4b5a-954b-f81b045b9378",
+    "date": "2026-10-19T13:28:00.416Z",
+    "theme": "tokenized-stocks",
+    "text": "$MUB surged hard, up 6.05% to 914.45 USDT, hitting a high of 918.59 USDT. Volume topped the board at 20,056,737 USDT, dwarfing the other bStocks.\n\n$SPYB barely budged, inching 0.73% higher to 768.05 USDT. Its 24-hour swing was tight, a 1.41% range between 759.81 USDT and 770.63 USDT.\n\n$CBRSB posted a 4.29% jump, landing at 130.39 USDT. The token's price swung 8.12% over the day, the widest band of the three.\n\nLargest absolute price move came from $MUB.",
+    "status": "published",
+    "postId": 378983550458443,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378983550458443?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "1edc220871cd05fc",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$SPYB",
+          "name": "S&P 500 ETF",
+          "lastPriceUSDT": 768.05,
+          "priceChangePercent": 0.725,
+          "highPrice": 770.63,
+          "lowPrice": 759.81,
+          "volumeUSDT": 453949
+        },
+        {
+          "cashtag": "$MUB",
+          "name": "Micron",
+          "lastPriceUSDT": 914.45,
+          "priceChangePercent": 6.05,
+          "highPrice": 918.59,
+          "lowPrice": 852.68,
+          "volumeUSDT": 20056737
+        },
+        {
+          "cashtag": "$CBRSB",
+          "name": "Cerebras",
+          "lastPriceUSDT": 130.39,
+          "priceChangePercent": 4.287,
+          "highPrice": 131.43,
+          "lowPrice": 120.84,
+          "volumeUSDT": 949602
+        }
+      ],
+      "sourceFetchedAt": "2026-10-19T13:27:59.587Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "91768891-3532-4faf-8199-9df72c842b8e",
     "date": "2026-10-19T04:49:12.747Z",
     "theme": "morning-brief",
