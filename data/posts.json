@@ -1,5 +1,54 @@
 [
   {
+    "id": "91768891-3532-4faf-8199-9df72c842b8e",
+    "date": "2026-10-19T04:49:12.747Z",
+    "theme": "morning-brief",
+    "text": "$BTC nudged up 1.25% to $82,857, hitting the day's high at that level and pulling back from a low of $80,684. It moved the most in absolute dollars and racked up the biggest USDT volume at about $935 M.\n\n$ETH crept 0.51% to $2,431.48, swinging between $2,329 and $2,438.4, a 4.5% range, the widest of the three. Volume hit roughly $437 M in quote terms.\n\n$BNB rose 1.21% to $729.19, trading from $705.86 up to $729.20, a 3.2% spread. Quote volume sat near $59 M.",
+    "status": "published",
+    "postId": 378856051323945,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/378856051323945?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "6e300e2b5e14ac46",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 82857,
+          "priceChangePercent": 1.249,
+          "highPrice": 82857,
+          "lowPrice": 80684.36,
+          "volume": 11434.00806,
+          "quoteVolume": 934923561.7412786
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2431.48,
+          "priceChangePercent": 0.513,
+          "highPrice": 2438.4,
+          "lowPrice": 2329,
+          "volume": 183089.7779,
+          "quoteVolume": 437171583.392059
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 729.19,
+          "priceChangePercent": 1.208,
+          "highPrice": 729.2,
+          "lowPrice": 705.86,
+          "volume": 82699.882,
+          "quoteVolume": 59401039.97982
+        }
+      ],
+      "sourceFetchedAt": "2026-10-19T04:49:12.035Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "12affd2f-b559-4758-842f-a248f9cfe321",
     "date": "2026-10-18T20:50:39.586Z",
     "theme": "market-regime",
