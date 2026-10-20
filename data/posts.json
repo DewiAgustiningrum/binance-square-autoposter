@@ -1,5 +1,33 @@
 [
   {
+    "id": "2584c275-6061-47a5-ad24-f67d75746dc7",
+    "date": "2026-10-20T21:41:29.474Z",
+    "theme": "breakout-watch",
+    "text": "$PEPE jumped about 10% and swung roughly 12.6% in the last 24 hours, which is noticeably wider than its usual 7.5% daily range. That's about a 68% bigger spread than the past week's average. The token's last price sits at $0.00000452.",
+    "status": "published",
+    "postId": 379458723446223,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379458723446223?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "714551db3179ca2d",
+      "sourceSnapshot": [
+        {
+          "symbol": "PEPEUSDT",
+          "cashtag": "$PEPE",
+          "lastPrice": 0.00000452,
+          "priceChangePercent": 9.976,
+          "last24hRangePct": 12.61061946902656,
+          "avgRangePct": 7.5143253708880176,
+          "ratio": 1.6782104642264484
+        }
+      ],
+      "sourceFetchedAt": "2026-10-20T21:41:28.811Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "9f06ee54-6c34-416e-8acb-f4e86ecb23ba",
     "date": "2026-10-20T17:15:14.370Z",
     "theme": "relative-strength",
