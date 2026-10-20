@@ -1,5 +1,32 @@
 [
   {
+    "id": "f310a53c-7d97-4211-86d1-b4e8aa09fa93",
+    "date": "2026-10-20T11:46:01.252Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped about 0.9% in the last 24 h. Most alts (about 63%) were down, but it wasn't a clean sweep, 37% managed to stay up, so the move felt mixed. The median alt only fell roughly 0.25%, so it held up a bit better than $BTC. Around 19 alts were tracked, and their typical 24-hour high-low swing was 4.29%.",
+    "status": "published",
+    "postId": 379312380904886,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379312380904886?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "2a38e01236c910a6",
+      "sourceSnapshot": {
+        "btcChangePercent": -0.9,
+        "altsMedianChangePercent": -0.25,
+        "altsCount": 19,
+        "breadthUpPct": 37,
+        "breadthDownPct": 63,
+        "medianRangePct": 4.29,
+        "direction": "mixed",
+        "leadership": "in-line"
+      },
+      "sourceFetchedAt": "2026-10-20T11:46:00.730Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "e89ad2f9-8f98-47fd-939b-6876ce6b3096",
     "date": "2026-10-20T04:57:45.426Z",
     "theme": "quiet-movers",
