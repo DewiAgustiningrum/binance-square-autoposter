@@ -1,5 +1,51 @@
 [
   {
+    "id": "e89ad2f9-8f98-47fd-939b-6876ce6b3096",
+    "date": "2026-10-20T04:57:45.426Z",
+    "theme": "quiet-movers",
+    "text": "$ENA's 24-hour swing was only 5.12%, way below its 7-day average of 11.93%, that's about 57% tighter than usual. It slipped 1.05% to $0.1893.\n\n$ZEC barely moved either, trading in a 5.50% band versus a typical 12.65% range, also roughly 57% tighter. The coin dropped 1.92% and is now $1,149.42.\n\n$SOL showed the tightest action of the three, with a 2.55% range compared to its normal 5.85%, about 56% tighter. It nudged down 0.5% and sits at $105.22.",
+    "status": "published",
+    "postId": 379212045296972,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379212045296972?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c401232920e39e96",
+      "sourceSnapshot": [
+        {
+          "symbol": "ENAUSDT",
+          "cashtag": "$ENA",
+          "lastPrice": 0.1893,
+          "priceChangePercent": -1.045,
+          "last24hRangePct": 5.124141574220807,
+          "avgRangePct": 11.934146745026222,
+          "ratio": 0.4293680716098441
+        },
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 1149.42,
+          "priceChangePercent": -1.922,
+          "last24hRangePct": 5.49842529275635,
+          "avgRangePct": 12.645355741435099,
+          "ratio": 0.43481776275693323
+        },
+        {
+          "symbol": "SOLUSDT",
+          "cashtag": "$SOL",
+          "lastPrice": 105.22,
+          "priceChangePercent": -0.501,
+          "last24hRangePct": 2.547044288158138,
+          "avgRangePct": 5.8462027489994,
+          "ratio": 0.43567498383357883
+        }
+      ],
+      "sourceFetchedAt": "2026-10-20T04:57:44.464Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "05228677-da87-4da0-a41e-5c2079eed9e0",
     "date": "2026-10-19T22:25:19.950Z",
     "theme": "leaders-laggards",
