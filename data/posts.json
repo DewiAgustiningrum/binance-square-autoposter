@@ -1,5 +1,29 @@
 [
   {
+    "id": "9f06ee54-6c34-416e-8acb-f4e86ecb23ba",
+    "date": "2026-10-20T17:15:14.370Z",
+    "theme": "relative-strength",
+    "text": "$ETH is up 1.024% against $BTC, so it's pulling a bit of ground on the king. Meanwhile $BTC logged a 1.031% rise, but the median alt in the 19-coin basket jumped 2.178%, leaving Bitcoin behind the typical alt. In short, ETH's relative strength is ticking up, yet the broader alt set is outpacing BTC's move.",
+    "status": "published",
+    "postId": 379393289531033,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379393289531033?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "54c23b59f0285b90",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02961,
+        "ethBtcChangePercent": 1.024,
+        "btcChangePercent": 1.031,
+        "altsMedianChangePercent": 2.178,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-20T17:15:13.710Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "f310a53c-7d97-4211-86d1-b4e8aa09fa93",
     "date": "2026-10-20T11:46:01.252Z",
     "theme": "market-regime",
