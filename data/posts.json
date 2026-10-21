@@ -1,5 +1,32 @@
 [
   {
+    "id": "af001532-fad6-40c0-a160-09b33f61a49d",
+    "date": "2026-10-21T17:17:46.110Z",
+    "theme": "market-regime",
+    "text": "$BTC up 2.04% while the whole alt crowd jumped even more, 2.52% on median. Every alt in the sample was higher, 100% up, none down. The typical 24-hour swing for those alts was 6.24%. So it was a clean, market-wide rally with BTC keeping pace.",
+    "status": "published",
+    "postId": 379747805666524,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379747805666524?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "581a047154aa8716",
+      "sourceSnapshot": {
+        "btcChangePercent": 2.04,
+        "altsMedianChangePercent": 2.52,
+        "altsCount": 19,
+        "breadthUpPct": 100,
+        "breadthDownPct": 0,
+        "medianRangePct": 6.24,
+        "direction": "broad-up",
+        "leadership": "in-line"
+      },
+      "sourceFetchedAt": "2026-10-21T17:17:45.236Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "14a2c527-ac0e-441f-95c9-e8a156ecba08",
     "date": "2026-10-21T11:57:42.690Z",
     "theme": "tokenized-stocks",
