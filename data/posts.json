@@ -1,5 +1,82 @@
 [
   {
+    "id": "d6389911-55b8-4d82-b07d-9b8ea2f913c0",
+    "date": "2026-10-21T04:56:39.993Z",
+    "theme": "leaders-laggards",
+    "text": "$ZEC jumped 9.41% to 1,257.95, cruising near its 1,296.45 high, while $ARB slipped 4.60% to 0.1909, barely touching the 0.2007 ceiling. Meanwhile $WLD nudged up 8.61% to 0.5904, staying close to its 0.5983 peak. $ZEC's 24-hour gain topped the board with over $215 M in quote volume.",
+    "status": "published",
+    "postId": 379565671885844,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379565671885844?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "7b8dc176ae17c534",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1257.95,
+            "priceChangePercent": 9.409,
+            "highPrice": 1296.45,
+            "lowPrice": 1123,
+            "quoteVolume": 215361544.0546
+          },
+          {
+            "symbol": "SPCXBUSDT",
+            "cashtag": "$SPCXB",
+            "lastPrice": 161.71,
+            "priceChangePercent": 9.249,
+            "highPrice": 162.06,
+            "lowPrice": 143.52,
+            "quoteVolume": 45074361.86494
+          },
+          {
+            "symbol": "WLDUSDT",
+            "cashtag": "$WLD",
+            "lastPrice": 0.5904,
+            "priceChangePercent": 8.609,
+            "highPrice": 0.5983,
+            "lowPrice": 0.528,
+            "quoteVolume": 97375127.80252
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "ARBUSDT",
+            "cashtag": "$ARB",
+            "lastPrice": 0.1909,
+            "priceChangePercent": -4.598,
+            "highPrice": 0.2007,
+            "lowPrice": 0.1864,
+            "quoteVolume": 29845073.54894
+          },
+          {
+            "symbol": "XAUTUSDT",
+            "cashtag": "$XAUT",
+            "lastPrice": 4116.29,
+            "priceChangePercent": -0.668,
+            "highPrice": 4151.87,
+            "lowPrice": 4109.56,
+            "quoteVolume": 24392274.646725
+          },
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3313,
+            "priceChangePercent": -0.06,
+            "highPrice": 0.3327,
+            "lowPrice": 0.3306,
+            "quoteVolume": 23215953.02464
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-21T04:56:39.238Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "2584c275-6061-47a5-ad24-f67d75746dc7",
     "date": "2026-10-20T21:41:29.474Z",
     "theme": "breakout-watch",
