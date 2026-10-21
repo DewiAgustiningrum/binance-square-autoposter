@@ -1,5 +1,51 @@
 [
   {
+    "id": "f7313cc5-c42a-4778-abe7-357db8983f50",
+    "date": "2026-10-21T21:47:15.197Z",
+    "theme": "quiet-movers",
+    "text": "$WLD slipped to $0.5746, down about 2.5% in 24 h. Its daily swing was only 5.7%, roughly 48% tighter than the week-average range, a pretty quiet day.\n\n$HYPE nudged up to $81.81, +0.58%. The token moved just 2.86% today, which is about 39% tighter than usual. Not much action there.\n\n$BNB held at $750.4, up 1.41%. Its range was 1.6%, roughly 38% tighter than the typical 7-day swing.\n\nAll three ran in a narrower band than they normally do.",
+    "status": "published",
+    "postId": 379814033619977,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379814033619977?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "950c99c9fda730b6",
+      "sourceSnapshot": [
+        {
+          "symbol": "WLDUSDT",
+          "cashtag": "$WLD",
+          "lastPrice": 0.5746,
+          "priceChangePercent": -2.494,
+          "last24hRangePct": 5.708318830490785,
+          "avgRangePct": 10.915069658324379,
+          "ratio": 0.5229759414441606
+        },
+        {
+          "symbol": "HYPEUSDT",
+          "cashtag": "$HYPE",
+          "lastPrice": 81.81,
+          "priceChangePercent": 0.578,
+          "last24hRangePct": 2.8602860286028644,
+          "avgRangePct": 4.679150095937923,
+          "ratio": 0.6112832394681983
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 750.4,
+          "priceChangePercent": 1.41,
+          "last24hRangePct": 1.595149253731347,
+          "avgRangePct": 2.575454390166183,
+          "ratio": 0.6193661436296757
+        }
+      ],
+      "sourceFetchedAt": "2026-10-21T21:47:14.312Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "af001532-fad6-40c0-a160-09b33f61a49d",
     "date": "2026-10-21T17:17:46.110Z",
     "theme": "market-regime",
