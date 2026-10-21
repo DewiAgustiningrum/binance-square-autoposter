@@ -1,5 +1,51 @@
 [
   {
+    "id": "14a2c527-ac0e-441f-95c9-e8a156ecba08",
+    "date": "2026-10-21T11:57:42.690Z",
+    "theme": "tokenized-stocks",
+    "text": "$MUB jumped 4.858% to 924.99 USDT, hitting a high of 931.1 USDT and sliding down to a low of 878.86 USDT. The 5.65% 24-hour range makes it the widest mover among the three.\n\nTesla's tokenized stock $TSLAB rose 3.339% to 379.15 USDT, with the price swinging between 363.95 USDT and 384 USDT. It also logged the biggest USDT volume at 9,942,639.\n\n$SPYB inched up 0.814% to 771.88 USDT, trading between 764.61 USDT and 772.99 USDT. The ETF's 24-hour range was the narrowest at 1.09%.",
+    "status": "published",
+    "postId": 379669148264541,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379669148264541?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "4c699370b4e92117",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$MUB",
+          "name": "Micron",
+          "lastPriceUSDT": 924.99,
+          "priceChangePercent": 4.858,
+          "highPrice": 931.1,
+          "lowPrice": 878.86,
+          "volumeUSDT": 8403460
+        },
+        {
+          "cashtag": "$SPYB",
+          "name": "S&P 500 ETF",
+          "lastPriceUSDT": 771.88,
+          "priceChangePercent": 0.814,
+          "highPrice": 772.99,
+          "lowPrice": 764.61,
+          "volumeUSDT": 343680
+        },
+        {
+          "cashtag": "$TSLAB",
+          "name": "Tesla",
+          "lastPriceUSDT": 379.15,
+          "priceChangePercent": 3.339,
+          "highPrice": 384,
+          "lowPrice": 363.95,
+          "volumeUSDT": 9942639
+        }
+      ],
+      "sourceFetchedAt": "2026-10-21T11:57:41.804Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d6389911-55b8-4d82-b07d-9b8ea2f913c0",
     "date": "2026-10-21T04:56:39.993Z",
     "theme": "leaders-laggards",
