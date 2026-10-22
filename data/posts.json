@@ -1,5 +1,29 @@
 [
   {
+    "id": "821fe84d-f530-4022-9e82-a48bb0eb3ce2",
+    "date": "2026-10-22T04:57:12.903Z",
+    "theme": "relative-strength",
+    "text": "$BTC up 0.11% in the last 24 h, while the median alt in the most-traded basket slipped 0.44%. So BTC is outpacing the typical alt by about half a percent.\n\n$ETH/BTC at 0.02951 and $ETH lost 0.034% against BTC, meaning ETH is giving a tiny bit of ground to Bitcoin.\n\n19 alts make up that median figure, all dragging behind the leader.\n\nBottom line: BTC's modest gain leaves it ahead of the median alt, and $ETH is slightly weaker versus $BTC.",
+    "status": "published",
+    "postId": 379919702539115,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/379919702539115?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "d5416698b2d3dcbd",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02951,
+        "ethBtcChangePercent": -0.034,
+        "btcChangePercent": 0.107,
+        "altsMedianChangePercent": -0.442,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-22T04:57:12.028Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "f7313cc5-c42a-4778-abe7-357db8983f50",
     "date": "2026-10-21T21:47:15.197Z",
     "theme": "quiet-movers",
