@@ -1,5 +1,54 @@
 [
   {
+    "id": "d15c0d53-6408-40f3-b10a-5f71435a1f1e",
+    "date": "2026-10-22T12:00:10.240Z",
+    "theme": "daily-recap",
+    "text": "$BTC slipped to $81,778, down about 2 % after peaking near $84,898. It bounced a bit, but the low stuck around $81,653. Quote volume hit roughly $1.85 B.\n\n$ETH fell harder, closing at $2,401.39, a 2.7 % drop. The 24-hour swing stretched from $2,395.55 up to $2,526.62, the widest range of the three. Quote volume was about $752 M.\n\n$BNB nudged lower to $733.25, down 1.8 % after testing $751.86 and hanging near $730.35. It moved the least in percentage terms, with quote volume near $91.7 M.\n\nThe standout was $ETH's price swing, the biggest absolute move and the widest 5.46 % range of the day.",
+    "status": "published",
+    "postId": 380023647146464,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380023647146464?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "05e28d137e48aeb7",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 81778,
+          "priceChangePercent": -2.062,
+          "highPrice": 84898,
+          "lowPrice": 81653,
+          "volume": 22101.4061,
+          "quoteVolume": 1845730771.6453445
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2401.39,
+          "priceChangePercent": -2.732,
+          "highPrice": 2526.62,
+          "lowPrice": 2395.55,
+          "volume": 304494.0766,
+          "quoteVolume": 752174258.217023
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 733.25,
+          "priceChangePercent": -1.8,
+          "highPrice": 751.86,
+          "lowPrice": 730.35,
+          "volume": 123257.356,
+          "quoteVolume": 91686961.38635
+        }
+      ],
+      "sourceFetchedAt": "2026-10-22T12:00:09.187Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "821fe84d-f530-4022-9e82-a48bb0eb3ce2",
     "date": "2026-10-22T04:57:12.903Z",
     "theme": "relative-strength",
