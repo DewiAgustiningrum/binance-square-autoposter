@@ -1,5 +1,51 @@
 [
   {
+    "id": "90943300-8f4a-4d3d-8049-698c1bb2ceed",
+    "date": "2026-10-23T11:46:08.910Z",
+    "theme": "tokenized-stocks",
+    "text": "$TSLAB is sitting at 375.87 USDT, up 1.318% on the day. It hit a high of 388.89 USDT and a low of 370.47 USDT, moving roughly 4.9% in the 24-hour window, while pulling in about 10.6 million USDT of volume.\n\nCerebras' bStock, $CBRSB, took the biggest hit: down 5.033% to 109.24 USDT. The token swung 7.68% between a high of 115.03 USDT and a low of 106.64 USDT, and its 24-hour volume was 1.62 million USDT.\n\n$SPYB barely budged, down 0.421% at 763.58 USDT, with a tight range of 0.79% between 768.27 USDT and 762.24 USDT.",
+    "status": "published",
+    "postId": 380374095001286,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380374095001286?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "2d88b8a39b0f0a3a",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$TSLAB",
+          "name": "Tesla",
+          "lastPriceUSDT": 375.87,
+          "priceChangePercent": 1.318,
+          "highPrice": 388.89,
+          "lowPrice": 370.47,
+          "volumeUSDT": 10642960
+        },
+        {
+          "cashtag": "$CBRSB",
+          "name": "Cerebras",
+          "lastPriceUSDT": 109.24,
+          "priceChangePercent": -5.033,
+          "highPrice": 115.03,
+          "lowPrice": 106.64,
+          "volumeUSDT": 1615765
+        },
+        {
+          "cashtag": "$SPYB",
+          "name": "S&P 500 ETF",
+          "lastPriceUSDT": 763.58,
+          "priceChangePercent": -0.421,
+          "highPrice": 768.27,
+          "lowPrice": 762.24,
+          "volumeUSDT": 676526
+        }
+      ],
+      "sourceFetchedAt": "2026-10-23T11:46:08.000Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "f3c47566-d407-48c3-9a9f-6fc870aa4a76",
     "date": "2026-10-23T04:58:51.831Z",
     "theme": "breakout-watch",
