@@ -1,5 +1,42 @@
 [
   {
+    "id": "9a344f2a-a4a0-4d17-af0e-85a1ea290c1a",
+    "date": "2026-10-23T21:28:33.181Z",
+    "theme": "breakout-watch",
+    "text": "$PEPE jumped around 5.9% and swung about twice its usual daily range, hitting a 15.9% spread in the last 24 hours.\n\n$XAUT nudged down 0.8% while its price moved through a 1.49% band, roughly 31% wider than the week-average range.\n\nBoth tokens broke their typical volatility windows today.",
+    "status": "published",
+    "postId": 380517228062431,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380517228062431?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "37275abd4f173ff3",
+      "sourceSnapshot": [
+        {
+          "symbol": "PEPEUSDT",
+          "cashtag": "$PEPE",
+          "lastPrice": 0.00000466,
+          "priceChangePercent": 5.909,
+          "last24hRangePct": 15.879828326180267,
+          "avgRangePct": 7.4935312066253035,
+          "ratio": 2.119138212454541
+        },
+        {
+          "symbol": "XAUTUSDT",
+          "cashtag": "$XAUT",
+          "lastPrice": 3998.55,
+          "priceChangePercent": -0.849,
+          "last24hRangePct": 1.4895436834444558,
+          "avgRangePct": 1.1405968556408468,
+          "ratio": 1.3059335347786423
+        }
+      ],
+      "sourceFetchedAt": "2026-10-23T21:28:32.497Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "ba4da63d-30a4-405f-b084-5cb23d25e097",
     "date": "2026-10-23T17:13:55.017Z",
     "theme": "quiet-movers",
