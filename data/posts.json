@@ -1,5 +1,51 @@
 [
   {
+    "id": "ba4da63d-30a4-405f-b084-5cb23d25e097",
+    "date": "2026-10-23T17:13:55.017Z",
+    "theme": "quiet-movers",
+    "text": "$ETH barely budged, holding at $2,410 while its 24-hour swing was about 57% tighter than usual.\n\n$BTC slipped a touch, sitting at $81,776 and moving within a range that's roughly 55% tighter than its week-average.\n\n$NEAR hovered around $4.86, its daily band about 53% tighter than normal.\n\nAll three tokens stayed well inside their typical volatility windows today.",
+    "status": "published",
+    "postId": 380454647797305,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380454647797305?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "fa0e23ba2f1052f2",
+      "sourceSnapshot": [
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2410,
+          "priceChangePercent": 1.431,
+          "last24hRangePct": 1.7659751037344376,
+          "avgRangePct": 4.150723564755545,
+          "ratio": 0.42546198902032734
+        },
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 81776,
+          "priceChangePercent": 0.742,
+          "last24hRangePct": 1.2390186315032994,
+          "avgRangePct": 2.7251479387635023,
+          "ratio": 0.4546610530309363
+        },
+        {
+          "symbol": "NEARUSDT",
+          "cashtag": "$NEAR",
+          "lastPrice": 4.858,
+          "priceChangePercent": -0.938,
+          "last24hRangePct": 4.590366405928363,
+          "avgRangePct": 9.749709275963648,
+          "ratio": 0.4708208497298662
+        }
+      ],
+      "sourceFetchedAt": "2026-10-23T17:13:54.299Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "90943300-8f4a-4d3d-8049-698c1bb2ceed",
     "date": "2026-10-23T11:46:08.910Z",
     "theme": "tokenized-stocks",
