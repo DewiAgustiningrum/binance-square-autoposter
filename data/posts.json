@@ -1,5 +1,29 @@
 [
   {
+    "id": "d2f450a8-9ed7-4174-8adf-6b14b94432c6",
+    "date": "2026-10-24T04:43:53.441Z",
+    "theme": "relative-strength",
+    "text": "$ETH is pulling a little ahead of $BTC, up 0.34% in BTC terms. Meanwhile $BTC dropped about 1.00% over the last 24 hours. The median alt in the 19-coin most-traded basket outperformed $BTC, gaining 0.98% versus the bitcoin loss.",
+    "status": "published",
+    "postId": 380624216960638,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380624216960638?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "78e7bcb56298e101",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02947,
+        "ethBtcChangePercent": 0.34,
+        "btcChangePercent": -0.999,
+        "altsMedianChangePercent": -0.98,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-24T04:43:52.710Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "9a344f2a-a4a0-4d17-af0e-85a1ea290c1a",
     "date": "2026-10-23T21:28:33.181Z",
     "theme": "breakout-watch",
