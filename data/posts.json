@@ -1,5 +1,32 @@
 [
   {
+    "id": "0a05bb17-58ec-4229-99be-d3a50dcdfa18",
+    "date": "2026-10-24T16:01:17.374Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped 2.21% while the median alt fell 5.33%. Most of the 19 alts were down, 89% dropped versus just 11% that rose, so the move was clearly broad. The typical 24-hour high-low swing for the alts was 9.04%. BTC held up better than the pack, losing less than the median alt. End of the 24-hour snapshot: 89% of alts were down.",
+    "status": "published",
+    "postId": 380790693344336,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380790693344336?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "e23797189d71936c",
+      "sourceSnapshot": {
+        "btcChangePercent": -2.21,
+        "altsMedianChangePercent": -5.33,
+        "altsCount": 19,
+        "breadthUpPct": 11,
+        "breadthDownPct": 89,
+        "medianRangePct": 9.04,
+        "direction": "broad-down",
+        "leadership": "btc-ahead"
+      },
+      "sourceFetchedAt": "2026-10-24T16:01:16.341Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "69129d8c-8702-446e-8dde-df60b7103b5b",
     "date": "2026-10-24T11:10:01.830Z",
     "theme": "leaders-laggards",
