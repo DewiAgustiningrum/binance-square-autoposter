@@ -1,5 +1,82 @@
 [
   {
+    "id": "69129d8c-8702-446e-8dde-df60b7103b5b",
+    "date": "2026-10-24T11:10:01.830Z",
+    "theme": "leaders-laggards",
+    "text": "$BMT jumped 52.65% to $0.03598 on 45.8 M USDT volume, a one-day outlier. $ERA inched up 6.25% to $0.0799 with 21.5 M USDT changing hands, showing a modest gain. Meanwhile $WLD fell 12.55% to $0.4691 on a hefty 80.1 M USDT volume, the biggest drop in the set.",
+    "status": "published",
+    "postId": 380719113253441,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380719113253441?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "27018eda6b36902a",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "BMTUSDT",
+            "cashtag": "$BMT",
+            "lastPrice": 0.03598,
+            "priceChangePercent": 52.652,
+            "highPrice": 0.05144,
+            "lowPrice": 0.02183,
+            "quoteVolume": 45787509.38547
+          },
+          {
+            "symbol": "ERAUSDT",
+            "cashtag": "$ERA",
+            "lastPrice": 0.0799,
+            "priceChangePercent": 6.25,
+            "highPrice": 0.1031,
+            "lowPrice": 0.0709,
+            "quoteVolume": 21463211.91528
+          },
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 83.82,
+            "priceChangePercent": -0.167,
+            "highPrice": 87.14,
+            "lowPrice": 80.88,
+            "quoteVolume": 21066143.62879
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "WLDUSDT",
+            "cashtag": "$WLD",
+            "lastPrice": 0.4691,
+            "priceChangePercent": -12.547,
+            "highPrice": 0.5443,
+            "lowPrice": 0.4642,
+            "quoteVolume": 80144492.57505
+          },
+          {
+            "symbol": "PEPEUSDT",
+            "cashtag": "$PEPE",
+            "lastPrice": 0.00000439,
+            "priceChangePercent": -10.953,
+            "highPrice": 0.00000511,
+            "lowPrice": 0.00000431,
+            "quoteVolume": 86404469.56562153
+          },
+          {
+            "symbol": "NEARUSDT",
+            "cashtag": "$NEAR",
+            "lastPrice": 4.535,
+            "priceChangePercent": -7.013,
+            "highPrice": 4.985,
+            "lowPrice": 4.427,
+            "quoteVolume": 117441774.2278
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-24T11:10:01.003Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d2f450a8-9ed7-4174-8adf-6b14b94432c6",
     "date": "2026-10-24T04:43:53.441Z",
     "theme": "relative-strength",
