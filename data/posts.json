@@ -1,5 +1,51 @@
 [
   {
+    "id": "5ea20f12-f668-4c76-a3c6-305c532e2aad",
+    "date": "2026-10-25T16:29:30.248Z",
+    "theme": "tokenized-stocks",
+    "text": "$SNDKB jumped 2.84% to 1,251.78 USDT, hitting a high of 1,255.34 USDT and a low of 1,216.17 USDT. The 24h range is about 3.13% and it pulled in the biggest USDT volume at 4,592,085.\n\n$MUB rose 2.34% to 891.77 USDT, swinging between 894.7 USDT and 871 USDT. Its range sits at roughly 2.66%, and the token moved over 2.2 M USDT in the last day.\n\nTesla's $TSLAB inched up 0.71% to 372.41 USDT, barely breaking its 369.68-372.54 USDT window. The range is only 0.77% and volume came in at 329,381 USDT.",
+    "status": "published",
+    "postId": 381151521759060,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/381151521759060?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "de5e134f8aaf756d",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 1251.78,
+          "priceChangePercent": 2.843,
+          "highPrice": 1255.34,
+          "lowPrice": 1216.17,
+          "volumeUSDT": 4592085
+        },
+        {
+          "cashtag": "$TSLAB",
+          "name": "Tesla",
+          "lastPriceUSDT": 372.41,
+          "priceChangePercent": 0.709,
+          "highPrice": 372.54,
+          "lowPrice": 369.68,
+          "volumeUSDT": 329381
+        },
+        {
+          "cashtag": "$MUB",
+          "name": "Micron",
+          "lastPriceUSDT": 891.77,
+          "priceChangePercent": 2.34,
+          "highPrice": 894.7,
+          "lowPrice": 871,
+          "volumeUSDT": 2249761
+        }
+      ],
+      "sourceFetchedAt": "2026-10-25T16:29:29.385Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "3a72b417-863b-4310-ac73-560992931b73",
     "date": "2026-10-25T04:50:09.635Z",
     "theme": "morning-brief",
