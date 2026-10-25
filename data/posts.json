@@ -1,5 +1,54 @@
 [
   {
+    "id": "3a72b417-863b-4310-ac73-560992931b73",
+    "date": "2026-10-25T04:50:09.635Z",
+    "theme": "morning-brief",
+    "text": "$BTC barely budged, up 0.07% to 80,946. It swung between 79,221 and 81,034, a 2.24% range, and hauled the most USDT volume at about 896 million.\n\n$ETH slipped 0.6% to 2,368.84. The 4.31% swing, from a low of 2,282.46 up to a high of 2,384.47, was the widest percentage move of the three.\n\n$BNB rose 1.09% to 748.17, the biggest absolute price change. Its 4.07% range (718-748.46) was tight, and it posted a 93 million USDT quote volume.\n\nAll three settled within their 24-hour highs and lows, with $BTC still holding the top quote-volume figure.",
+    "status": "published",
+    "postId": 380979651138323,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/380979651138323?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "0ddf7e044864e047",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 80946,
+          "priceChangePercent": 0.065,
+          "highPrice": 81033.69,
+          "lowPrice": 79220.74,
+          "volume": 11147.53242,
+          "quoteVolume": 895730956.5564741
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2368.84,
+          "priceChangePercent": -0.599,
+          "highPrice": 2384.47,
+          "lowPrice": 2282.46,
+          "volume": 197527.2185,
+          "quoteVolume": 461012254.441778
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 748.17,
+          "priceChangePercent": 1.09,
+          "highPrice": 748.46,
+          "lowPrice": 718,
+          "volume": 127389.385,
+          "quoteVolume": 93330830.05688
+        }
+      ],
+      "sourceFetchedAt": "2026-10-25T04:50:08.875Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "0a05bb17-58ec-4229-99be-d3a50dcdfa18",
     "date": "2026-10-24T16:01:17.374Z",
     "theme": "market-regime",
