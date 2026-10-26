@@ -1,5 +1,82 @@
 [
   {
+    "id": "8ea3c948-3481-4a26-9dd3-4ac44d6b9e36",
+    "date": "2026-10-26T04:54:58.990Z",
+    "theme": "leaders-laggards",
+    "text": "$ENA jumped 5.831% to $0.2069, cruising up to a high of $0.2116 while volume topped 33 M USDT. $QNT nudged 3.472% higher, ending at $190.46 after hitting $200.35 earlier. On the flip side, $WLD slipped 5.506% to $0.4445, its low was $0.4299 and it still moved over 30 M USDT in the last day.",
+    "status": "published",
+    "postId": 381334730917464,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/381334730917464?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "3115bd1c454c3981",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "ENAUSDT",
+            "cashtag": "$ENA",
+            "lastPrice": 0.2069,
+            "priceChangePercent": 5.831,
+            "highPrice": 0.2116,
+            "lowPrice": 0.1887,
+            "quoteVolume": 33103329.187361
+          },
+          {
+            "symbol": "QNTUSDT",
+            "cashtag": "$QNT",
+            "lastPrice": 190.46,
+            "priceChangePercent": 3.472,
+            "highPrice": 200.35,
+            "lowPrice": 177.92,
+            "quoteVolume": 14176154.02181
+          },
+          {
+            "symbol": "UNIUSDT",
+            "cashtag": "$UNI",
+            "lastPrice": 6.901,
+            "priceChangePercent": 1.01,
+            "highPrice": 7.04,
+            "lowPrice": 6.645,
+            "quoteVolume": 20998064.56972
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "WLDUSDT",
+            "cashtag": "$WLD",
+            "lastPrice": 0.4445,
+            "priceChangePercent": -5.506,
+            "highPrice": 0.4707,
+            "lowPrice": 0.4299,
+            "quoteVolume": 30098951.56477
+          },
+          {
+            "symbol": "PEPEUSDT",
+            "cashtag": "$PEPE",
+            "lastPrice": 0.00000438,
+            "priceChangePercent": -2.45,
+            "highPrice": 0.0000045,
+            "lowPrice": 0.00000421,
+            "quoteVolume": 25284425.93911552
+          },
+          {
+            "symbol": "SUIUSDT",
+            "cashtag": "$SUI",
+            "lastPrice": 0.9143,
+            "priceChangePercent": -2.046,
+            "highPrice": 0.9343,
+            "lowPrice": 0.9001,
+            "quoteVolume": 32341683.75981
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-26T04:54:58.192Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "5a1f3d0a-6803-44a6-8efc-f004f71625c7",
     "date": "2026-10-25T20:55:38.573Z",
     "theme": "quiet-movers",
@@ -1303,52 +1380,6 @@
         "altsCount": 19
       },
       "sourceFetchedAt": "2026-10-17T20:40:36.287Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "50394b9d-adff-4f6e-b8b2-20f4806b822c",
-    "date": "2026-10-17T15:40:36.578Z",
-    "theme": "tokenized-stocks",
-    "text": "$CBRSB slid to 126.75 USDT, down 4.195% and carving out the widest 24h range at about 5%, its high hit 132.62 USDT and low sat at 126.31 USDT.\n\nTesla's $TSLAB is still the heavyweight on volume, moving 351.88 USDT after a 2.345% dip; it traded between 349.9 USDT and 360.43 USDT and pumped 7,018,611 USDT in the last 24 h.\n\nNvidia's $NVDAB dropped 1.692% to 214.41 USDT, with a tighter 2.13% range, high of 218.3 USDT and low of 213.74 USDT.\n\nVolume for $TSLAB topped 7 million USDT.",
-    "status": "published",
-    "postId": 378308349693459,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/378308349693459?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "7aa569a2543a1506",
-      "sourceSnapshot": [
-        {
-          "cashtag": "$CBRSB",
-          "name": "Cerebras",
-          "lastPriceUSDT": 126.75,
-          "priceChangePercent": -4.195,
-          "highPrice": 132.62,
-          "lowPrice": 126.31,
-          "volumeUSDT": 700895
-        },
-        {
-          "cashtag": "$TSLAB",
-          "name": "Tesla",
-          "lastPriceUSDT": 351.88,
-          "priceChangePercent": -2.345,
-          "highPrice": 360.43,
-          "lowPrice": 349.9,
-          "volumeUSDT": 7018611
-        },
-        {
-          "cashtag": "$NVDAB",
-          "name": "Nvidia",
-          "lastPriceUSDT": 214.41,
-          "priceChangePercent": -1.692,
-          "highPrice": 218.3,
-          "lowPrice": 213.74,
-          "volumeUSDT": 3335716
-        }
-      ],
-      "sourceFetchedAt": "2026-10-17T15:40:35.571Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
