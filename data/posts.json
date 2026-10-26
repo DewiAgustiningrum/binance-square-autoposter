@@ -1,5 +1,33 @@
 [
   {
+    "id": "a34f1bb3-191f-4e8c-b915-7240dfad3b72",
+    "date": "2026-10-26T22:43:38.050Z",
+    "theme": "breakout-watch",
+    "text": "$QNT jumped to $202.93 and swung about twice its usual daily range, hitting a 17.83% spread in the last 24 hours. That's a lot more movement than the typical 9.03% range it's seen over the past week.",
+    "status": "published",
+    "postId": 381597362638278,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/381597362638278?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "449cd651720ab80e",
+      "sourceSnapshot": [
+        {
+          "symbol": "QNTUSDT",
+          "cashtag": "$QNT",
+          "lastPrice": 202.93,
+          "priceChangePercent": 5.638,
+          "last24hRangePct": 17.830909539068283,
+          "avgRangePct": 9.02655149669324,
+          "ratio": 1.9753844583505011
+        }
+      ],
+      "sourceFetchedAt": "2026-10-26T22:43:37.136Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "6c1433f5-8479-41ca-8c1d-c813f28c0876",
     "date": "2026-10-26T13:12:28.944Z",
     "theme": "relative-strength",
@@ -1303,83 +1331,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-18T11:15:48.912Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "07fcb929-86b5-48f5-9334-b925f78aef9d",
-    "date": "2026-10-18T04:41:16.311Z",
-    "theme": "leaders-laggards",
-    "text": "$SAND surged 15.8% to $0.06489, hitting a high of $0.06686 while $BTC barely moved, up 0.3% to $81,824 and topping out at $82,078. Meanwhile $TIA tumbled 16.7% down to $0.6305, sliding near its low of $0.6269. $SAND's quote volume topped 22.6 M USDT, $BTC's was over 611 M USDT, and $TIA pushed about 23.2 M USDT.",
-    "status": "published",
-    "postId": 378500205511780,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/378500205511780?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "5fb9dd18d6a60bba",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "SANDUSDT",
-            "cashtag": "$SAND",
-            "lastPrice": 0.06489,
-            "priceChangePercent": 15.772,
-            "highPrice": 0.06686,
-            "lowPrice": 0.05562,
-            "quoteVolume": 22650065.11532
-          },
-          {
-            "symbol": "BTCUSDT",
-            "cashtag": "$BTC",
-            "lastPrice": 81824.42,
-            "priceChangePercent": 0.316,
-            "highPrice": 82078,
-            "lowPrice": 80819.66,
-            "quoteVolume": 611701562.8325444
-          },
-          {
-            "symbol": "BNBUSDT",
-            "cashtag": "$BNB",
-            "lastPrice": 720.09,
-            "priceChangePercent": -0.334,
-            "highPrice": 723.45,
-            "lowPrice": 710.15,
-            "quoteVolume": 50213068.2663
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "TIAUSDT",
-            "cashtag": "$TIA",
-            "lastPrice": 0.6305,
-            "priceChangePercent": -16.678,
-            "highPrice": 0.769,
-            "lowPrice": 0.6269,
-            "quoteVolume": 23177949.420265
-          },
-          {
-            "symbol": "STRKUSDT",
-            "cashtag": "$STRK",
-            "lastPrice": 0.06295,
-            "priceChangePercent": -12.13,
-            "highPrice": 0.07294,
-            "lowPrice": 0.06278,
-            "quoteVolume": 19470049.4383275
-          },
-          {
-            "symbol": "FILUSDT",
-            "cashtag": "$FIL",
-            "lastPrice": 1.0562,
-            "priceChangePercent": -11.474,
-            "highPrice": 1.2236,
-            "lowPrice": 1.0369,
-            "quoteVolume": 19711063.463221
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-10-18T04:41:15.556Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
