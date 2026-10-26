@@ -1,5 +1,29 @@
 [
   {
+    "id": "6c1433f5-8479-41ca-8c1d-c813f28c0876",
+    "date": "2026-10-26T13:12:28.944Z",
+    "theme": "relative-strength",
+    "text": "$ETH slipped 0.38% against $BTC, so it's losing a bit of ground in BTC terms. Meanwhile $BTC dropped 0.40% over 24 h, while the median alt in the 19-coin basket rose 0.64%. That means the typical alt outperformed Bitcoin today. End of the day: $ETH is down vs $BTC, and $BTC is lagging the alt median.",
+    "status": "published",
+    "postId": 381456997138476,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/381456997138476?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "6ef78c99dadfa960",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02893,
+        "ethBtcChangePercent": -0.379,
+        "btcChangePercent": -0.402,
+        "altsMedianChangePercent": 0.638,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-10-26T13:12:28.201Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "8ea3c948-3481-4a26-9dd3-4ac44d6b9e36",
     "date": "2026-10-26T04:54:58.990Z",
     "theme": "leaders-laggards",
@@ -1356,30 +1380,6 @@
         ]
       },
       "sourceFetchedAt": "2026-10-18T04:41:15.556Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "370e5c5f-54bd-47bb-ab50-51612188f323",
-    "date": "2026-10-17T20:40:37.117Z",
-    "theme": "relative-strength",
-    "text": "$ETH is gaining on $BTC, up 0.271% in BTC terms. Meanwhile $BTC slipped 0.12% over 24 h, but that's still better than the median alt, which fell 0.33% across the 19-coin basket. So BTC's outpacing the typical alt, while ETH is tightening the gap against Bitcoin.",
-    "status": "published",
-    "postId": 378382080510608,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/378382080510608?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "6e66adae98aafed5",
-      "sourceSnapshot": {
-        "ethBtcPrice": 0.02964,
-        "ethBtcChangePercent": 0.271,
-        "btcChangePercent": -0.119,
-        "altsMedianChangePercent": -0.329,
-        "altsCount": 19
-      },
-      "sourceFetchedAt": "2026-10-17T20:40:36.287Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
