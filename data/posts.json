@@ -1,5 +1,82 @@
 [
   {
+    "id": "ab8e44c9-a87f-4e05-9109-345346b93cf2",
+    "date": "2026-10-28T13:04:28.999Z",
+    "theme": "leaders-laggards",
+    "text": "$HAEDAL jumped 20.43% and is now 0.03071, while $PEPE nudged up 12.67% to 0.00000489. On the flip side $ENA slipped 2.92% to 0.1998. Quote volume topped 26.9 M for $HAEDAL, 83.8 M for $PEPE and 35.7 M for $ENA.",
+    "status": "published",
+    "postId": 382162819873532,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/382162819873532?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "b335ffa019920dc2",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "HAEDALUSDT",
+            "cashtag": "$HAEDAL",
+            "lastPrice": 0.03071,
+            "priceChangePercent": 20.431,
+            "highPrice": 0.03395,
+            "lowPrice": 0.02528,
+            "quoteVolume": 26919653.875823
+          },
+          {
+            "symbol": "PEPEUSDT",
+            "cashtag": "$PEPE",
+            "lastPrice": 0.00000489,
+            "priceChangePercent": 12.673,
+            "highPrice": 0.00000505,
+            "lowPrice": 0.0000043,
+            "quoteVolume": 83800341.4639019
+          },
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 103.06,
+            "priceChangePercent": 8.382,
+            "highPrice": 105.45,
+            "lowPrice": 94.22,
+            "quoteVolume": 62515616.39195
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "ENAUSDT",
+            "cashtag": "$ENA",
+            "lastPrice": 0.1998,
+            "priceChangePercent": -2.915,
+            "highPrice": 0.2165,
+            "lowPrice": 0.1984,
+            "quoteVolume": 35693873.681696
+          },
+          {
+            "symbol": "WLDUSDT",
+            "cashtag": "$WLD",
+            "lastPrice": 0.4306,
+            "priceChangePercent": -0.692,
+            "highPrice": 0.4439,
+            "lowPrice": 0.4249,
+            "quoteVolume": 21964342.93706
+          },
+          {
+            "symbol": "UNIUSDT",
+            "cashtag": "$UNI",
+            "lastPrice": 7.033,
+            "priceChangePercent": -0.58,
+            "highPrice": 7.274,
+            "lowPrice": 7.006,
+            "quoteVolume": 20641039.63002
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-10-28T13:04:28.309Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "8b0a6b4d-d88b-4d48-91c5-3735006d8c9d",
     "date": "2026-10-28T05:50:40.284Z",
     "theme": "breakout-watch",
@@ -1295,33 +1372,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-19T04:49:12.035Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "12affd2f-b559-4758-842f-a248f9cfe321",
-    "date": "2026-10-18T20:50:39.586Z",
-    "theme": "market-regime",
-    "text": "$BTC slipped 0.91% while every alt was down, 0% up, 100% down. The median alt fell 3.44%, so $BTC held up better than the typical coin. Nineteen alts moved together, and the typical 24-hour range was 6.58%. That's a full-on sell-off across the board, with $BTC the least hurt. End of the 24-hour snapshot: all 19 alts were in the red.",
-    "status": "published",
-    "postId": 378738442736851,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/378738442736851?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "ea27d7ef4e5ba98c",
-      "sourceSnapshot": {
-        "btcChangePercent": -0.91,
-        "altsMedianChangePercent": -3.44,
-        "altsCount": 19,
-        "breadthUpPct": 0,
-        "breadthDownPct": 100,
-        "medianRangePct": 6.58,
-        "direction": "broad-down",
-        "leadership": "btc-ahead"
-      },
-      "sourceFetchedAt": "2026-10-18T20:50:38.659Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
