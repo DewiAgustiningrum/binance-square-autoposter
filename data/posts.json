@@ -1,5 +1,51 @@
 [
   {
+    "id": "1be6281a-f033-4c5b-8f83-3c4026c095b9",
+    "date": "2026-10-29T22:49:26.208Z",
+    "theme": "tokenized-stocks",
+    "text": "$NVDAB slipped to 209.66 USDT, down about 1.9% from its recent highs. The tokenized stock still managed a 2.97% 24-hour range, bouncing between 215.46 and 209.24 USDT.\n\n$CRCLB fell 4.35% to 76.89 USDT, trading in a 6.74% band. Its low hit 76.1 USDT while the high nudged up to 81.28 USDT, and volume hit 23,883,189 USDT.\n\n$SNDKB took the biggest hit, down 6.31% to 1,282.99 USDT. It swung a 9.59% range, from a low of 1,268.23 USDT to a high of 1,391.29 USDT, and racked up the largest 24-hour volume at 45,470,461 USDT.",
+    "status": "published",
+    "postId": 382660472704874,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/382660472704874?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "2eac3939c6c54212",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$NVDAB",
+          "name": "Nvidia",
+          "lastPriceUSDT": 209.66,
+          "priceChangePercent": -1.918,
+          "highPrice": 215.46,
+          "lowPrice": 209.24,
+          "volumeUSDT": 12935766
+        },
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 1282.99,
+          "priceChangePercent": -6.309,
+          "highPrice": 1391.29,
+          "lowPrice": 1268.23,
+          "volumeUSDT": 45470461
+        },
+        {
+          "cashtag": "$CRCLB",
+          "name": "Circle",
+          "lastPriceUSDT": 76.89,
+          "priceChangePercent": -4.354,
+          "highPrice": 81.28,
+          "lowPrice": 76.1,
+          "volumeUSDT": 23883189
+        }
+      ],
+      "sourceFetchedAt": "2026-10-29T22:49:25.153Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "ab8e44c9-a87f-4e05-9109-345346b93cf2",
     "date": "2026-10-28T13:04:28.999Z",
     "theme": "leaders-laggards",
@@ -1323,55 +1369,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-19T13:27:59.587Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "91768891-3532-4faf-8199-9df72c842b8e",
-    "date": "2026-10-19T04:49:12.747Z",
-    "theme": "morning-brief",
-    "text": "$BTC nudged up 1.25% to $82,857, hitting the day's high at that level and pulling back from a low of $80,684. It moved the most in absolute dollars and racked up the biggest USDT volume at about $935 M.\n\n$ETH crept 0.51% to $2,431.48, swinging between $2,329 and $2,438.4, a 4.5% range, the widest of the three. Volume hit roughly $437 M in quote terms.\n\n$BNB rose 1.21% to $729.19, trading from $705.86 up to $729.20, a 3.2% spread. Quote volume sat near $59 M.",
-    "status": "published",
-    "postId": 378856051323945,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/378856051323945?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "6e300e2b5e14ac46",
-      "sourceSnapshot": [
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 82857,
-          "priceChangePercent": 1.249,
-          "highPrice": 82857,
-          "lowPrice": 80684.36,
-          "volume": 11434.00806,
-          "quoteVolume": 934923561.7412786
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2431.48,
-          "priceChangePercent": 0.513,
-          "highPrice": 2438.4,
-          "lowPrice": 2329,
-          "volume": 183089.7779,
-          "quoteVolume": 437171583.392059
-        },
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 729.19,
-          "priceChangePercent": 1.208,
-          "highPrice": 729.2,
-          "lowPrice": 705.86,
-          "volume": 82699.882,
-          "quoteVolume": 59401039.97982
-        }
-      ],
-      "sourceFetchedAt": "2026-10-19T04:49:12.035Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
