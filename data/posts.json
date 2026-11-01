@@ -1,5 +1,32 @@
 [
   {
+    "id": "7785d12f-2cf3-41e5-a549-1cb1d5caf76c",
+    "date": "2026-11-01T22:07:24.696Z",
+    "theme": "market-regime",
+    "text": "$BTC barely moved, up 0.14%. Most alts slipped, the median down 0.7%, they held up about the same as BTC. Only 32% of the 19 alts were up, so it was a mixed day with a clear majority down. The typical 24-hour range for alts was 5.86%. That's the snapshot: a slight gain for $BTC, a modest median drop for the rest, and a mostly-down breadth.",
+    "status": "published",
+    "postId": 383711827397811,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/383711827397811?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "4abfce5e2e9ca670",
+      "sourceSnapshot": {
+        "btcChangePercent": 0.14,
+        "altsMedianChangePercent": -0.7,
+        "altsCount": 19,
+        "breadthUpPct": 32,
+        "breadthDownPct": 68,
+        "medianRangePct": 5.86,
+        "direction": "mixed",
+        "leadership": "in-line"
+      },
+      "sourceFetchedAt": "2026-11-01T22:07:23.958Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "8811f5e6-bbde-4a30-afde-a33e7383b061",
     "date": "2026-11-01T13:37:43.261Z",
     "theme": "daily-recap",
@@ -1313,52 +1340,6 @@
         "leadership": "in-line"
       },
       "sourceFetchedAt": "2026-10-21T17:17:45.236Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "14a2c527-ac0e-441f-95c9-e8a156ecba08",
-    "date": "2026-10-21T11:57:42.690Z",
-    "theme": "tokenized-stocks",
-    "text": "$MUB jumped 4.858% to 924.99 USDT, hitting a high of 931.1 USDT and sliding down to a low of 878.86 USDT. The 5.65% 24-hour range makes it the widest mover among the three.\n\nTesla's tokenized stock $TSLAB rose 3.339% to 379.15 USDT, with the price swinging between 363.95 USDT and 384 USDT. It also logged the biggest USDT volume at 9,942,639.\n\n$SPYB inched up 0.814% to 771.88 USDT, trading between 764.61 USDT and 772.99 USDT. The ETF's 24-hour range was the narrowest at 1.09%.",
-    "status": "published",
-    "postId": 379669148264541,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/379669148264541?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "4c699370b4e92117",
-      "sourceSnapshot": [
-        {
-          "cashtag": "$MUB",
-          "name": "Micron",
-          "lastPriceUSDT": 924.99,
-          "priceChangePercent": 4.858,
-          "highPrice": 931.1,
-          "lowPrice": 878.86,
-          "volumeUSDT": 8403460
-        },
-        {
-          "cashtag": "$SPYB",
-          "name": "S&P 500 ETF",
-          "lastPriceUSDT": 771.88,
-          "priceChangePercent": 0.814,
-          "highPrice": 772.99,
-          "lowPrice": 764.61,
-          "volumeUSDT": 343680
-        },
-        {
-          "cashtag": "$TSLAB",
-          "name": "Tesla",
-          "lastPriceUSDT": 379.15,
-          "priceChangePercent": 3.339,
-          "highPrice": 384,
-          "lowPrice": 363.95,
-          "volumeUSDT": 9942639
-        }
-      ],
-      "sourceFetchedAt": "2026-10-21T11:57:41.804Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
