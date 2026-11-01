@@ -1,5 +1,54 @@
 [
   {
+    "id": "8811f5e6-bbde-4a30-afde-a33e7383b061",
+    "date": "2026-11-01T13:37:43.261Z",
+    "theme": "daily-recap",
+    "text": "$BTC nudged up to $77,977.63, +0.64% in 24 h. It bounced between $78,285 high and $77,392 low, trading about 6,617 BTC for roughly $514.8 M in USDT.\n\n$ETH crept to $2,266.48, +0.748%. The pair swung from $2,278 down to $2,244.73, moving 77,390 ETH for about $175.2 M in USDT.\n\n$BNB led the pack, closing at $713.80 with a +1.181% jump. Its range was $716-$702.03, the widest at 1.96% of price, and it posted the biggest absolute move of the three. Around 92,046 BNB changed hands, worth $65.2 M in USDT.",
+    "status": "published",
+    "postId": 383586565896286,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/383586565896286?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "9013aaf2d0f37ae6",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 77977.63,
+          "priceChangePercent": 0.64,
+          "highPrice": 78285,
+          "lowPrice": 77392.01,
+          "volume": 6616.72958,
+          "quoteVolume": 514820708.5909315
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2266.48,
+          "priceChangePercent": 0.748,
+          "highPrice": 2278,
+          "lowPrice": 2244.73,
+          "volume": 77389.7588,
+          "quoteVolume": 175175683.832431
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 713.8,
+          "priceChangePercent": 1.181,
+          "highPrice": 716,
+          "lowPrice": 702.03,
+          "volume": 92045.746,
+          "quoteVolume": 65208131.38488
+        }
+      ],
+      "sourceFetchedAt": "2026-11-01T13:37:42.011Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "fca5aa11-6bda-489c-a9bd-11a5a53d9a0a",
     "date": "2026-11-01T06:16:23.082Z",
     "theme": "leaders-laggards",
@@ -1310,83 +1359,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-21T11:57:41.804Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "d6389911-55b8-4d82-b07d-9b8ea2f913c0",
-    "date": "2026-10-21T04:56:39.993Z",
-    "theme": "leaders-laggards",
-    "text": "$ZEC jumped 9.41% to 1,257.95, cruising near its 1,296.45 high, while $ARB slipped 4.60% to 0.1909, barely touching the 0.2007 ceiling. Meanwhile $WLD nudged up 8.61% to 0.5904, staying close to its 0.5983 peak. $ZEC's 24-hour gain topped the board with over $215 M in quote volume.",
-    "status": "published",
-    "postId": 379565671885844,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/379565671885844?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "7b8dc176ae17c534",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "ZECUSDT",
-            "cashtag": "$ZEC",
-            "lastPrice": 1257.95,
-            "priceChangePercent": 9.409,
-            "highPrice": 1296.45,
-            "lowPrice": 1123,
-            "quoteVolume": 215361544.0546
-          },
-          {
-            "symbol": "SPCXBUSDT",
-            "cashtag": "$SPCXB",
-            "lastPrice": 161.71,
-            "priceChangePercent": 9.249,
-            "highPrice": 162.06,
-            "lowPrice": 143.52,
-            "quoteVolume": 45074361.86494
-          },
-          {
-            "symbol": "WLDUSDT",
-            "cashtag": "$WLD",
-            "lastPrice": 0.5904,
-            "priceChangePercent": 8.609,
-            "highPrice": 0.5983,
-            "lowPrice": 0.528,
-            "quoteVolume": 97375127.80252
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "ARBUSDT",
-            "cashtag": "$ARB",
-            "lastPrice": 0.1909,
-            "priceChangePercent": -4.598,
-            "highPrice": 0.2007,
-            "lowPrice": 0.1864,
-            "quoteVolume": 29845073.54894
-          },
-          {
-            "symbol": "XAUTUSDT",
-            "cashtag": "$XAUT",
-            "lastPrice": 4116.29,
-            "priceChangePercent": -0.668,
-            "highPrice": 4151.87,
-            "lowPrice": 4109.56,
-            "quoteVolume": 24392274.646725
-          },
-          {
-            "symbol": "TRXUSDT",
-            "cashtag": "$TRX",
-            "lastPrice": 0.3313,
-            "priceChangePercent": -0.06,
-            "highPrice": 0.3327,
-            "lowPrice": 0.3306,
-            "quoteVolume": 23215953.02464
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-10-21T04:56:39.238Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
