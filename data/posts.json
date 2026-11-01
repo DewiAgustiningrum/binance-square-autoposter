@@ -1,5 +1,82 @@
 [
   {
+    "id": "fca5aa11-6bda-489c-a9bd-11a5a53d9a0a",
+    "date": "2026-11-01T06:16:23.082Z",
+    "theme": "leaders-laggards",
+    "text": "$BEAMX jumped 27.16% to $0.005796, hitting a high of $0.005858. $AAVE nudged up 6.30% and closed at $140.17, its range staying between $130.43 and $141.17. Meanwhile $TRX slipped 4.223% to $0.3107 after testing $0.3253 earlier.",
+    "status": "published",
+    "postId": 383478103560926,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/383478103560926?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c3f4197101e9a0bb",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "BEAMXUSDT",
+            "cashtag": "$BEAMX",
+            "lastPrice": 0.005796,
+            "priceChangePercent": 27.161,
+            "highPrice": 0.005858,
+            "lowPrice": 0.004548,
+            "quoteVolume": 14586760.668319
+          },
+          {
+            "symbol": "ZROUSDT",
+            "cashtag": "$ZRO",
+            "lastPrice": 1.858,
+            "priceChangePercent": 8.591,
+            "highPrice": 1.896,
+            "lowPrice": 1.676,
+            "quoteVolume": 16541674.05167
+          },
+          {
+            "symbol": "AAVEUSDT",
+            "cashtag": "$AAVE",
+            "lastPrice": 140.17,
+            "priceChangePercent": 6.302,
+            "highPrice": 141.17,
+            "lowPrice": 130.43,
+            "quoteVolume": 18989448.98606
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "XPLUSDT",
+            "cashtag": "$XPL",
+            "lastPrice": 0.0735,
+            "priceChangePercent": -8.843,
+            "highPrice": 0.08639,
+            "lowPrice": 0.06903,
+            "quoteVolume": 20400834.420631
+          },
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3107,
+            "priceChangePercent": -4.223,
+            "highPrice": 0.3253,
+            "lowPrice": 0.302,
+            "quoteVolume": 90121296.20092
+          },
+          {
+            "symbol": "ENAUSDT",
+            "cashtag": "$ENA",
+            "lastPrice": 0.1905,
+            "priceChangePercent": -2.057,
+            "highPrice": 0.1965,
+            "lowPrice": 0.1861,
+            "quoteVolume": 16719477.532357
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-01T06:16:22.427Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "00cb1068-30d6-4527-8037-7a05e22ac272",
     "date": "2026-10-31T21:41:24.459Z",
     "theme": "tokenized-stocks",
@@ -1310,34 +1387,6 @@
         ]
       },
       "sourceFetchedAt": "2026-10-21T04:56:39.238Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "2584c275-6061-47a5-ad24-f67d75746dc7",
-    "date": "2026-10-20T21:41:29.474Z",
-    "theme": "breakout-watch",
-    "text": "$PEPE jumped about 10% and swung roughly 12.6% in the last 24 hours, which is noticeably wider than its usual 7.5% daily range. That's about a 68% bigger spread than the past week's average. The token's last price sits at $0.00000452.",
-    "status": "published",
-    "postId": 379458723446223,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/379458723446223?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "714551db3179ca2d",
-      "sourceSnapshot": [
-        {
-          "symbol": "PEPEUSDT",
-          "cashtag": "$PEPE",
-          "lastPrice": 0.00000452,
-          "priceChangePercent": 9.976,
-          "last24hRangePct": 12.61061946902656,
-          "avgRangePct": 7.5143253708880176,
-          "ratio": 1.6782104642264484
-        }
-      ],
-      "sourceFetchedAt": "2026-10-20T21:41:28.811Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
