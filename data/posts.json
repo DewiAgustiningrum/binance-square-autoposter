@@ -1,5 +1,29 @@
 [
   {
+    "id": "db16d89b-55f4-4262-ba38-fc80c38a86f1",
+    "date": "2026-11-02T06:17:43.752Z",
+    "theme": "relative-strength",
+    "text": "$ETH is nudging ahead of $BTC, up 0.275% in BTC terms while $BTC itself rose 0.431% against USD. That means ETH's relative strength is climbing, even though both are modestly higher.\n\nMeanwhile the median alt in the 24-hour basket (19 coins) slipped 1.314%. $BTC's 0.43% gain puts it well ahead of that median, so Bitcoin's outpacing the typical alt right now.\n\nIn short: ETH is gaining ground on BTC, and BTC is beating the median alt by roughly half a percent.",
+    "status": "published",
+    "postId": 383832328222793,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/383832328222793?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c706a6847d05d872",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02921,
+        "ethBtcChangePercent": 0.275,
+        "btcChangePercent": 0.431,
+        "altsMedianChangePercent": -1.314,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-11-02T06:17:42.903Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "7785d12f-2cf3-41e5-a549-1cb1d5caf76c",
     "date": "2026-11-01T22:07:24.696Z",
     "theme": "market-regime",
@@ -1313,33 +1337,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-21T21:47:14.312Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "af001532-fad6-40c0-a160-09b33f61a49d",
-    "date": "2026-10-21T17:17:46.110Z",
-    "theme": "market-regime",
-    "text": "$BTC up 2.04% while the whole alt crowd jumped even more, 2.52% on median. Every alt in the sample was higher, 100% up, none down. The typical 24-hour swing for those alts was 6.24%. So it was a clean, market-wide rally with BTC keeping pace.",
-    "status": "published",
-    "postId": 379747805666524,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/379747805666524?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "581a047154aa8716",
-      "sourceSnapshot": {
-        "btcChangePercent": 2.04,
-        "altsMedianChangePercent": 2.52,
-        "altsCount": 19,
-        "breadthUpPct": 100,
-        "breadthDownPct": 0,
-        "medianRangePct": 6.24,
-        "direction": "broad-up",
-        "leadership": "in-line"
-      },
-      "sourceFetchedAt": "2026-10-21T17:17:45.236Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
