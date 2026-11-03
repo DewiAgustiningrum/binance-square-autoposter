@@ -1,5 +1,54 @@
 [
   {
+    "id": "d8d1aba1-160b-4909-b2f4-d4aee6376c5c",
+    "date": "2026-11-03T19:32:04.569Z",
+    "theme": "daily-recap",
+    "text": "$BTC closed at 77,566.01, up 0.79% after swinging between 76,388.88 and 77,892.85. It moved the most USDT-wise, trading about 1.02 billion in quote volume.\n\n$ETH hit 2,309 at the top, dipped to 2,237.38 and settled at 2,288.74, up 1.72%, the biggest absolute price jump of the three and the widest 24h range at roughly 3.13%.\n\n$BNB barely budged, finishing at 697.21, down 0.05% after a narrow 1.67% range from 691.66 to 703.30, with about 67.7 million USDT traded.",
+    "status": "published",
+    "postId": 384381441168464,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/384381441168464?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c2221faa85a573c7",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 77566.01,
+          "priceChangePercent": 0.793,
+          "highPrice": 77892.85,
+          "lowPrice": 76388.88,
+          "volume": 13253.15323,
+          "quoteVolume": 1021662310.7798872
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2288.74,
+          "priceChangePercent": 1.72,
+          "highPrice": 2309,
+          "lowPrice": 2237.38,
+          "volume": 147590.1976,
+          "quoteVolume": 334998824.700454
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 697.21,
+          "priceChangePercent": -0.054,
+          "highPrice": 703.3,
+          "lowPrice": 691.66,
+          "volume": 97039.605,
+          "quoteVolume": 67651678.96485
+        }
+      ],
+      "sourceFetchedAt": "2026-11-03T19:32:03.633Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "be1fbeb1-0efe-4f1b-8705-1c22b925fba2",
     "date": "2026-11-03T06:55:01.653Z",
     "theme": "leaders-laggards",
@@ -1341,55 +1390,6 @@
         ]
       },
       "sourceFetchedAt": "2026-10-22T21:41:37.891Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "d15c0d53-6408-40f3-b10a-5f71435a1f1e",
-    "date": "2026-10-22T12:00:10.240Z",
-    "theme": "daily-recap",
-    "text": "$BTC slipped to $81,778, down about 2 % after peaking near $84,898. It bounced a bit, but the low stuck around $81,653. Quote volume hit roughly $1.85 B.\n\n$ETH fell harder, closing at $2,401.39, a 2.7 % drop. The 24-hour swing stretched from $2,395.55 up to $2,526.62, the widest range of the three. Quote volume was about $752 M.\n\n$BNB nudged lower to $733.25, down 1.8 % after testing $751.86 and hanging near $730.35. It moved the least in percentage terms, with quote volume near $91.7 M.\n\nThe standout was $ETH's price swing, the biggest absolute move and the widest 5.46 % range of the day.",
-    "status": "published",
-    "postId": 380023647146464,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380023647146464?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "05e28d137e48aeb7",
-      "sourceSnapshot": [
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 81778,
-          "priceChangePercent": -2.062,
-          "highPrice": 84898,
-          "lowPrice": 81653,
-          "volume": 22101.4061,
-          "quoteVolume": 1845730771.6453445
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2401.39,
-          "priceChangePercent": -2.732,
-          "highPrice": 2526.62,
-          "lowPrice": 2395.55,
-          "volume": 304494.0766,
-          "quoteVolume": 752174258.217023
-        },
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 733.25,
-          "priceChangePercent": -1.8,
-          "highPrice": 751.86,
-          "lowPrice": 730.35,
-          "volume": 123257.356,
-          "quoteVolume": 91686961.38635
-        }
-      ],
-      "sourceFetchedAt": "2026-10-22T12:00:09.187Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
