@@ -1,5 +1,82 @@
 [
   {
+    "id": "be1fbeb1-0efe-4f1b-8705-1c22b925fba2",
+    "date": "2026-11-03T06:55:01.653Z",
+    "theme": "leaders-laggards",
+    "text": "$TRX nudged up 2.2% to $0.3207, trading a tight range between $0.3138 and $0.3215 with about $39.9 M in volume. Meanwhile $SOXLB plunged 14.5% to $69.48, barely holding above its low of $67.59 after hitting $82.11 earlier, and still moved roughly $35.6 M. $ZEC also slipped, down 10.8% to $1,132.37, swinging from a high of $1,278 to a low of $1,120.03 on a hefty $181.2 M turnover.",
+    "status": "published",
+    "postId": 384195389738385,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/384195389738385?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "b50f511bfc810203",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3207,
+            "priceChangePercent": 2.166,
+            "highPrice": 0.3215,
+            "lowPrice": 0.3138,
+            "quoteVolume": 39895123.2573
+          },
+          {
+            "symbol": "XRPUSDT",
+            "cashtag": "$XRP",
+            "lastPrice": 1.2499,
+            "priceChangePercent": 0,
+            "highPrice": 1.264,
+            "lowPrice": 1.2355,
+            "quoteVolume": 90065721.71071
+          },
+          {
+            "symbol": "SPCXBUSDT",
+            "cashtag": "$SPCXB",
+            "lastPrice": 137.16,
+            "priceChangePercent": -1.018,
+            "highPrice": 142.22,
+            "lowPrice": 135.98,
+            "quoteVolume": 42591843.50301
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 69.48,
+            "priceChangePercent": -14.497,
+            "highPrice": 82.11,
+            "lowPrice": 67.59,
+            "quoteVolume": 35647363.51444
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1132.37,
+            "priceChangePercent": -10.764,
+            "highPrice": 1278,
+            "lowPrice": 1120.03,
+            "quoteVolume": 181159000.68202
+          },
+          {
+            "symbol": "INTCBUSDT",
+            "cashtag": "$INTCB",
+            "lastPrice": 60.52,
+            "priceChangePercent": -9.006,
+            "highPrice": 66.89,
+            "lowPrice": 59.48,
+            "quoteVolume": 29604879.04699
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-03T06:55:00.855Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "c6651d2c-4304-4db8-8e41-47e19286ff8c",
     "date": "2026-11-02T21:44:31.048Z",
     "theme": "quiet-movers",
@@ -1313,30 +1390,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-22T12:00:09.187Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "821fe84d-f530-4022-9e82-a48bb0eb3ce2",
-    "date": "2026-10-22T04:57:12.903Z",
-    "theme": "relative-strength",
-    "text": "$BTC up 0.11% in the last 24 h, while the median alt in the most-traded basket slipped 0.44%. So BTC is outpacing the typical alt by about half a percent.\n\n$ETH/BTC at 0.02951 and $ETH lost 0.034% against BTC, meaning ETH is giving a tiny bit of ground to Bitcoin.\n\n19 alts make up that median figure, all dragging behind the leader.\n\nBottom line: BTC's modest gain leaves it ahead of the median alt, and $ETH is slightly weaker versus $BTC.",
-    "status": "published",
-    "postId": 379919702539115,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/379919702539115?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "d5416698b2d3dcbd",
-      "sourceSnapshot": {
-        "ethBtcPrice": 0.02951,
-        "ethBtcChangePercent": -0.034,
-        "btcChangePercent": 0.107,
-        "altsMedianChangePercent": -0.442,
-        "altsCount": 19
-      },
-      "sourceFetchedAt": "2026-10-22T04:57:12.028Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
