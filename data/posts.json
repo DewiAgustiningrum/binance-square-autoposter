@@ -1,5 +1,33 @@
 [
   {
+    "id": "4e07b565-cf43-4f5a-b6a5-8263e1734e2d",
+    "date": "2026-11-04T06:34:26.197Z",
+    "theme": "breakout-watch",
+    "text": "$ZEC jumped to $1,273.24, up about 12.1% in the last 24 hours. Its price swing hit roughly 12 % of the day, which is noticeably wider than its usual 9 % range. That's a 30% bump in volatility compared to the past week.",
+    "status": "published",
+    "postId": 384544222606390,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/384544222606390?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "669cc23978919bf9",
+      "sourceSnapshot": [
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 1273.24,
+          "priceChangePercent": 12.104,
+          "last24hRangePct": 11.97779679513853,
+          "avgRangePct": 9.211999472099189,
+          "ratio": 1.3002385455422834
+        }
+      ],
+      "sourceFetchedAt": "2026-11-04T06:34:25.434Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d8d1aba1-160b-4909-b2f4-d4aee6376c5c",
     "date": "2026-11-03T19:32:04.569Z",
     "theme": "daily-recap",
@@ -1313,83 +1341,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-23T04:58:50.760Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "16f1bf8e-5ff8-4e5d-9b6b-5fa977fac143",
-    "date": "2026-10-22T21:41:38.642Z",
-    "theme": "leaders-laggards",
-    "text": "$AI jumped 2.062% to $0.0198, trading near its high of $0.0214. $BNB slipped 2.411% and is now $732.28, hanging close to the low of $725.62. Meanwhile $ZEC tumbled 10.182% to $1217.48, sitting just above its low of $1187.5.",
-    "status": "published",
-    "postId": 380166549833814,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380166549833814?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "094dc888511560f4",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "AIUSDT",
-            "cashtag": "$AI",
-            "lastPrice": 0.0198,
-            "priceChangePercent": 2.062,
-            "highPrice": 0.0214,
-            "lowPrice": 0.0188,
-            "quoteVolume": 83387772.73114
-          },
-          {
-            "symbol": "TRXUSDT",
-            "cashtag": "$TRX",
-            "lastPrice": 0.3282,
-            "priceChangePercent": -0.876,
-            "highPrice": 0.3314,
-            "lowPrice": 0.3277,
-            "quoteVolume": 29132895.59527
-          },
-          {
-            "symbol": "BNBUSDT",
-            "cashtag": "$BNB",
-            "lastPrice": 732.28,
-            "priceChangePercent": -2.411,
-            "highPrice": 751,
-            "lowPrice": 725.62,
-            "quoteVolume": 77356112.12537
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "SOXLBUSDT",
-            "cashtag": "$SOXLB",
-            "lastPrice": 81.79,
-            "priceChangePercent": -19.829,
-            "highPrice": 102.12,
-            "lowPrice": 80.37,
-            "quoteVolume": 49197337.71891
-          },
-          {
-            "symbol": "ZECUSDT",
-            "cashtag": "$ZEC",
-            "lastPrice": 1217.48,
-            "priceChangePercent": -10.182,
-            "highPrice": 1359.71,
-            "lowPrice": 1187.5,
-            "quoteVolume": 271766145.50626
-          },
-          {
-            "symbol": "SNDKBUSDT",
-            "cashtag": "$SNDKB",
-            "lastPrice": 1242.81,
-            "priceChangePercent": -9.799,
-            "highPrice": 1377.83,
-            "lowPrice": 1229.29,
-            "quoteVolume": 53711206.812582
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-10-22T21:41:37.891Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
