@@ -1,5 +1,32 @@
 [
   {
+    "id": "23ad3a8a-1fa8-438d-a609-4376fd52bfce",
+    "date": "2026-11-04T19:50:31.611Z",
+    "theme": "market-regime",
+    "text": "$BTC jumped 3.15% while the median alt rose 1.85%. Most alts were up, 68% gained versus 32% down, so the move wasn't broad either way. The typical alt swung about a 10.23% high-low range. $BTC outperformed the median alt, holding up better on the day. That's the snapshot.",
+    "status": "published",
+    "postId": 384739869597837,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/384739869597837?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "191ccc48858eebec",
+      "sourceSnapshot": {
+        "btcChangePercent": 3.15,
+        "altsMedianChangePercent": 1.85,
+        "altsCount": 19,
+        "breadthUpPct": 68,
+        "breadthDownPct": 32,
+        "medianRangePct": 10.23,
+        "direction": "mixed",
+        "leadership": "btc-ahead"
+      },
+      "sourceFetchedAt": "2026-11-04T19:50:30.938Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "4e07b565-cf43-4f5a-b6a5-8263e1734e2d",
     "date": "2026-11-04T06:34:26.197Z",
     "theme": "breakout-watch",
@@ -1295,52 +1322,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-23T11:46:08.000Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "f3c47566-d407-48c3-9a9f-6fc870aa4a76",
-    "date": "2026-10-23T04:58:51.831Z",
-    "theme": "breakout-watch",
-    "text": "$AI blew past its usual swing, moving about 13% today versus a 5.5% weekly average, that's a much wider range. It closed at $0.0205 after a 7.3% gain.\n\n$XAUT also stretched far beyond its norm, trading roughly 2.5 times its typical 1-day spread. The gold-backed token ended the session at $4,012.84, down 2.0%.\n\n$SNDKB's 24-hour band was 10.2% versus a 7.5% average, so it was noticeably wider. It finished at $1,280.76 after slipping 4.4%.",
-    "status": "published",
-    "postId": 380274000619740,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380274000619740?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "b003fc13ee89db6f",
-      "sourceSnapshot": [
-        {
-          "symbol": "XAUTUSDT",
-          "cashtag": "$XAUT",
-          "lastPrice": 4012.84,
-          "priceChangePercent": -2.026,
-          "last24hRangePct": 2.7499227479789967,
-          "avgRangePct": 1.0794007499680416,
-          "ratio": 2.547638352169401
-        },
-        {
-          "symbol": "AIUSDT",
-          "cashtag": "$AI",
-          "lastPrice": 0.0205,
-          "priceChangePercent": 7.33,
-          "last24hRangePct": 12.682926829268283,
-          "avgRangePct": 5.52510903132051,
-          "ratio": 2.295507067348686
-        },
-        {
-          "symbol": "SNDKBUSDT",
-          "cashtag": "$SNDKB",
-          "lastPrice": 1280.76,
-          "priceChangePercent": -4.424,
-          "last24hRangePct": 10.197946355366408,
-          "avgRangePct": 7.490242558157342,
-          "ratio": 1.3614974783774134
-        }
-      ],
-      "sourceFetchedAt": "2026-10-23T04:58:50.760Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
