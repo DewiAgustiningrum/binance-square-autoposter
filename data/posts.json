@@ -1,5 +1,33 @@
 [
   {
+    "id": "1fac1472-1d5b-45e5-997e-1fbd5d40a306",
+    "date": "2026-11-05T06:56:15.679Z",
+    "theme": "quiet-movers",
+    "text": "$ZEC's 24-hour swing was about a third tighter than its usual week-long range. It still managed a 4.45% pop, closing around $1,329.89.",
+    "status": "published",
+    "postId": 384903480547918,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/384903480547918?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "d3846e1467f342e7",
+      "sourceSnapshot": [
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 1329.89,
+          "priceChangePercent": 4.446,
+          "last24hRangePct": 6.387746354961692,
+          "avgRangePct": 9.716278371120591,
+          "ratio": 0.6574272690609403
+        }
+      ],
+      "sourceFetchedAt": "2026-11-05T06:56:14.980Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "23ad3a8a-1fa8-438d-a609-4376fd52bfce",
     "date": "2026-11-04T19:50:31.611Z",
     "theme": "market-regime",
@@ -1276,52 +1304,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-23T17:13:54.299Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "90943300-8f4a-4d3d-8049-698c1bb2ceed",
-    "date": "2026-10-23T11:46:08.910Z",
-    "theme": "tokenized-stocks",
-    "text": "$TSLAB is sitting at 375.87 USDT, up 1.318% on the day. It hit a high of 388.89 USDT and a low of 370.47 USDT, moving roughly 4.9% in the 24-hour window, while pulling in about 10.6 million USDT of volume.\n\nCerebras' bStock, $CBRSB, took the biggest hit: down 5.033% to 109.24 USDT. The token swung 7.68% between a high of 115.03 USDT and a low of 106.64 USDT, and its 24-hour volume was 1.62 million USDT.\n\n$SPYB barely budged, down 0.421% at 763.58 USDT, with a tight range of 0.79% between 768.27 USDT and 762.24 USDT.",
-    "status": "published",
-    "postId": 380374095001286,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380374095001286?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "2d88b8a39b0f0a3a",
-      "sourceSnapshot": [
-        {
-          "cashtag": "$TSLAB",
-          "name": "Tesla",
-          "lastPriceUSDT": 375.87,
-          "priceChangePercent": 1.318,
-          "highPrice": 388.89,
-          "lowPrice": 370.47,
-          "volumeUSDT": 10642960
-        },
-        {
-          "cashtag": "$CBRSB",
-          "name": "Cerebras",
-          "lastPriceUSDT": 109.24,
-          "priceChangePercent": -5.033,
-          "highPrice": 115.03,
-          "lowPrice": 106.64,
-          "volumeUSDT": 1615765
-        },
-        {
-          "cashtag": "$SPYB",
-          "name": "S&P 500 ETF",
-          "lastPriceUSDT": 763.58,
-          "priceChangePercent": -0.421,
-          "highPrice": 768.27,
-          "lowPrice": 762.24,
-          "volumeUSDT": 676526
-        }
-      ],
-      "sourceFetchedAt": "2026-10-23T11:46:08.000Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
