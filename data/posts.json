@@ -1,5 +1,82 @@
 [
   {
+    "id": "a26d5331-b15a-40f9-a94d-84f4b7466456",
+    "date": "2026-11-05T20:01:56.964Z",
+    "theme": "leaders-laggards",
+    "text": "$XAUT nudged up 1.34% to $4,099.89, trading in a tight $4,040-$4,128 range with about $80.7 M volume. Meanwhile $ZEC slipped 2.46% to $1,245.86, still hovering near its $1,213-$1,335 highs and pulling in $206 M. On the flip side $SOXLB tumbled 28.24% to $46.73, swinging from $67.57 down to $42.11 on $85 M of trades.",
+    "status": "published",
+    "postId": 385096571098239,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/385096571098239?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "0f3b5d6a12d18362",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "XAUTUSDT",
+            "cashtag": "$XAUT",
+            "lastPrice": 4099.89,
+            "priceChangePercent": 1.337,
+            "highPrice": 4128.31,
+            "lowPrice": 4040.82,
+            "quoteVolume": 80692617.320185
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1245.86,
+            "priceChangePercent": -2.455,
+            "highPrice": 1335.22,
+            "lowPrice": 1213.33,
+            "quoteVolume": 206225455.98125
+          },
+          {
+            "symbol": "PEPEUSDT",
+            "cashtag": "$PEPE",
+            "lastPrice": 0.00000482,
+            "priceChangePercent": -2.626,
+            "highPrice": 0.00000511,
+            "lowPrice": 0.00000463,
+            "quoteVolume": 57669084.53042343
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 46.73,
+            "priceChangePercent": -28.24,
+            "highPrice": 67.57,
+            "lowPrice": 42.11,
+            "quoteVolume": 85042053.9481
+          },
+          {
+            "symbol": "SNDKBUSDT",
+            "cashtag": "$SNDKB",
+            "lastPrice": 850.44,
+            "priceChangePercent": -17.635,
+            "highPrice": 1049.03,
+            "lowPrice": 808.01,
+            "quoteVolume": 86004948.755413
+          },
+          {
+            "symbol": "CRCLBUSDT",
+            "cashtag": "$CRCLB",
+            "lastPrice": 68.8,
+            "priceChangePercent": -10.042,
+            "highPrice": 77.24,
+            "lowPrice": 65,
+            "quoteVolume": 30633858.2796
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-05T20:01:56.083Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "1fac1472-1d5b-45e5-997e-1fbd5d40a306",
     "date": "2026-11-05T06:56:15.679Z",
     "theme": "quiet-movers",
@@ -1258,52 +1335,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-23T21:28:32.497Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "ba4da63d-30a4-405f-b084-5cb23d25e097",
-    "date": "2026-10-23T17:13:55.017Z",
-    "theme": "quiet-movers",
-    "text": "$ETH barely budged, holding at $2,410 while its 24-hour swing was about 57% tighter than usual.\n\n$BTC slipped a touch, sitting at $81,776 and moving within a range that's roughly 55% tighter than its week-average.\n\n$NEAR hovered around $4.86, its daily band about 53% tighter than normal.\n\nAll three tokens stayed well inside their typical volatility windows today.",
-    "status": "published",
-    "postId": 380454647797305,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380454647797305?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "fa0e23ba2f1052f2",
-      "sourceSnapshot": [
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2410,
-          "priceChangePercent": 1.431,
-          "last24hRangePct": 1.7659751037344376,
-          "avgRangePct": 4.150723564755545,
-          "ratio": 0.42546198902032734
-        },
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 81776,
-          "priceChangePercent": 0.742,
-          "last24hRangePct": 1.2390186315032994,
-          "avgRangePct": 2.7251479387635023,
-          "ratio": 0.4546610530309363
-        },
-        {
-          "symbol": "NEARUSDT",
-          "cashtag": "$NEAR",
-          "lastPrice": 4.858,
-          "priceChangePercent": -0.938,
-          "last24hRangePct": 4.590366405928363,
-          "avgRangePct": 9.749709275963648,
-          "ratio": 0.4708208497298662
-        }
-      ],
-      "sourceFetchedAt": "2026-10-23T17:13:54.299Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
