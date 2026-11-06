@@ -1,5 +1,51 @@
 [
   {
+    "id": "54ff1804-6a85-4d4e-b601-ddfba9ab87c1",
+    "date": "2026-11-06T19:28:29.047Z",
+    "theme": "tokenized-stocks",
+    "text": "$CBRSB jumped 8.5% to 89.36 USDT, hugging the high of 89.7 after a swing from a low of 80.38. Volume hit about 1.09 M USDT, the biggest move among the three.\n\n$SNDKB slipped 1.66% to 823.05 USDT, still sitting near the top of its 14.4% 24h range (high 912.51, low 794.03). It crushed the volume leaderboard with roughly 77.7 M USDT traded.\n\n$NVDAB nudged up 2.58% to 187.65 USDT, trading between 179 and 195.09 and moving about 31.0 M USDT in the last day.",
+    "status": "published",
+    "postId": 385442241991045,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/385442241991045?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "85a2d09f89349f62",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$CBRSB",
+          "name": "Cerebras",
+          "lastPriceUSDT": 89.36,
+          "priceChangePercent": 8.499,
+          "highPrice": 89.7,
+          "lowPrice": 80.38,
+          "volumeUSDT": 1093576
+        },
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 823.05,
+          "priceChangePercent": -1.655,
+          "highPrice": 912.51,
+          "lowPrice": 794.03,
+          "volumeUSDT": 77680355
+        },
+        {
+          "cashtag": "$NVDAB",
+          "name": "Nvidia",
+          "lastPriceUSDT": 187.65,
+          "priceChangePercent": 2.58,
+          "highPrice": 195.09,
+          "lowPrice": 179,
+          "volumeUSDT": 31016097
+        }
+      ],
+      "sourceFetchedAt": "2026-11-06T19:28:28.077Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "a26d5331-b15a-40f9-a94d-84f4b7466456",
     "date": "2026-11-05T20:01:56.964Z",
     "theme": "leaders-laggards",
@@ -1298,43 +1344,6 @@
         "altsCount": 19
       },
       "sourceFetchedAt": "2026-10-24T04:43:52.710Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "9a344f2a-a4a0-4d17-af0e-85a1ea290c1a",
-    "date": "2026-10-23T21:28:33.181Z",
-    "theme": "breakout-watch",
-    "text": "$PEPE jumped around 5.9% and swung about twice its usual daily range, hitting a 15.9% spread in the last 24 hours.\n\n$XAUT nudged down 0.8% while its price moved through a 1.49% band, roughly 31% wider than the week-average range.\n\nBoth tokens broke their typical volatility windows today.",
-    "status": "published",
-    "postId": 380517228062431,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380517228062431?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "37275abd4f173ff3",
-      "sourceSnapshot": [
-        {
-          "symbol": "PEPEUSDT",
-          "cashtag": "$PEPE",
-          "lastPrice": 0.00000466,
-          "priceChangePercent": 5.909,
-          "last24hRangePct": 15.879828326180267,
-          "avgRangePct": 7.4935312066253035,
-          "ratio": 2.119138212454541
-        },
-        {
-          "symbol": "XAUTUSDT",
-          "cashtag": "$XAUT",
-          "lastPrice": 3998.55,
-          "priceChangePercent": -0.849,
-          "last24hRangePct": 1.4895436834444558,
-          "avgRangePct": 1.1405968556408468,
-          "ratio": 1.3059335347786423
-        }
-      ],
-      "sourceFetchedAt": "2026-10-23T21:28:32.497Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
