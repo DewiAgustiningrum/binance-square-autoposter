@@ -1,5 +1,51 @@
 [
   {
+    "id": "d6a1b9a3-8b44-4acf-b9d1-07cae0eb37c8",
+    "date": "2026-11-07T21:56:02.700Z",
+    "theme": "quiet-movers",
+    "text": "$BNB's 24-hour swing was about 80% tighter than its usual week-long range, barely moving off $695.48.\n\n$BTC managed a 73% tighter daily band, ending the day at $75,713.03 with a tiny 0.27% change.\n\n$ETH saw its range shrink roughly 68%, staying close to $2,230.81 and slipping 0.22% in price.",
+    "status": "published",
+    "postId": 385832400929214,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/385832400929214?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "1f2887a8f6b5e807",
+      "sourceSnapshot": [
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 695.48,
+          "priceChangePercent": 0.277,
+          "last24hRangePct": 0.64559728532812,
+          "avgRangePct": 3.1901103860600237,
+          "ratio": 0.20237459122079818
+        },
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 75713.03,
+          "priceChangePercent": -0.218,
+          "last24hRangePct": 0.8966884563991211,
+          "avgRangePct": 3.325134117081423,
+          "ratio": 0.2696698613727417
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2230.81,
+          "priceChangePercent": -0.218,
+          "last24hRangePct": 1.3945607200971901,
+          "avgRangePct": 4.297417195316766,
+          "ratio": 0.3245113650163994
+        }
+      ],
+      "sourceFetchedAt": "2026-11-07T21:56:01.899Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "eca8fafb-e8f5-4c56-add8-85e7aafb7d4d",
     "date": "2026-11-07T13:11:43.893Z",
     "theme": "daily-recap",
@@ -1293,33 +1339,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-25T04:50:08.875Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "0a05bb17-58ec-4229-99be-d3a50dcdfa18",
-    "date": "2026-10-24T16:01:17.374Z",
-    "theme": "market-regime",
-    "text": "$BTC slipped 2.21% while the median alt fell 5.33%. Most of the 19 alts were down, 89% dropped versus just 11% that rose, so the move was clearly broad. The typical 24-hour high-low swing for the alts was 9.04%. BTC held up better than the pack, losing less than the median alt. End of the 24-hour snapshot: 89% of alts were down.",
-    "status": "published",
-    "postId": 380790693344336,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380790693344336?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "e23797189d71936c",
-      "sourceSnapshot": {
-        "btcChangePercent": -2.21,
-        "altsMedianChangePercent": -5.33,
-        "altsCount": 19,
-        "breadthUpPct": 11,
-        "breadthDownPct": 89,
-        "medianRangePct": 9.04,
-        "direction": "broad-down",
-        "leadership": "btc-ahead"
-      },
-      "sourceFetchedAt": "2026-10-24T16:01:16.341Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
