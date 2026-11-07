@@ -1,5 +1,33 @@
 [
   {
+    "id": "7d0af435-a8be-4226-8fae-34e3129a3ffe",
+    "date": "2026-11-07T06:06:54.045Z",
+    "theme": "breakout-watch",
+    "text": "$SPCXB jumped around $135.23 and swung about 53% wider than its usual daily range. The token moved 8.77% all day, well above its 5.74% average. It also posted a 7.25% gain in the last 24 hours.",
+    "status": "published",
+    "postId": 385599139362485,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/385599139362485?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "19ca5fd5e5359a67",
+      "sourceSnapshot": [
+        {
+          "symbol": "SPCXBUSDT",
+          "cashtag": "$SPCXB",
+          "lastPrice": 135.23,
+          "priceChangePercent": 7.249,
+          "last24hRangePct": 8.770243289210974,
+          "avgRangePct": 5.735577589065171,
+          "ratio": 1.529095048061309
+        }
+      ],
+      "sourceFetchedAt": "2026-11-07T06:06:53.415Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "54ff1804-6a85-4d4e-b601-ddfba9ab87c1",
     "date": "2026-11-06T19:28:29.047Z",
     "theme": "tokenized-stocks",
@@ -1320,30 +1348,6 @@
         ]
       },
       "sourceFetchedAt": "2026-10-24T11:10:01.003Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "d2f450a8-9ed7-4174-8adf-6b14b94432c6",
-    "date": "2026-10-24T04:43:53.441Z",
-    "theme": "relative-strength",
-    "text": "$ETH is pulling a little ahead of $BTC, up 0.34% in BTC terms. Meanwhile $BTC dropped about 1.00% over the last 24 hours. The median alt in the 19-coin most-traded basket outperformed $BTC, gaining 0.98% versus the bitcoin loss.",
-    "status": "published",
-    "postId": 380624216960638,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380624216960638?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "78e7bcb56298e101",
-      "sourceSnapshot": {
-        "ethBtcPrice": 0.02947,
-        "ethBtcChangePercent": 0.34,
-        "btcChangePercent": -0.999,
-        "altsMedianChangePercent": -0.98,
-        "altsCount": 19
-      },
-      "sourceFetchedAt": "2026-10-24T04:43:52.710Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
