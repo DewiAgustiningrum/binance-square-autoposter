@@ -1,5 +1,82 @@
 [
   {
+    "id": "b28f7670-6668-4b5a-a283-7a0f7e457ec8",
+    "date": "2026-11-08T06:11:12.253Z",
+    "theme": "leaders-laggards",
+    "text": "$ACT jumped 6.2% to $0.01148, trading in a tight $0.00998-$0.01298 band with over 8.4 M USDT volume. $ONE nudged up 3.6% to $0.00192, its range stayed between $0.00178 and $0.002476 while pulling in 43 M USDT. On the flip side, $PUMP fell 5.96% to $0.003675, sliding from a high of $0.003959 to a low of $0.003568 and still moving about 11.4 M USDT.",
+    "status": "published",
+    "postId": 385954091203452,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/385954091203452?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "163a92d60418f091",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "ACTUSDT",
+            "cashtag": "$ACT",
+            "lastPrice": 0.01148,
+            "priceChangePercent": 6.198,
+            "highPrice": 0.01298,
+            "lowPrice": 0.00998,
+            "quoteVolume": 8435745.872602
+          },
+          {
+            "symbol": "ONEUSDT",
+            "cashtag": "$ONE",
+            "lastPrice": 0.00192,
+            "priceChangePercent": 3.56,
+            "highPrice": 0.002476,
+            "lowPrice": 0.001778,
+            "quoteVolume": 43454836.7511281
+          },
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3209,
+            "priceChangePercent": 0.912,
+            "highPrice": 0.321,
+            "lowPrice": 0.3179,
+            "quoteVolume": 11688513.72243
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "PUMPUSDT",
+            "cashtag": "$PUMP",
+            "lastPrice": 0.003675,
+            "priceChangePercent": -5.962,
+            "highPrice": 0.003959,
+            "lowPrice": 0.003568,
+            "quoteVolume": 11389902.028021
+          },
+          {
+            "symbol": "ENAUSDT",
+            "cashtag": "$ENA",
+            "lastPrice": 0.1549,
+            "priceChangePercent": -5.836,
+            "highPrice": 0.1653,
+            "lowPrice": 0.1533,
+            "quoteVolume": 11958017.311536
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1263.45,
+            "priceChangePercent": -3.681,
+            "highPrice": 1330.08,
+            "lowPrice": 1236.64,
+            "quoteVolume": 124469483.90726
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-08T06:11:11.394Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d6a1b9a3-8b44-4acf-b9d1-07cae0eb37c8",
     "date": "2026-11-07T21:56:02.700Z",
     "theme": "quiet-movers",
@@ -1290,55 +1367,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-25T16:29:29.385Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "3a72b417-863b-4310-ac73-560992931b73",
-    "date": "2026-10-25T04:50:09.635Z",
-    "theme": "morning-brief",
-    "text": "$BTC barely budged, up 0.07% to 80,946. It swung between 79,221 and 81,034, a 2.24% range, and hauled the most USDT volume at about 896 million.\n\n$ETH slipped 0.6% to 2,368.84. The 4.31% swing, from a low of 2,282.46 up to a high of 2,384.47, was the widest percentage move of the three.\n\n$BNB rose 1.09% to 748.17, the biggest absolute price change. Its 4.07% range (718-748.46) was tight, and it posted a 93 million USDT quote volume.\n\nAll three settled within their 24-hour highs and lows, with $BTC still holding the top quote-volume figure.",
-    "status": "published",
-    "postId": 380979651138323,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/380979651138323?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "0ddf7e044864e047",
-      "sourceSnapshot": [
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 80946,
-          "priceChangePercent": 0.065,
-          "highPrice": 81033.69,
-          "lowPrice": 79220.74,
-          "volume": 11147.53242,
-          "quoteVolume": 895730956.5564741
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2368.84,
-          "priceChangePercent": -0.599,
-          "highPrice": 2384.47,
-          "lowPrice": 2282.46,
-          "volume": 197527.2185,
-          "quoteVolume": 461012254.441778
-        },
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 748.17,
-          "priceChangePercent": 1.09,
-          "highPrice": 748.46,
-          "lowPrice": 718,
-          "volume": 127389.385,
-          "quoteVolume": 93330830.05688
-        }
-      ],
-      "sourceFetchedAt": "2026-10-25T04:50:08.875Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
