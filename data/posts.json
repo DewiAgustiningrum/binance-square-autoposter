@@ -1,5 +1,54 @@
 [
   {
+    "id": "b53c0e8c-9144-4a7e-b03c-ab98b79280c5",
+    "date": "2026-11-10T19:48:10.860Z",
+    "theme": "daily-recap",
+    "text": "$BTC slipped 2.0% to $73,502, bounced off a high of $75,442 and found support near $72,727. The pair moved about 3.7% in the 24-hour range and traded roughly $1.2 B in USDT volume.\n\n$ETH took the biggest hit, down 4.18% to $2,045.84. It swung from $2,137.30 down to $2,006, a 6.4% range, the widest of the three, and logged about $677 M in quote volume.\n\n$BNB fell 1.99% to $675.04, hovering between $692.64 and $670.06, a 3.3% swing, with $86.7 M USDT traded.\n\nThe standout stat: $BTC moved the most USDT volume, topping $1.19 B.",
+    "status": "published",
+    "postId": 386862659842447,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/386862659842447?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "8e1946680ae55b85",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 73502,
+          "priceChangePercent": -2.021,
+          "highPrice": 75442.01,
+          "lowPrice": 72727.27,
+          "volume": 16185.64087,
+          "quoteVolume": 1198881025.2071886
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 2045.84,
+          "priceChangePercent": -4.178,
+          "highPrice": 2137.3,
+          "lowPrice": 2006,
+          "volume": 327047.0594,
+          "quoteVolume": 677054097.11601
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 675.04,
+          "priceChangePercent": -1.991,
+          "highPrice": 692.64,
+          "lowPrice": 670.06,
+          "volume": 126472.275,
+          "quoteVolume": 86674470.03672
+        }
+      ],
+      "sourceFetchedAt": "2026-11-10T19:48:09.930Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "f57143d4-98a7-4e99-9686-0292b0c2caba",
     "date": "2026-11-10T07:26:23.917Z",
     "theme": "market-regime",
@@ -1293,30 +1342,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-26T22:43:37.136Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "6c1433f5-8479-41ca-8c1d-c813f28c0876",
-    "date": "2026-10-26T13:12:28.944Z",
-    "theme": "relative-strength",
-    "text": "$ETH slipped 0.38% against $BTC, so it's losing a bit of ground in BTC terms. Meanwhile $BTC dropped 0.40% over 24 h, while the median alt in the 19-coin basket rose 0.64%. That means the typical alt outperformed Bitcoin today. End of the day: $ETH is down vs $BTC, and $BTC is lagging the alt median.",
-    "status": "published",
-    "postId": 381456997138476,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/381456997138476?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "6ef78c99dadfa960",
-      "sourceSnapshot": {
-        "ethBtcPrice": 0.02893,
-        "ethBtcChangePercent": -0.379,
-        "btcChangePercent": -0.402,
-        "altsMedianChangePercent": 0.638,
-        "altsCount": 19
-      },
-      "sourceFetchedAt": "2026-10-26T13:12:28.201Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
