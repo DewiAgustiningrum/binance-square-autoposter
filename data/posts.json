@@ -1,5 +1,32 @@
 [
   {
+    "id": "f57143d4-98a7-4e99-9686-0292b0c2caba",
+    "date": "2026-11-10T07:26:23.917Z",
+    "theme": "market-regime",
+    "text": "$BTC up 1.05% while the alt crowd ripped higher, 89% of the 19 coins rose, only 11% fell. The median alt jumped 2.8%, so the typical alt outperformed $BTC by a solid point. Those alts were swinging about a 6.77% 24-hour range on average.\n\nOverall it was a broad rally led by the alt side, with $BTC holding its own but lagging the median mover.",
+    "status": "published",
+    "postId": 386680359248123,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/386680359248123?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "ef275bd8ab0cb251",
+      "sourceSnapshot": {
+        "btcChangePercent": 1.05,
+        "altsMedianChangePercent": 2.8,
+        "altsCount": 19,
+        "breadthUpPct": 89,
+        "breadthDownPct": 11,
+        "medianRangePct": 6.77,
+        "direction": "broad-up",
+        "leadership": "alts-ahead"
+      },
+      "sourceFetchedAt": "2026-11-10T07:26:23.416Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "52b2bdbd-9c90-4f48-876b-4459b7836b6a",
     "date": "2026-11-08T22:12:51.411Z",
     "theme": "breakout-watch",
@@ -1290,83 +1317,6 @@
         "altsCount": 19
       },
       "sourceFetchedAt": "2026-10-26T13:12:28.201Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "8ea3c948-3481-4a26-9dd3-4ac44d6b9e36",
-    "date": "2026-10-26T04:54:58.990Z",
-    "theme": "leaders-laggards",
-    "text": "$ENA jumped 5.831% to $0.2069, cruising up to a high of $0.2116 while volume topped 33 M USDT. $QNT nudged 3.472% higher, ending at $190.46 after hitting $200.35 earlier. On the flip side, $WLD slipped 5.506% to $0.4445, its low was $0.4299 and it still moved over 30 M USDT in the last day.",
-    "status": "published",
-    "postId": 381334730917464,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/381334730917464?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "3115bd1c454c3981",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "ENAUSDT",
-            "cashtag": "$ENA",
-            "lastPrice": 0.2069,
-            "priceChangePercent": 5.831,
-            "highPrice": 0.2116,
-            "lowPrice": 0.1887,
-            "quoteVolume": 33103329.187361
-          },
-          {
-            "symbol": "QNTUSDT",
-            "cashtag": "$QNT",
-            "lastPrice": 190.46,
-            "priceChangePercent": 3.472,
-            "highPrice": 200.35,
-            "lowPrice": 177.92,
-            "quoteVolume": 14176154.02181
-          },
-          {
-            "symbol": "UNIUSDT",
-            "cashtag": "$UNI",
-            "lastPrice": 6.901,
-            "priceChangePercent": 1.01,
-            "highPrice": 7.04,
-            "lowPrice": 6.645,
-            "quoteVolume": 20998064.56972
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "WLDUSDT",
-            "cashtag": "$WLD",
-            "lastPrice": 0.4445,
-            "priceChangePercent": -5.506,
-            "highPrice": 0.4707,
-            "lowPrice": 0.4299,
-            "quoteVolume": 30098951.56477
-          },
-          {
-            "symbol": "PEPEUSDT",
-            "cashtag": "$PEPE",
-            "lastPrice": 0.00000438,
-            "priceChangePercent": -2.45,
-            "highPrice": 0.0000045,
-            "lowPrice": 0.00000421,
-            "quoteVolume": 25284425.93911552
-          },
-          {
-            "symbol": "SUIUSDT",
-            "cashtag": "$SUI",
-            "lastPrice": 0.9143,
-            "priceChangePercent": -2.046,
-            "highPrice": 0.9343,
-            "lowPrice": 0.9001,
-            "quoteVolume": 32341683.75981
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-10-26T04:54:58.192Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
