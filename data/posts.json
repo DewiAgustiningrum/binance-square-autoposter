@@ -1,5 +1,82 @@
 [
   {
+    "id": "87f3a522-86c9-4398-9443-dfd9c56f24ad",
+    "date": "2026-11-11T06:36:05.714Z",
+    "theme": "leaders-laggards",
+    "text": "$INIT surged 27.754% to $0.28429, trading a solid $41.66 M volume. Meanwhile $ONE jumped 22.899% and is now $0.001755 on $30.03 M of trades. On the flip side $ZEC slipped 12.539% to $1,005.02, still moving $266.58 M in quote volume.",
+    "status": "published",
+    "postId": 387021890697809,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/387021890697809?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "56638111742abcb8",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "INITUSDT",
+            "cashtag": "$INIT",
+            "lastPrice": 0.28429,
+            "priceChangePercent": 27.754,
+            "highPrice": 0.395,
+            "lowPrice": 0.19154,
+            "quoteVolume": 41664234.214025
+          },
+          {
+            "symbol": "ONEUSDT",
+            "cashtag": "$ONE",
+            "lastPrice": 0.001755,
+            "priceChangePercent": 22.899,
+            "highPrice": 0.00208,
+            "lowPrice": 0.001421,
+            "quoteVolume": 30027419.0970178
+          },
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 62.97,
+            "priceChangePercent": 15.372,
+            "highPrice": 63.05,
+            "lowPrice": 51.01,
+            "quoteVolume": 37650046.10839
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 1005.02,
+            "priceChangePercent": -12.539,
+            "highPrice": 1199.82,
+            "lowPrice": 994.22,
+            "quoteVolume": 266577974.95354
+          },
+          {
+            "symbol": "UNIUSDT",
+            "cashtag": "$UNI",
+            "lastPrice": 6.544,
+            "priceChangePercent": -6.661,
+            "highPrice": 7.16,
+            "lowPrice": 6.47,
+            "quoteVolume": 52372419.27466
+          },
+          {
+            "symbol": "NVDABUSDT",
+            "cashtag": "$NVDAB",
+            "lastPrice": 173.33,
+            "priceChangePercent": -3.641,
+            "highPrice": 183.36,
+            "lowPrice": 166.11,
+            "quoteVolume": 73034727.50672
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-11T06:36:04.916Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "b53c0e8c-9144-4a7e-b03c-ab98b79280c5",
     "date": "2026-11-10T19:48:10.860Z",
     "theme": "daily-recap",
@@ -1314,34 +1391,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-27T12:20:30.465Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "a34f1bb3-191f-4e8c-b915-7240dfad3b72",
-    "date": "2026-10-26T22:43:38.050Z",
-    "theme": "breakout-watch",
-    "text": "$QNT jumped to $202.93 and swung about twice its usual daily range, hitting a 17.83% spread in the last 24 hours. That's a lot more movement than the typical 9.03% range it's seen over the past week.",
-    "status": "published",
-    "postId": 381597362638278,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/381597362638278?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "449cd651720ab80e",
-      "sourceSnapshot": [
-        {
-          "symbol": "QNTUSDT",
-          "cashtag": "$QNT",
-          "lastPrice": 202.93,
-          "priceChangePercent": 5.638,
-          "last24hRangePct": 17.830909539068283,
-          "avgRangePct": 9.02655149669324,
-          "ratio": 1.9753844583505011
-        }
-      ],
-      "sourceFetchedAt": "2026-10-26T22:43:37.136Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
