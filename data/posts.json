@@ -1,5 +1,42 @@
 [
   {
+    "id": "b6e584c2-3390-4a95-9c07-2dddabd276e5",
+    "date": "2026-11-12T07:19:52.037Z",
+    "theme": "breakout-watch",
+    "text": "$PEPE swung hard, its 24-hour range about 145% wider than usual, roughly two-and-a-half times its typical daily swing. The token dropped 15.37% and finished around $0.00000446.\n\n$NVDAB also broke out of its norm, moving about 113% beyond its average range, so a little over double what you'd expect in a day. It slid 6.226% to end near $161.3.\n\nBoth memes and meme-stocks saw their volatility spike well past the week-long average. The data shows $PEPE's range hit 19.06% versus a 7.78% norm, while $NVDAB's hit 14.49% versus a 6.79% norm.",
+    "status": "published",
+    "postId": 387386543113302,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/387386543113302?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c652aa5117161c97",
+      "sourceSnapshot": [
+        {
+          "symbol": "PEPEUSDT",
+          "cashtag": "$PEPE",
+          "lastPrice": 0.00000446,
+          "priceChangePercent": -15.37,
+          "last24hRangePct": 19.05829596412557,
+          "avgRangePct": 7.78272673833984,
+          "ratio": 2.4487941829229585
+        },
+        {
+          "symbol": "NVDABUSDT",
+          "cashtag": "$NVDAB",
+          "lastPrice": 161.3,
+          "priceChangePercent": -6.226,
+          "last24hRangePct": 14.491225894462703,
+          "avgRangePct": 6.794266029298262,
+          "ratio": 2.1328611261280583
+        }
+      ],
+      "sourceFetchedAt": "2026-11-12T07:19:51.171Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d8e41e3e-0524-43c8-b579-4898b06faf76",
     "date": "2026-11-11T19:40:14.162Z",
     "theme": "relative-strength",
@@ -1329,43 +1366,6 @@
         ]
       },
       "sourceFetchedAt": "2026-10-28T13:04:28.309Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "8b0a6b4d-d88b-4d48-91c5-3735006d8c9d",
-    "date": "2026-10-28T05:50:40.284Z",
-    "theme": "breakout-watch",
-    "text": "$PEPE jumped around $0.00000478 and swung about twice its usual daily range, hitting a 15.9% spread versus the 8.3% average.\n\n$SOXLB sat near $103.14, its 24-hour range hit 16.4%, roughly 44% wider than the typical 11.4% swing.\n\nBoth tokens moved noticeably wider than normal in the last day.",
-    "status": "published",
-    "postId": 382056205121479,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/382056205121479?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "0ae2220e35e15721",
-      "sourceSnapshot": [
-        {
-          "symbol": "PEPEUSDT",
-          "cashtag": "$PEPE",
-          "lastPrice": 0.00000478,
-          "priceChangePercent": 10.138,
-          "last24hRangePct": 15.899581589958167,
-          "avgRangePct": 8.282640834977189,
-          "ratio": 1.9196270738693642
-        },
-        {
-          "symbol": "SOXLBUSDT",
-          "cashtag": "$SOXLB",
-          "lastPrice": 103.14,
-          "priceChangePercent": 15.073,
-          "last24hRangePct": 16.385495443087073,
-          "avgRangePct": 11.398634410259504,
-          "ratio": 1.437496357312686
-        }
-      ],
-      "sourceFetchedAt": "2026-10-28T05:50:39.756Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
