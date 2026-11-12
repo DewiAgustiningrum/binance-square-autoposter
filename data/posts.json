@@ -1,5 +1,32 @@
 [
   {
+    "id": "d42fca93-1861-477d-8d24-5300f974e4bc",
+    "date": "2026-11-12T20:00:07.222Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped 3.64% in the last 24 h. The alt universe went even lower, with the median down 3.95% and 95% of the 19 coins losing ground, only 5% managed to stay up. That's a pretty broad drop across the board. $BTC held up about the same as the typical alt, falling just a hair less. The typical alt swung a 7.6% high-low range today.",
+    "status": "published",
+    "postId": 387573382433476,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/387573382433476?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "a883c7d055211897",
+      "sourceSnapshot": {
+        "btcChangePercent": -3.64,
+        "altsMedianChangePercent": -3.95,
+        "altsCount": 19,
+        "breadthUpPct": 5,
+        "breadthDownPct": 95,
+        "medianRangePct": 7.6,
+        "direction": "broad-down",
+        "leadership": "in-line"
+      },
+      "sourceFetchedAt": "2026-11-12T20:00:06.560Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "b6e584c2-3390-4a95-9c07-2dddabd276e5",
     "date": "2026-11-12T07:19:52.037Z",
     "theme": "breakout-watch",
@@ -1289,83 +1316,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-29T22:49:25.153Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "ab8e44c9-a87f-4e05-9109-345346b93cf2",
-    "date": "2026-10-28T13:04:28.999Z",
-    "theme": "leaders-laggards",
-    "text": "$HAEDAL jumped 20.43% and is now 0.03071, while $PEPE nudged up 12.67% to 0.00000489. On the flip side $ENA slipped 2.92% to 0.1998. Quote volume topped 26.9 M for $HAEDAL, 83.8 M for $PEPE and 35.7 M for $ENA.",
-    "status": "published",
-    "postId": 382162819873532,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/382162819873532?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "b335ffa019920dc2",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "HAEDALUSDT",
-            "cashtag": "$HAEDAL",
-            "lastPrice": 0.03071,
-            "priceChangePercent": 20.431,
-            "highPrice": 0.03395,
-            "lowPrice": 0.02528,
-            "quoteVolume": 26919653.875823
-          },
-          {
-            "symbol": "PEPEUSDT",
-            "cashtag": "$PEPE",
-            "lastPrice": 0.00000489,
-            "priceChangePercent": 12.673,
-            "highPrice": 0.00000505,
-            "lowPrice": 0.0000043,
-            "quoteVolume": 83800341.4639019
-          },
-          {
-            "symbol": "SOXLBUSDT",
-            "cashtag": "$SOXLB",
-            "lastPrice": 103.06,
-            "priceChangePercent": 8.382,
-            "highPrice": 105.45,
-            "lowPrice": 94.22,
-            "quoteVolume": 62515616.39195
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "ENAUSDT",
-            "cashtag": "$ENA",
-            "lastPrice": 0.1998,
-            "priceChangePercent": -2.915,
-            "highPrice": 0.2165,
-            "lowPrice": 0.1984,
-            "quoteVolume": 35693873.681696
-          },
-          {
-            "symbol": "WLDUSDT",
-            "cashtag": "$WLD",
-            "lastPrice": 0.4306,
-            "priceChangePercent": -0.692,
-            "highPrice": 0.4439,
-            "lowPrice": 0.4249,
-            "quoteVolume": 21964342.93706
-          },
-          {
-            "symbol": "UNIUSDT",
-            "cashtag": "$UNI",
-            "lastPrice": 7.033,
-            "priceChangePercent": -0.58,
-            "highPrice": 7.274,
-            "lowPrice": 7.006,
-            "quoteVolume": 20641039.63002
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-10-28T13:04:28.309Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
