@@ -1,5 +1,51 @@
 [
   {
+    "id": "89b50e78-feca-420c-b2f0-db174842cfb5",
+    "date": "2026-11-14T22:30:35.234Z",
+    "theme": "tokenized-stocks",
+    "text": "$CRCLB slid to 55.92 USDT, down 9.63% in 24 h, after hitting a high of 62 USDT and a low of 55.25 USDT. The token's range was the widest at 12.07%, and it moved the most in absolute terms among the three.\n\nNvidia's bStock, $NVDAB, nudged lower to 159.13 USDT, a 1.47% dip, trading between 156.01 USDT and 162.82 USDT. It pulled the biggest USDT volume, about 25.6 million.\n\nMicron's $MUB held near 753 USDT, down 1.78% with a 3.86% range, low of 739.39 USDT and high of 768.46 USDT. Volume was 3.6 million USDT.",
+    "status": "published",
+    "postId": 388318149987291,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/388318149987291?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "65259faab2619969",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$CRCLB",
+          "name": "Circle",
+          "lastPriceUSDT": 55.92,
+          "priceChangePercent": -9.632,
+          "highPrice": 62,
+          "lowPrice": 55.25,
+          "volumeUSDT": 13290351
+        },
+        {
+          "cashtag": "$MUB",
+          "name": "Micron",
+          "lastPriceUSDT": 753.09,
+          "priceChangePercent": -1.778,
+          "highPrice": 768.46,
+          "lowPrice": 739.39,
+          "volumeUSDT": 3607957
+        },
+        {
+          "cashtag": "$NVDAB",
+          "name": "Nvidia",
+          "lastPriceUSDT": 159.13,
+          "priceChangePercent": -1.474,
+          "highPrice": 162.82,
+          "lowPrice": 156.01,
+          "volumeUSDT": 25608461
+        }
+      ],
+      "sourceFetchedAt": "2026-11-14T22:30:34.002Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "b78f0f72-c90f-400f-a15d-355564b0d19d",
     "date": "2026-11-14T18:12:19.260Z",
     "theme": "leaders-laggards",
@@ -1333,30 +1379,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-30T22:26:28.336Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "9aa3dbfa-c85a-424c-b812-42385cca9694",
-    "date": "2026-10-30T13:03:34.927Z",
-    "theme": "relative-strength",
-    "text": "$ETH slipped 0.62% against $BTC, so it's losing a bit of ground in BTC terms. $BTC dropped 3.50% over the last 24 h, but that's still better than the median alt, which fell 4.18% across the 19-coin basket. In other words, Bitcoin's out-performing the typical alt even though both are in the red. $ETH's price in BTC is now 0.02886.",
-    "status": "published",
-    "postId": 382870386586551,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/382870386586551?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "b9b2cbe79477daa9",
-      "sourceSnapshot": {
-        "ethBtcPrice": 0.02886,
-        "ethBtcChangePercent": -0.62,
-        "btcChangePercent": -3.499,
-        "altsMedianChangePercent": -4.178,
-        "altsCount": 19
-      },
-      "sourceFetchedAt": "2026-10-30T13:03:34.271Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
