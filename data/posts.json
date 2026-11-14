@@ -1,5 +1,82 @@
 [
   {
+    "id": "b78f0f72-c90f-400f-a15d-355564b0d19d",
+    "date": "2026-11-14T18:12:19.260Z",
+    "theme": "leaders-laggards",
+    "text": "$NVDAB barely slipped, down 0.93% to $159.49, while $TRX gave up 1.92% and sits at $0.307. On the other side $SHELL tanked hard, down 16.81% to $0.02618. Volume's still hefty, $NVDAB moved over 31.7 M USDT and $SHELL churned about 35.6 M USDT.",
+    "status": "published",
+    "postId": 388254679403650,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/388254679403650?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "8a971048dca40be6",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "NVDABUSDT",
+            "cashtag": "$NVDAB",
+            "lastPrice": 159.49,
+            "priceChangePercent": -0.926,
+            "highPrice": 163.37,
+            "lowPrice": 159.1,
+            "quoteVolume": 31726121.48996
+          },
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.307,
+            "priceChangePercent": -1.917,
+            "highPrice": 0.314,
+            "lowPrice": 0.3069,
+            "quoteVolume": 28857679.21719
+          },
+          {
+            "symbol": "SPCXBUSDT",
+            "cashtag": "$SPCXB",
+            "lastPrice": 135.07,
+            "priceChangePercent": -2.827,
+            "highPrice": 140.36,
+            "lowPrice": 134.54,
+            "quoteVolume": 25145022.69021
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "SHELLUSDT",
+            "cashtag": "$SHELL",
+            "lastPrice": 0.02618,
+            "priceChangePercent": -16.81,
+            "highPrice": 0.05163,
+            "lowPrice": 0.02578,
+            "quoteVolume": 35573373.707644
+          },
+          {
+            "symbol": "UNIUSDT",
+            "cashtag": "$UNI",
+            "lastPrice": 5.014,
+            "priceChangePercent": -12.77,
+            "highPrice": 5.893,
+            "lowPrice": 4.913,
+            "quoteVolume": 53139718.55296
+          },
+          {
+            "symbol": "ENAUSDT",
+            "cashtag": "$ENA",
+            "lastPrice": 0.1194,
+            "priceChangePercent": -11.882,
+            "highPrice": 0.1377,
+            "lowPrice": 0.1181,
+            "quoteVolume": 28963324.84406
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-14T18:12:18.669Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d3135336-0d2c-4fef-b593-1ceb180bbb52",
     "date": "2026-11-13T19:48:14.858Z",
     "theme": "quiet-movers",
@@ -1280,33 +1357,6 @@
         "altsCount": 19
       },
       "sourceFetchedAt": "2026-10-30T13:03:34.271Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "70642f77-1427-4d2d-b40d-1353de4cc0f0",
-    "date": "2026-10-30T05:56:08.204Z",
-    "theme": "market-regime",
-    "text": "$BTC slipped 2.07% while the median alt fell 3.18%, so Bitcoin held up better than the rest.\nOut of 19 alts, 79% were down and only 21% managed to rise, that's a clear broad decline.\nThe typical alt's 24-hour range was about 15.04%, giving a sense of how much they moved.\n\nBottom line: a wide-spread sell-off with Bitcoin the least hurt, and most alts joining the drop.",
-    "status": "published",
-    "postId": 382765339314389,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/382765339314389?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "070a8f27c71ecdff",
-      "sourceSnapshot": {
-        "btcChangePercent": -2.07,
-        "altsMedianChangePercent": -3.18,
-        "altsCount": 19,
-        "breadthUpPct": 21,
-        "breadthDownPct": 79,
-        "medianRangePct": 15.04,
-        "direction": "broad-down",
-        "leadership": "btc-ahead"
-      },
-      "sourceFetchedAt": "2026-10-30T05:56:07.295Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
