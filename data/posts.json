@@ -1,5 +1,51 @@
 [
   {
+    "id": "8cde595b-e35d-484a-8594-3c1454cd5e19",
+    "date": "2026-11-15T06:42:31.681Z",
+    "theme": "breakout-watch",
+    "text": "$DOGE swung hard, its 24-hour range about 2.6 times its usual spread and the token dropped 8.03% to $0.05795.\n\n$HYPE was next, covering roughly 2.4 times its typical daily swing and slid 6.12% to $65.36.\n\n$BNB also broke out, moving about 2.37 times wider than normal and fell 4.35% to $591.65.\n\nAll three posted ranges well over double their week-average.",
+    "status": "published",
+    "postId": 388439050730475,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/388439050730475?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "33e9721efe984b89",
+      "sourceSnapshot": [
+        {
+          "symbol": "DOGEUSDT",
+          "cashtag": "$DOGE",
+          "lastPrice": 0.05795,
+          "priceChangePercent": -8.03,
+          "last24hRangePct": 13.615185504745472,
+          "avgRangePct": 5.261409762285603,
+          "ratio": 2.5877447528114432
+        },
+        {
+          "symbol": "HYPEUSDT",
+          "cashtag": "$HYPE",
+          "lastPrice": 65.36,
+          "priceChangePercent": -6.119,
+          "last24hRangePct": 15.208078335373312,
+          "avgRangePct": 6.261464005467524,
+          "ratio": 2.428837460711039
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 591.65,
+          "priceChangePercent": -4.347,
+          "last24hRangePct": 9.26883683196431,
+          "avgRangePct": 3.9031109048576473,
+          "ratio": 2.3747305823231173
+        }
+      ],
+      "sourceFetchedAt": "2026-11-15T06:42:31.137Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "89b50e78-feca-420c-b2f0-db174842cfb5",
     "date": "2026-11-14T22:30:35.234Z",
     "theme": "tokenized-stocks",
@@ -1333,52 +1379,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-31T05:52:30.162Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "9a328fc3-8f62-424f-8f83-25405182dac0",
-    "date": "2026-10-30T22:26:29.066Z",
-    "theme": "breakout-watch",
-    "text": "$TRX swung hard, its 24-hour range about 5 times the norm, ending at $0.3283 and down 6.3%.\n\n$PEPE was noticeably wider too, trading a 24-hour spread roughly twice its usual size, up 9.3% to $0.00000492.\n\n$SOL also broke its typical band, moving about 1.7 times the average range and slipping 1.8% to $95.67.",
-    "status": "published",
-    "postId": 383008725838095,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383008725838095?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "d96eb2f1fbf58022",
-      "sourceSnapshot": [
-        {
-          "symbol": "TRXUSDT",
-          "cashtag": "$TRX",
-          "lastPrice": 0.3283,
-          "priceChangePercent": -6.307,
-          "last24hRangePct": 10.782820590922933,
-          "avgRangePct": 2.292190112702412,
-          "ratio": 4.704156313723195
-        },
-        {
-          "symbol": "PEPEUSDT",
-          "cashtag": "$PEPE",
-          "lastPrice": 0.00000492,
-          "priceChangePercent": 9.333,
-          "last24hRangePct": 24.18699186991869,
-          "avgRangePct": 12.269954257584388,
-          "ratio": 1.9712373299980366
-        },
-        {
-          "symbol": "SOLUSDT",
-          "cashtag": "$SOL",
-          "lastPrice": 95.67,
-          "priceChangePercent": -1.847,
-          "last24hRangePct": 6.532873419044632,
-          "avgRangePct": 3.9267143444350805,
-          "ratio": 1.6636996852859915
-        }
-      ],
-      "sourceFetchedAt": "2026-10-30T22:26:28.336Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
