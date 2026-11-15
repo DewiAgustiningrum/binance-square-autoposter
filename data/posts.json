@@ -1,5 +1,32 @@
 [
   {
+    "id": "ccef39f2-8610-4a1e-a6d4-ba4e2cdef8ec",
+    "date": "2026-11-15T18:55:18.766Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped 1.36% in the last 24 h. The alt crowd also fell, with the median down 0.76% and 63% of them in the red. Most alts (19 of them) moved lower, but it wasn't a clean sweep, 37% managed to stay up. The typical alt's 24-hour range was about 9.2%. $BTC held up about the same as the median alt, so neither side really out-performed. All in all, a mixed-direction day with a clear tilt toward downside across the board.",
+    "status": "published",
+    "postId": 388619139313683,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/388619139313683?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "30ae7f4850081276",
+      "sourceSnapshot": {
+        "btcChangePercent": -1.36,
+        "altsMedianChangePercent": -0.76,
+        "altsCount": 19,
+        "breadthUpPct": 37,
+        "breadthDownPct": 63,
+        "medianRangePct": 9.2,
+        "direction": "mixed",
+        "leadership": "in-line"
+      },
+      "sourceFetchedAt": "2026-11-15T18:55:18.170Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "8cde595b-e35d-484a-8594-3c1454cd5e19",
     "date": "2026-11-15T06:42:31.681Z",
     "theme": "breakout-watch",
@@ -1333,52 +1360,6 @@
         }
       ],
       "sourceFetchedAt": "2026-10-31T21:41:23.658Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "628b77da-dac9-458e-b5f5-fb81515af4cd",
-    "date": "2026-10-31T05:52:30.867Z",
-    "theme": "quiet-movers",
-    "text": "$ETH barely budged, closing at $2,241.45 and ending the day about 41% tighter than its usual swing.\n\n$NEAR slipped a bit, last at $4.323, its 24-hour range roughly 38% narrower than normal, a decent calm after a 2.4% pop.\n\n$XRP fell to $1.247, moving in a range that's about 22% tighter than its week-average, with a 1% dip on the day.\n\nAll three sat in tighter-than-usual windows, with $ETH's range at just 2.41% versus its 4.11% average.",
-    "status": "published",
-    "postId": 383118341083866,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383118341083866?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "8e5806636a033149",
-      "sourceSnapshot": [
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2241.45,
-          "priceChangePercent": -0.202,
-          "last24hRangePct": 2.4131700461754533,
-          "avgRangePct": 4.111226667038223,
-          "ratio": 0.5869708098371355
-        },
-        {
-          "symbol": "NEARUSDT",
-          "cashtag": "$NEAR",
-          "lastPrice": 4.323,
-          "priceChangePercent": 2.392,
-          "last24hRangePct": 6.105457909343206,
-          "avgRangePct": 9.90642168246785,
-          "ratio": 0.6163131456586894
-        },
-        {
-          "symbol": "XRPUSDT",
-          "cashtag": "$XRP",
-          "lastPrice": 1.247,
-          "priceChangePercent": -1.032,
-          "last24hRangePct": 3.5926222935044065,
-          "avgRangePct": 4.620312771252353,
-          "ratio": 0.7775712319429433
-        }
-      ],
-      "sourceFetchedAt": "2026-10-31T05:52:30.162Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
