@@ -1,5 +1,51 @@
 [
   {
+    "id": "9cf07caf-f167-4f88-87be-eb151d981f1b",
+    "date": "2026-11-16T06:40:48.222Z",
+    "theme": "quiet-movers",
+    "text": "$BNB barely budged, trading around $590.6. Its 24-hour swing was about 49% tighter than usual, so the market was pretty calm for BNB.\n\n$ZEC slipped a touch to $890.19, down 0.2% in the last day. The daily range came in roughly 48% narrower than its typical week-long volatility.\n\n$NEAR held steady near $3.151, up a half percent. Its price window was also about 48% tighter than the norm.",
+    "status": "published",
+    "postId": 388792520222607,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/388792520222607?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "df7cd49f6793157b",
+      "sourceSnapshot": [
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 590.6,
+          "priceChangePercent": -0.058,
+          "last24hRangePct": 2.5854624879361987,
+          "avgRangePct": 5.1182142555819725,
+          "ratio": 0.505149327251486
+        },
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 890.19,
+          "priceChangePercent": -0.209,
+          "last24hRangePct": 6.2999820289334085,
+          "avgRangePct": 12.211650461442135,
+          "ratio": 0.5158993085189741
+        },
+        {
+          "symbol": "NEARUSDT",
+          "cashtag": "$NEAR",
+          "lastPrice": 3.151,
+          "priceChangePercent": 0.51,
+          "last24hRangePct": 4.823865439543007,
+          "avgRangePct": 9.332889428474546,
+          "ratio": 0.516867308512779
+        }
+      ],
+      "sourceFetchedAt": "2026-11-16T06:40:47.601Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "ccef39f2-8610-4a1e-a6d4-ba4e2cdef8ec",
     "date": "2026-11-15T18:55:18.766Z",
     "theme": "market-regime",
@@ -1314,52 +1360,6 @@
         ]
       },
       "sourceFetchedAt": "2026-11-01T06:16:22.427Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "00cb1068-30d6-4527-8037-7a05e22ac272",
-    "date": "2026-10-31T21:41:24.459Z",
-    "theme": "tokenized-stocks",
-    "text": "$MUB jumped to 897.81 USDT, up 1.317% on the day, after hitting a high of 904.73 USDT and a low of 885.66 USDT.\n\n$NVDAB slipped to 204.25 USDT, down 0.521% with a 24-hour range from 202.62 USDT to 205.93 USDT, and it moved the most USDT volume at 2,450,344.\n\n$CBRSB barely budged, sitting at 108.81 USDT, up 0.249% and trading between 108.31 USDT and 109.3 USDT with 26,626 USDT of volume.\n\nThe biggest price swing came from $MUB, a 2.12% range.",
-    "status": "published",
-    "postId": 383351543000722,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383351543000722?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "739e1def80eb4386",
-      "sourceSnapshot": [
-        {
-          "cashtag": "$CBRSB",
-          "name": "Cerebras",
-          "lastPriceUSDT": 108.81,
-          "priceChangePercent": 0.249,
-          "highPrice": 109.3,
-          "lowPrice": 108.31,
-          "volumeUSDT": 26626
-        },
-        {
-          "cashtag": "$NVDAB",
-          "name": "Nvidia",
-          "lastPriceUSDT": 204.25,
-          "priceChangePercent": -0.521,
-          "highPrice": 205.93,
-          "lowPrice": 202.62,
-          "volumeUSDT": 2450344
-        },
-        {
-          "cashtag": "$MUB",
-          "name": "Micron",
-          "lastPriceUSDT": 897.81,
-          "priceChangePercent": 1.317,
-          "highPrice": 904.73,
-          "lowPrice": 885.66,
-          "volumeUSDT": 2318926
-        }
-      ],
-      "sourceFetchedAt": "2026-10-31T21:41:23.658Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
