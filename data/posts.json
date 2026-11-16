@@ -1,5 +1,82 @@
 [
   {
+    "id": "9c53510f-e863-4624-8d8c-d0354a20b8f4",
+    "date": "2026-11-16T22:13:19.821Z",
+    "theme": "leaders-laggards",
+    "text": "$ASTER jumped 8.632% to $0.5701, trading near its high of $0.5768, while $HYPE nudged up 4.424% to $70.81 and stayed just under its peak. On the flip side, $SOXLB slid 13.999% down to $48.84, hitting a low of $48.20. $SOXLB's 24-hour drop was the steepest among the trio.",
+    "status": "published",
+    "postId": 389021698009116,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/389021698009116?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "9ab24633361446a6",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "ASTERUSDT",
+            "cashtag": "$ASTER",
+            "lastPrice": 0.5701,
+            "priceChangePercent": 8.632,
+            "highPrice": 0.5768,
+            "lowPrice": 0.4894,
+            "quoteVolume": 29164712.16859
+          },
+          {
+            "symbol": "HYPEUSDT",
+            "cashtag": "$HYPE",
+            "lastPrice": 70.81,
+            "priceChangePercent": 4.424,
+            "highPrice": 71.05,
+            "lowPrice": 64.84,
+            "quoteVolume": 61492639.43593
+          },
+          {
+            "symbol": "PEPEUSDT",
+            "cashtag": "$PEPE",
+            "lastPrice": 0.00000393,
+            "priceChangePercent": 1.289,
+            "highPrice": 0.00000395,
+            "lowPrice": 0.00000371,
+            "quoteVolume": 32574361.72013796
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 48.84,
+            "priceChangePercent": -13.999,
+            "highPrice": 59.23,
+            "lowPrice": 48.2,
+            "quoteVolume": 71970882.34828
+          },
+          {
+            "symbol": "SNDKBUSDT",
+            "cashtag": "$SNDKB",
+            "lastPrice": 814.24,
+            "priceChangePercent": -5.662,
+            "highPrice": 885.49,
+            "lowPrice": 800,
+            "quoteVolume": 25047106.905964
+          },
+          {
+            "symbol": "MUBUSDT",
+            "cashtag": "$MUB",
+            "lastPrice": 722.65,
+            "priceChangePercent": -5.635,
+            "highPrice": 792.84,
+            "lowPrice": 717.27,
+            "quoteVolume": 42146406.49312
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-16T22:13:19.095Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "9cf07caf-f167-4f88-87be-eb151d981f1b",
     "date": "2026-11-16T06:40:48.222Z",
     "theme": "quiet-movers",
@@ -1283,83 +1360,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-01T13:37:42.011Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "fca5aa11-6bda-489c-a9bd-11a5a53d9a0a",
-    "date": "2026-11-01T06:16:23.082Z",
-    "theme": "leaders-laggards",
-    "text": "$BEAMX jumped 27.16% to $0.005796, hitting a high of $0.005858. $AAVE nudged up 6.30% and closed at $140.17, its range staying between $130.43 and $141.17. Meanwhile $TRX slipped 4.223% to $0.3107 after testing $0.3253 earlier.",
-    "status": "published",
-    "postId": 383478103560926,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383478103560926?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "c3f4197101e9a0bb",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "BEAMXUSDT",
-            "cashtag": "$BEAMX",
-            "lastPrice": 0.005796,
-            "priceChangePercent": 27.161,
-            "highPrice": 0.005858,
-            "lowPrice": 0.004548,
-            "quoteVolume": 14586760.668319
-          },
-          {
-            "symbol": "ZROUSDT",
-            "cashtag": "$ZRO",
-            "lastPrice": 1.858,
-            "priceChangePercent": 8.591,
-            "highPrice": 1.896,
-            "lowPrice": 1.676,
-            "quoteVolume": 16541674.05167
-          },
-          {
-            "symbol": "AAVEUSDT",
-            "cashtag": "$AAVE",
-            "lastPrice": 140.17,
-            "priceChangePercent": 6.302,
-            "highPrice": 141.17,
-            "lowPrice": 130.43,
-            "quoteVolume": 18989448.98606
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "XPLUSDT",
-            "cashtag": "$XPL",
-            "lastPrice": 0.0735,
-            "priceChangePercent": -8.843,
-            "highPrice": 0.08639,
-            "lowPrice": 0.06903,
-            "quoteVolume": 20400834.420631
-          },
-          {
-            "symbol": "TRXUSDT",
-            "cashtag": "$TRX",
-            "lastPrice": 0.3107,
-            "priceChangePercent": -4.223,
-            "highPrice": 0.3253,
-            "lowPrice": 0.302,
-            "quoteVolume": 90121296.20092
-          },
-          {
-            "symbol": "ENAUSDT",
-            "cashtag": "$ENA",
-            "lastPrice": 0.1905,
-            "priceChangePercent": -2.057,
-            "highPrice": 0.1965,
-            "lowPrice": 0.1861,
-            "quoteVolume": 16719477.532357
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-11-01T06:16:22.427Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
