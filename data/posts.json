@@ -1,5 +1,51 @@
 [
   {
+    "id": "e75f6a3f-a559-479a-8bcd-4ddd4936b473",
+    "date": "2026-11-17T21:00:09.299Z",
+    "theme": "quiet-movers",
+    "text": "$BNB barely budged, trading around $589.46 and ending the day about 50% tighter than its usual 7-day swing.\n\n$XRP nudged up to $0.9687, its 24-hour range roughly 45% narrower than normal, a modestly tighter day.\n\n$ZEC held steady near $924.84, also seeing its daily swing about 45% tighter than the week-average.\n\nAll three tokens moved within a much tighter band than they typically do.",
+    "status": "published",
+    "postId": 389357609383746,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/389357609383746?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "bed0df82b38d2baa",
+      "sourceSnapshot": [
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 589.46,
+          "priceChangePercent": -0.338,
+          "last24hRangePct": 2.497200827876366,
+          "avgRangePct": 5.023068311387178,
+          "ratio": 0.4971464995240599
+        },
+        {
+          "symbol": "XRPUSDT",
+          "cashtag": "$XRP",
+          "lastPrice": 0.9687,
+          "priceChangePercent": 1.53,
+          "last24hRangePct": 3.4788892329926657,
+          "avgRangePct": 6.379672136215873,
+          "ratio": 0.5453084670674287
+        },
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 924.84,
+          "priceChangePercent": 3.556,
+          "last24hRangePct": 6.824768578596766,
+          "avgRangePct": 12.48736968239086,
+          "ratio": 0.5465337178429781
+        }
+      ],
+      "sourceFetchedAt": "2026-11-17T21:00:08.542Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "a76ac6b0-694c-46b4-adf5-042436da3e14",
     "date": "2026-11-17T08:01:19.171Z",
     "theme": "relative-strength",
@@ -1308,33 +1354,6 @@
         "altsCount": 19
       },
       "sourceFetchedAt": "2026-11-02T06:17:42.903Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "7785d12f-2cf3-41e5-a549-1cb1d5caf76c",
-    "date": "2026-11-01T22:07:24.696Z",
-    "theme": "market-regime",
-    "text": "$BTC barely moved, up 0.14%. Most alts slipped, the median down 0.7%, they held up about the same as BTC. Only 32% of the 19 alts were up, so it was a mixed day with a clear majority down. The typical 24-hour range for alts was 5.86%. That's the snapshot: a slight gain for $BTC, a modest median drop for the rest, and a mostly-down breadth.",
-    "status": "published",
-    "postId": 383711827397811,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383711827397811?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "4abfce5e2e9ca670",
-      "sourceSnapshot": {
-        "btcChangePercent": 0.14,
-        "altsMedianChangePercent": -0.7,
-        "altsCount": 19,
-        "breadthUpPct": 32,
-        "breadthDownPct": 68,
-        "medianRangePct": 5.86,
-        "direction": "mixed",
-        "leadership": "in-line"
-      },
-      "sourceFetchedAt": "2026-11-01T22:07:23.958Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
