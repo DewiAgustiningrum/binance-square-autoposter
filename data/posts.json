@@ -1,5 +1,29 @@
 [
   {
+    "id": "a76ac6b0-694c-46b4-adf5-042436da3e14",
+    "date": "2026-11-17T08:01:19.171Z",
+    "theme": "relative-strength",
+    "text": "$ETH is gaining on $BTC, up 1.07% in the BTC pair. Meanwhile $BTC slipped 0.36% over 24 h, while the median alt in the 19-coin basket rose about 0.30%. So the typical alt outperformed Bitcoin, but ETH is still pulling ahead of BTC directly.",
+    "status": "published",
+    "postId": 389166202222109,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/389166202222109?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "4de4805d65b05e0e",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02832,
+        "ethBtcChangePercent": 1.071,
+        "btcChangePercent": -0.36,
+        "altsMedianChangePercent": 0.302,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-11-17T08:01:18.446Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "9c53510f-e863-4624-8d8c-d0354a20b8f4",
     "date": "2026-11-16T22:13:19.821Z",
     "theme": "leaders-laggards",
@@ -1311,55 +1335,6 @@
         "leadership": "in-line"
       },
       "sourceFetchedAt": "2026-11-01T22:07:23.958Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "8811f5e6-bbde-4a30-afde-a33e7383b061",
-    "date": "2026-11-01T13:37:43.261Z",
-    "theme": "daily-recap",
-    "text": "$BTC nudged up to $77,977.63, +0.64% in 24 h. It bounced between $78,285 high and $77,392 low, trading about 6,617 BTC for roughly $514.8 M in USDT.\n\n$ETH crept to $2,266.48, +0.748%. The pair swung from $2,278 down to $2,244.73, moving 77,390 ETH for about $175.2 M in USDT.\n\n$BNB led the pack, closing at $713.80 with a +1.181% jump. Its range was $716-$702.03, the widest at 1.96% of price, and it posted the biggest absolute move of the three. Around 92,046 BNB changed hands, worth $65.2 M in USDT.",
-    "status": "published",
-    "postId": 383586565896286,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383586565896286?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "9013aaf2d0f37ae6",
-      "sourceSnapshot": [
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 77977.63,
-          "priceChangePercent": 0.64,
-          "highPrice": 78285,
-          "lowPrice": 77392.01,
-          "volume": 6616.72958,
-          "quoteVolume": 514820708.5909315
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2266.48,
-          "priceChangePercent": 0.748,
-          "highPrice": 2278,
-          "lowPrice": 2244.73,
-          "volume": 77389.7588,
-          "quoteVolume": 175175683.832431
-        },
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 713.8,
-          "priceChangePercent": 1.181,
-          "highPrice": 716,
-          "lowPrice": 702.03,
-          "volume": 92045.746,
-          "quoteVolume": 65208131.38488
-        }
-      ],
-      "sourceFetchedAt": "2026-11-01T13:37:42.011Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
