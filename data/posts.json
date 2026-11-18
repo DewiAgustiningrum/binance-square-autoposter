@@ -1,5 +1,33 @@
 [
   {
+    "id": "a26b37cd-36ea-4378-a299-866fecb7bd11",
+    "date": "2026-11-18T07:38:02.091Z",
+    "theme": "breakout-watch",
+    "text": "$SOXLB jumped to $51.76 and swung about 51% wider than its usual daily range. The 24-hour price spread hit 24.0%, well above the 15.9% average. That's a noticeably wider move for today.",
+    "status": "published",
+    "postId": 389514374612360,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/389514374612360?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "4f6560a87dd88b1f",
+      "sourceSnapshot": [
+        {
+          "symbol": "SOXLBUSDT",
+          "cashtag": "$SOXLB",
+          "lastPrice": 51.76,
+          "priceChangePercent": 2.903,
+          "last24hRangePct": 24.01468315301391,
+          "avgRangePct": 15.922407176334772,
+          "ratio": 1.5082319455255837
+        }
+      ],
+      "sourceFetchedAt": "2026-11-18T07:38:01.503Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "e75f6a3f-a559-479a-8bcd-4ddd4936b473",
     "date": "2026-11-17T21:00:09.299Z",
     "theme": "quiet-movers",
@@ -1330,30 +1358,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-02T21:44:30.013Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "db16d89b-55f4-4262-ba38-fc80c38a86f1",
-    "date": "2026-11-02T06:17:43.752Z",
-    "theme": "relative-strength",
-    "text": "$ETH is nudging ahead of $BTC, up 0.275% in BTC terms while $BTC itself rose 0.431% against USD. That means ETH's relative strength is climbing, even though both are modestly higher.\n\nMeanwhile the median alt in the 24-hour basket (19 coins) slipped 1.314%. $BTC's 0.43% gain puts it well ahead of that median, so Bitcoin's outpacing the typical alt right now.\n\nIn short: ETH is gaining ground on BTC, and BTC is beating the median alt by roughly half a percent.",
-    "status": "published",
-    "postId": 383832328222793,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/383832328222793?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "c706a6847d05d872",
-      "sourceSnapshot": {
-        "ethBtcPrice": 0.02921,
-        "ethBtcChangePercent": 0.275,
-        "btcChangePercent": 0.431,
-        "altsMedianChangePercent": -1.314,
-        "altsCount": 19
-      },
-      "sourceFetchedAt": "2026-11-02T06:17:42.903Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
