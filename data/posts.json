@@ -1,5 +1,82 @@
 [
   {
+    "id": "6af57287-eea0-4890-9424-a01e6b12c2ed",
+    "date": "2026-11-20T20:28:00.225Z",
+    "theme": "leaders-laggards",
+    "text": "$TRX slipped 2.9% to $0.3016 on 29.7 M USDT volume, while $SOXLB plunged 31.1% to $31.75 on a hefty 126.7 M USDT volume, a one-day move this big is an outlier. $ZEC also fell hard, down 15.5% to $754.43 with 240.2 M USDT traded, another outlier swing. All three saw massive volume behind the drops.",
+    "status": "published",
+    "postId": 390411390823748,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/390411390823748?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "cc6c0698e1f75c5a",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "TRXUSDT",
+            "cashtag": "$TRX",
+            "lastPrice": 0.3016,
+            "priceChangePercent": -2.866,
+            "highPrice": 0.311,
+            "lowPrice": 0.301,
+            "quoteVolume": 29746514.05588
+          },
+          {
+            "symbol": "PAXGUSDT",
+            "cashtag": "$PAXG",
+            "lastPrice": 3513.72,
+            "priceChangePercent": -4.106,
+            "highPrice": 3664.69,
+            "lowPrice": 3501,
+            "quoteVolume": 42858912.184803
+          },
+          {
+            "symbol": "XAUTUSDT",
+            "cashtag": "$XAUT",
+            "lastPrice": 3513.86,
+            "priceChangePercent": -4.123,
+            "highPrice": 3666.16,
+            "lowPrice": 3502.52,
+            "quoteVolume": 77703615.898694
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 31.75,
+            "priceChangePercent": -31.053,
+            "highPrice": 46.77,
+            "lowPrice": 31.3,
+            "quoteVolume": 126665459.21786
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 754.43,
+            "priceChangePercent": -15.486,
+            "highPrice": 899,
+            "lowPrice": 745.88,
+            "quoteVolume": 240191923.92514
+          },
+          {
+            "symbol": "MUBUSDT",
+            "cashtag": "$MUB",
+            "lastPrice": 597.03,
+            "priceChangePercent": -14.466,
+            "highPrice": 701.66,
+            "lowPrice": 591.28,
+            "quoteVolume": 31008811.75224
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-20T20:27:59.491Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "ca4ec8e0-3ae6-4827-8d36-de2b17362dcb",
     "date": "2026-11-19T20:43:35.375Z",
     "theme": "market-regime",
@@ -1259,55 +1336,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-04T06:34:25.434Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "d8d1aba1-160b-4909-b2f4-d4aee6376c5c",
-    "date": "2026-11-03T19:32:04.569Z",
-    "theme": "daily-recap",
-    "text": "$BTC closed at 77,566.01, up 0.79% after swinging between 76,388.88 and 77,892.85. It moved the most USDT-wise, trading about 1.02 billion in quote volume.\n\n$ETH hit 2,309 at the top, dipped to 2,237.38 and settled at 2,288.74, up 1.72%, the biggest absolute price jump of the three and the widest 24h range at roughly 3.13%.\n\n$BNB barely budged, finishing at 697.21, down 0.05% after a narrow 1.67% range from 691.66 to 703.30, with about 67.7 million USDT traded.",
-    "status": "published",
-    "postId": 384381441168464,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/384381441168464?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "c2221faa85a573c7",
-      "sourceSnapshot": [
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 77566.01,
-          "priceChangePercent": 0.793,
-          "highPrice": 77892.85,
-          "lowPrice": 76388.88,
-          "volume": 13253.15323,
-          "quoteVolume": 1021662310.7798872
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2288.74,
-          "priceChangePercent": 1.72,
-          "highPrice": 2309,
-          "lowPrice": 2237.38,
-          "volume": 147590.1976,
-          "quoteVolume": 334998824.700454
-        },
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 697.21,
-          "priceChangePercent": -0.054,
-          "highPrice": 703.3,
-          "lowPrice": 691.66,
-          "volume": 97039.605,
-          "quoteVolume": 67651678.96485
-        }
-      ],
-      "sourceFetchedAt": "2026-11-03T19:32:03.633Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
