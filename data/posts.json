@@ -1,5 +1,51 @@
 [
   {
+    "id": "22998af0-af32-4a27-be9c-45d99d4f1280",
+    "date": "2026-11-21T19:22:40.967Z",
+    "theme": "tokenized-stocks",
+    "text": "$SNDKB nudged up to 80.73 USDT, a 1.03% rise, after hitting a high of 81.9 USDT and testing a low near 77.63 USDT. The tokenized stock saw the biggest absolute price move among the three.\n\n$CRCLB slipped a touch, down 0.61% to 49.11 USDT, with a 9.47% 24-hour range, the widest swing here. Volume was hefty, 30,705,039 USDT moving through the Binance bStock market.\n\nMicron's $MUB held steady, up 1.02% at 610.59 USDT, trading between 584.96 USDT and 614.52 USDT. It logged 25,924,705 USDT in 24-hour volume.",
+    "status": "published",
+    "postId": 390749232670261,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/390749232670261?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "67c7c1e49f40c252",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 80.73,
+          "priceChangePercent": 1.026,
+          "highPrice": 81.9,
+          "lowPrice": 77.63,
+          "volumeUSDT": 8238352
+        },
+        {
+          "cashtag": "$CRCLB",
+          "name": "Circle",
+          "lastPriceUSDT": 49.11,
+          "priceChangePercent": -0.607,
+          "highPrice": 49.88,
+          "lowPrice": 45.23,
+          "volumeUSDT": 30705039
+        },
+        {
+          "cashtag": "$MUB",
+          "name": "Micron",
+          "lastPriceUSDT": 610.59,
+          "priceChangePercent": 1.019,
+          "highPrice": 614.52,
+          "lowPrice": 584.96,
+          "volumeUSDT": 25924705
+        }
+      ],
+      "sourceFetchedAt": "2026-11-21T19:22:40.129Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "c8010389-1c04-41ba-93ce-4c2ecde1dec3",
     "date": "2026-11-21T07:18:34.736Z",
     "theme": "relative-strength",
@@ -1305,33 +1351,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-05T06:56:14.980Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "23ad3a8a-1fa8-438d-a609-4376fd52bfce",
-    "date": "2026-11-04T19:50:31.611Z",
-    "theme": "market-regime",
-    "text": "$BTC jumped 3.15% while the median alt rose 1.85%. Most alts were up, 68% gained versus 32% down, so the move wasn't broad either way. The typical alt swung about a 10.23% high-low range. $BTC outperformed the median alt, holding up better on the day. That's the snapshot.",
-    "status": "published",
-    "postId": 384739869597837,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/384739869597837?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "191ccc48858eebec",
-      "sourceSnapshot": {
-        "btcChangePercent": 3.15,
-        "altsMedianChangePercent": 1.85,
-        "altsCount": 19,
-        "breadthUpPct": 68,
-        "breadthDownPct": 32,
-        "medianRangePct": 10.23,
-        "direction": "mixed",
-        "leadership": "btc-ahead"
-      },
-      "sourceFetchedAt": "2026-11-04T19:50:30.938Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
