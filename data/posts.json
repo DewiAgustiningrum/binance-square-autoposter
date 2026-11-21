@@ -1,5 +1,29 @@
 [
   {
+    "id": "c8010389-1c04-41ba-93ce-4c2ecde1dec3",
+    "date": "2026-11-21T07:18:34.736Z",
+    "theme": "relative-strength",
+    "text": "$ETH slipped 0.5% against $BTC, so it's losing a bit of relative strength. Meanwhile $BTC dropped 5.94% in the last 24 h, but that's still better than the median alt, which fell 7.95% across the 19-coin basket. In short, BTC's outpacing the typical alt, while ETH's giving ground to BTC.",
+    "status": "published",
+    "postId": 390571276193738,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/390571276193738?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c0d129d6ca8c7a66",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02806,
+        "ethBtcChangePercent": -0.496,
+        "btcChangePercent": -5.943,
+        "altsMedianChangePercent": -7.954,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-11-21T07:18:34.043Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "6af57287-eea0-4890-9424-a01e6b12c2ed",
     "date": "2026-11-20T20:28:00.225Z",
     "theme": "leaders-laggards",
@@ -1308,34 +1332,6 @@
         "leadership": "btc-ahead"
       },
       "sourceFetchedAt": "2026-11-04T19:50:30.938Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "4e07b565-cf43-4f5a-b6a5-8263e1734e2d",
-    "date": "2026-11-04T06:34:26.197Z",
-    "theme": "breakout-watch",
-    "text": "$ZEC jumped to $1,273.24, up about 12.1% in the last 24 hours. Its price swing hit roughly 12 % of the day, which is noticeably wider than its usual 9 % range. That's a 30% bump in volatility compared to the past week.",
-    "status": "published",
-    "postId": 384544222606390,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/384544222606390?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "669cc23978919bf9",
-      "sourceSnapshot": [
-        {
-          "symbol": "ZECUSDT",
-          "cashtag": "$ZEC",
-          "lastPrice": 1273.24,
-          "priceChangePercent": 12.104,
-          "last24hRangePct": 11.97779679513853,
-          "avgRangePct": 9.211999472099189,
-          "ratio": 1.3002385455422834
-        }
-      ],
-      "sourceFetchedAt": "2026-11-04T06:34:25.434Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
