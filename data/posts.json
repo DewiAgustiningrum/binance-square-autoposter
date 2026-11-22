@@ -1,5 +1,42 @@
 [
   {
+    "id": "e9b1b452-d469-4243-a4cd-0ef58c7f6d96",
+    "date": "2026-11-22T06:58:56.264Z",
+    "theme": "quiet-movers",
+    "text": "$SOXLB is sitting at $32.47, down 0.49% in the last 24 h. Its price swing was about 67% tighter than its usual weekly range, moving only ~7% today versus a 21% average.\n\n$HYPE traded around $60.13, up 2.56%. The token's range was roughly 22% tighter than normal, a 7.5% swing compared with a 9.7% average.\n\nBoth pairs stayed well inside their typical volatility bands. The data shows $SOXLB's range at 6.99% and $HYPE's at 7.52% for the day.",
+    "status": "published",
+    "postId": 390920342977195,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/390920342977195?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "e5b425c0d154380c",
+      "sourceSnapshot": [
+        {
+          "symbol": "SOXLBUSDT",
+          "cashtag": "$SOXLB",
+          "lastPrice": 32.47,
+          "priceChangePercent": -0.49,
+          "last24hRangePct": 6.991068678780422,
+          "avgRangePct": 21.007080296884034,
+          "ratio": 0.33279582788177386
+        },
+        {
+          "symbol": "HYPEUSDT",
+          "cashtag": "$HYPE",
+          "lastPrice": 60.13,
+          "priceChangePercent": 2.558,
+          "last24hRangePct": 7.517046399467812,
+          "avgRangePct": 9.667241406626527,
+          "ratio": 0.7775792579582385
+        }
+      ],
+      "sourceFetchedAt": "2026-11-22T06:58:55.434Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "22998af0-af32-4a27-be9c-45d99d4f1280",
     "date": "2026-11-21T19:22:40.967Z",
     "theme": "tokenized-stocks",
@@ -1323,34 +1360,6 @@
         ]
       },
       "sourceFetchedAt": "2026-11-05T20:01:56.083Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "1fac1472-1d5b-45e5-997e-1fbd5d40a306",
-    "date": "2026-11-05T06:56:15.679Z",
-    "theme": "quiet-movers",
-    "text": "$ZEC's 24-hour swing was about a third tighter than its usual week-long range. It still managed a 4.45% pop, closing around $1,329.89.",
-    "status": "published",
-    "postId": 384903480547918,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/384903480547918?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "d3846e1467f342e7",
-      "sourceSnapshot": [
-        {
-          "symbol": "ZECUSDT",
-          "cashtag": "$ZEC",
-          "lastPrice": 1329.89,
-          "priceChangePercent": 4.446,
-          "last24hRangePct": 6.387746354961692,
-          "avgRangePct": 9.716278371120591,
-          "ratio": 0.6574272690609403
-        }
-      ],
-      "sourceFetchedAt": "2026-11-05T06:56:14.980Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
