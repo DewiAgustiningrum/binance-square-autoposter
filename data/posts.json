@@ -1,5 +1,54 @@
 [
   {
+    "id": "1737791a-82b7-4711-8b6a-3eb8e78605d0",
+    "date": "2026-11-23T23:58:54.554Z",
+    "theme": "morning-brief",
+    "text": "$BTC slipped a hair, up 0.149% to $61,275.46. It bounced between $60,386 low and $64,603.12 high, a 6.88% swing, and hauled the most USDT volume at about $1.71 billion.\n\n$ETH fell 0.699% to $1,710.83, the biggest absolute move of the three. Its 24-hour range hit 8.68% (high $1,845.07, low $1,696.5), the widest slice, while trading roughly $780 million in USDT.\n\n$BNB nudged down 0.461% to $556.76, trading in a 6.56% band from $550.82 to $587.36 and moving about $96 million in USDT.",
+    "status": "published",
+    "postId": 391524905639964,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/391524905639964?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "c8e1ba3f35426361",
+      "sourceSnapshot": [
+        {
+          "symbol": "BTCUSDT",
+          "cashtag": "$BTC",
+          "lastPrice": 61275.46,
+          "priceChangePercent": 0.149,
+          "highPrice": 64603.12,
+          "lowPrice": 60386,
+          "volume": 27501.11455,
+          "quoteVolume": 1709697339.8590193
+        },
+        {
+          "symbol": "ETHUSDT",
+          "cashtag": "$ETH",
+          "lastPrice": 1710.83,
+          "priceChangePercent": -0.699,
+          "highPrice": 1845.07,
+          "lowPrice": 1696.5,
+          "volume": 444147.0625,
+          "quoteVolume": 779832203.951832
+        },
+        {
+          "symbol": "BNBUSDT",
+          "cashtag": "$BNB",
+          "lastPrice": 556.76,
+          "priceChangePercent": -0.461,
+          "highPrice": 587.36,
+          "lowPrice": 550.82,
+          "volume": 170780.649,
+          "quoteVolume": 96431583.78364
+        }
+      ],
+      "sourceFetchedAt": "2026-11-23T23:58:53.766Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "44d5727c-2503-43b5-ac3b-0a05fff67c7c",
     "date": "2026-11-23T07:48:17.247Z",
     "theme": "quiet-movers",
@@ -1332,34 +1381,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-07T13:11:42.960Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "7d0af435-a8be-4226-8fae-34e3129a3ffe",
-    "date": "2026-11-07T06:06:54.045Z",
-    "theme": "breakout-watch",
-    "text": "$SPCXB jumped around $135.23 and swung about 53% wider than its usual daily range. The token moved 8.77% all day, well above its 5.74% average. It also posted a 7.25% gain in the last 24 hours.",
-    "status": "published",
-    "postId": 385599139362485,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/385599139362485?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "19ca5fd5e5359a67",
-      "sourceSnapshot": [
-        {
-          "symbol": "SPCXBUSDT",
-          "cashtag": "$SPCXB",
-          "lastPrice": 135.23,
-          "priceChangePercent": 7.249,
-          "last24hRangePct": 8.770243289210974,
-          "avgRangePct": 5.735577589065171,
-          "ratio": 1.529095048061309
-        }
-      ],
-      "sourceFetchedAt": "2026-11-07T06:06:53.415Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
