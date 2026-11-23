@@ -1,5 +1,51 @@
 [
   {
+    "id": "44d5727c-2503-43b5-ac3b-0a05fff67c7c",
+    "date": "2026-11-23T07:48:17.247Z",
+    "theme": "quiet-movers",
+    "text": "$SNDKB barely moved, its 24-hour swing was about 95% tighter than usual, landing at $84.38 with a 5.12% gain.\n\n$ZEC's daily band was roughly 63% tighter than its week-average, trading around $786.66 and slipping just 0.1%.\n\n$SOXLB showed a somewhat tighter range, about 47% less volatile than normal, and jumped 10% to $35.6.\n\nAll three tokens kept their price swings well below their typical daily ranges.",
+    "status": "published",
+    "postId": 391286365944566,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/391286365944566?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "6cdc50dc78bf531b",
+      "sourceSnapshot": [
+        {
+          "symbol": "SNDKBUSDT",
+          "cashtag": "$SNDKB",
+          "lastPrice": 84.38,
+          "priceChangePercent": 5.12,
+          "last24hRangePct": 6.767006399620756,
+          "avgRangePct": 134.4301011347164,
+          "ratio": 0.0503384758510249
+        },
+        {
+          "symbol": "ZECUSDT",
+          "cashtag": "$ZEC",
+          "lastPrice": 786.66,
+          "priceChangePercent": -0.097,
+          "last24hRangePct": 4.148818527321952,
+          "avgRangePct": 11.330679586547328,
+          "ratio": 0.36615796039698756
+        },
+        {
+          "symbol": "SOXLBUSDT",
+          "cashtag": "$SOXLB",
+          "lastPrice": 35.6,
+          "priceChangePercent": 10.012,
+          "last24hRangePct": 11.207865168539332,
+          "avgRangePct": 21.222134525747485,
+          "ratio": 0.5281214834889267
+        }
+      ],
+      "sourceFetchedAt": "2026-11-23T07:48:16.434Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "d63b4ce5-af9a-4728-b5c4-3c394baec825",
     "date": "2026-11-22T19:46:19.484Z",
     "theme": "leaders-laggards",
@@ -1314,52 +1360,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-07T06:06:53.415Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "54ff1804-6a85-4d4e-b601-ddfba9ab87c1",
-    "date": "2026-11-06T19:28:29.047Z",
-    "theme": "tokenized-stocks",
-    "text": "$CBRSB jumped 8.5% to 89.36 USDT, hugging the high of 89.7 after a swing from a low of 80.38. Volume hit about 1.09 M USDT, the biggest move among the three.\n\n$SNDKB slipped 1.66% to 823.05 USDT, still sitting near the top of its 14.4% 24h range (high 912.51, low 794.03). It crushed the volume leaderboard with roughly 77.7 M USDT traded.\n\n$NVDAB nudged up 2.58% to 187.65 USDT, trading between 179 and 195.09 and moving about 31.0 M USDT in the last day.",
-    "status": "published",
-    "postId": 385442241991045,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/385442241991045?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "85a2d09f89349f62",
-      "sourceSnapshot": [
-        {
-          "cashtag": "$CBRSB",
-          "name": "Cerebras",
-          "lastPriceUSDT": 89.36,
-          "priceChangePercent": 8.499,
-          "highPrice": 89.7,
-          "lowPrice": 80.38,
-          "volumeUSDT": 1093576
-        },
-        {
-          "cashtag": "$SNDKB",
-          "name": "Sandisk",
-          "lastPriceUSDT": 823.05,
-          "priceChangePercent": -1.655,
-          "highPrice": 912.51,
-          "lowPrice": 794.03,
-          "volumeUSDT": 77680355
-        },
-        {
-          "cashtag": "$NVDAB",
-          "name": "Nvidia",
-          "lastPriceUSDT": 187.65,
-          "priceChangePercent": 2.58,
-          "highPrice": 195.09,
-          "lowPrice": 179,
-          "volumeUSDT": 31016097
-        }
-      ],
-      "sourceFetchedAt": "2026-11-06T19:28:28.077Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
