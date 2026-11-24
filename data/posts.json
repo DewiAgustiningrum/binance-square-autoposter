@@ -1,5 +1,51 @@
 [
   {
+    "id": "838d487e-f5c5-4d04-89f5-a75f0781ff76",
+    "date": "2026-11-24T22:31:44.569Z",
+    "theme": "tokenized-stocks",
+    "text": "$NVDAB is sitting at 154.03 USDT, down 6.936% on the day. The token hit a high of 169.03 and a low of 150.69, with about 67.2 million USDT changing hands.\n\n$SNDKB took the biggest hit, sliding 11.956% to 78.28 USDT. Its 24-hour swing was the widest at roughly 19.2%, ranging from 75.07 up to 90.1, and it moved about 11.5 million USDT in volume.\n\nCerebras' bStock, $CBRSB, is at 89.45 USDT after a 10.326% drop. The token's range was 16.11%, bouncing between 86.22 and 100.63, with 751 k USDT traded.",
+    "status": "published",
+    "postId": 391857377932876,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/391857377932876?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "8ccc9977dadafb9e",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$NVDAB",
+          "name": "Nvidia",
+          "lastPriceUSDT": 154.03,
+          "priceChangePercent": -6.936,
+          "highPrice": 169.03,
+          "lowPrice": 150.69,
+          "volumeUSDT": 67216898
+        },
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 78.28,
+          "priceChangePercent": -11.956,
+          "highPrice": 90.1,
+          "lowPrice": 75.07,
+          "volumeUSDT": 11508918
+        },
+        {
+          "cashtag": "$CBRSB",
+          "name": "Cerebras",
+          "lastPriceUSDT": 89.45,
+          "priceChangePercent": -10.326,
+          "highPrice": 100.63,
+          "lowPrice": 86.22,
+          "volumeUSDT": 751002
+        }
+      ],
+      "sourceFetchedAt": "2026-11-24T22:31:43.810Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "ea6e4509-57ad-4bab-9fee-fa77a2888cc3",
     "date": "2026-11-24T10:00:11.946Z",
     "theme": "breakout-watch",
@@ -1332,52 +1378,6 @@
         ]
       },
       "sourceFetchedAt": "2026-11-08T06:11:11.394Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "d6a1b9a3-8b44-4acf-b9d1-07cae0eb37c8",
-    "date": "2026-11-07T21:56:02.700Z",
-    "theme": "quiet-movers",
-    "text": "$BNB's 24-hour swing was about 80% tighter than its usual week-long range, barely moving off $695.48.\n\n$BTC managed a 73% tighter daily band, ending the day at $75,713.03 with a tiny 0.27% change.\n\n$ETH saw its range shrink roughly 68%, staying close to $2,230.81 and slipping 0.22% in price.",
-    "status": "published",
-    "postId": 385832400929214,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/385832400929214?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "1f2887a8f6b5e807",
-      "sourceSnapshot": [
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 695.48,
-          "priceChangePercent": 0.277,
-          "last24hRangePct": 0.64559728532812,
-          "avgRangePct": 3.1901103860600237,
-          "ratio": 0.20237459122079818
-        },
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 75713.03,
-          "priceChangePercent": -0.218,
-          "last24hRangePct": 0.8966884563991211,
-          "avgRangePct": 3.325134117081423,
-          "ratio": 0.2696698613727417
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2230.81,
-          "priceChangePercent": -0.218,
-          "last24hRangePct": 1.3945607200971901,
-          "avgRangePct": 4.297417195316766,
-          "ratio": 0.3245113650163994
-        }
-      ],
-      "sourceFetchedAt": "2026-11-07T21:56:01.899Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
