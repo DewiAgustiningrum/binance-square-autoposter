@@ -1,5 +1,32 @@
 [
   {
+    "id": "3bb29d2c-b771-4a7c-92ff-b9e1770c92f4",
+    "date": "2026-11-25T08:44:04.352Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped 1.87% while the median alt fell 3.63%, so BTC held up better than the pack. Out of 19 alts, 95% were down and only 5% managed to rise, that's a clear broad decline. The typical 24-hour range for alts was 7.45%, showing how much they swung. All in all, the market was dominated by red, with BTC the least bruised.",
+    "status": "published",
+    "postId": 392007865550166,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/392007865550166?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "5273087902388321",
+      "sourceSnapshot": {
+        "btcChangePercent": -1.87,
+        "altsMedianChangePercent": -3.63,
+        "altsCount": 19,
+        "breadthUpPct": 5,
+        "breadthDownPct": 95,
+        "medianRangePct": 7.45,
+        "direction": "broad-down",
+        "leadership": "btc-ahead"
+      },
+      "sourceFetchedAt": "2026-11-25T08:44:03.749Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "838d487e-f5c5-4d04-89f5-a75f0781ff76",
     "date": "2026-11-24T22:31:44.569Z",
     "theme": "tokenized-stocks",
@@ -1301,83 +1328,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-08T13:33:22.323Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "b28f7670-6668-4b5a-a283-7a0f7e457ec8",
-    "date": "2026-11-08T06:11:12.253Z",
-    "theme": "leaders-laggards",
-    "text": "$ACT jumped 6.2% to $0.01148, trading in a tight $0.00998-$0.01298 band with over 8.4 M USDT volume. $ONE nudged up 3.6% to $0.00192, its range stayed between $0.00178 and $0.002476 while pulling in 43 M USDT. On the flip side, $PUMP fell 5.96% to $0.003675, sliding from a high of $0.003959 to a low of $0.003568 and still moving about 11.4 M USDT.",
-    "status": "published",
-    "postId": 385954091203452,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/385954091203452?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "163a92d60418f091",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "ACTUSDT",
-            "cashtag": "$ACT",
-            "lastPrice": 0.01148,
-            "priceChangePercent": 6.198,
-            "highPrice": 0.01298,
-            "lowPrice": 0.00998,
-            "quoteVolume": 8435745.872602
-          },
-          {
-            "symbol": "ONEUSDT",
-            "cashtag": "$ONE",
-            "lastPrice": 0.00192,
-            "priceChangePercent": 3.56,
-            "highPrice": 0.002476,
-            "lowPrice": 0.001778,
-            "quoteVolume": 43454836.7511281
-          },
-          {
-            "symbol": "TRXUSDT",
-            "cashtag": "$TRX",
-            "lastPrice": 0.3209,
-            "priceChangePercent": 0.912,
-            "highPrice": 0.321,
-            "lowPrice": 0.3179,
-            "quoteVolume": 11688513.72243
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "PUMPUSDT",
-            "cashtag": "$PUMP",
-            "lastPrice": 0.003675,
-            "priceChangePercent": -5.962,
-            "highPrice": 0.003959,
-            "lowPrice": 0.003568,
-            "quoteVolume": 11389902.028021
-          },
-          {
-            "symbol": "ENAUSDT",
-            "cashtag": "$ENA",
-            "lastPrice": 0.1549,
-            "priceChangePercent": -5.836,
-            "highPrice": 0.1653,
-            "lowPrice": 0.1533,
-            "quoteVolume": 11958017.311536
-          },
-          {
-            "symbol": "ZECUSDT",
-            "cashtag": "$ZEC",
-            "lastPrice": 1263.45,
-            "priceChangePercent": -3.681,
-            "highPrice": 1330.08,
-            "lowPrice": 1236.64,
-            "quoteVolume": 124469483.90726
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-11-08T06:11:11.394Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
