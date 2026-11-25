@@ -1,5 +1,82 @@
 [
   {
+    "id": "15b8f069-c91b-4c72-93c4-2da0825b241f",
+    "date": "2026-11-25T21:46:22.795Z",
+    "theme": "leaders-laggards",
+    "text": "$NEAR jumped 6.1% to $3.03, flashing a high of $3.06 before slipping to $2.71. $ZEC rose 4.5% and closed at $763.73, holding near its $769.94 peak. Meanwhile $MUB fell 4.4% to $600.55, trading down from a $637.26 high. All three moved on volumes over $25 M, with $NEAR topping the chart at about $68 M.",
+    "status": "published",
+    "postId": 392200125353358,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/392200125353358?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "b63d7ad4ccbad379",
+      "sourceSnapshot": {
+        "leaders": [
+          {
+            "symbol": "NEARUSDT",
+            "cashtag": "$NEAR",
+            "lastPrice": 3.031,
+            "priceChangePercent": 6.127,
+            "highPrice": 3.055,
+            "lowPrice": 2.714,
+            "quoteVolume": 67898591.8127
+          },
+          {
+            "symbol": "ZECUSDT",
+            "cashtag": "$ZEC",
+            "lastPrice": 763.73,
+            "priceChangePercent": 4.526,
+            "highPrice": 769.94,
+            "lowPrice": 674.63,
+            "quoteVolume": 153226725.1147
+          },
+          {
+            "symbol": "HYPEUSDT",
+            "cashtag": "$HYPE",
+            "lastPrice": 61.81,
+            "priceChangePercent": 3.103,
+            "highPrice": 62.22,
+            "lowPrice": 56.12,
+            "quoteVolume": 40500608.01225
+          }
+        ],
+        "laggards": [
+          {
+            "symbol": "MUBUSDT",
+            "cashtag": "$MUB",
+            "lastPrice": 600.55,
+            "priceChangePercent": -4.408,
+            "highPrice": 637.26,
+            "lowPrice": 548.99,
+            "quoteVolume": 25113047.88819
+          },
+          {
+            "symbol": "NVDABUSDT",
+            "cashtag": "$NVDAB",
+            "lastPrice": 149.34,
+            "priceChangePercent": -2.906,
+            "highPrice": 155.27,
+            "lowPrice": 141.4,
+            "quoteVolume": 95121258.86077
+          },
+          {
+            "symbol": "SOXLBUSDT",
+            "cashtag": "$SOXLB",
+            "lastPrice": 31.85,
+            "priceChangePercent": -2.03,
+            "highPrice": 33.71,
+            "lowPrice": 24.65,
+            "quoteVolume": 100759909.87531
+          }
+        ]
+      },
+      "sourceFetchedAt": "2026-11-25T21:46:22.183Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "3bb29d2c-b771-4a7c-92ff-b9e1770c92f4",
     "date": "2026-11-25T08:44:04.352Z",
     "theme": "market-regime",
@@ -1282,52 +1359,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-08T22:12:50.729Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "8d7adaa2-7cdb-4628-b28e-6c3f3c273c50",
-    "date": "2026-11-08T13:33:23.062Z",
-    "theme": "tokenized-stocks",
-    "text": "$CRCLB is sitting at 67.63 USDT, up 0.044% on the day. It hit a high of 67.8 and a low of 66.92, so the 24h range is about 1.30% and it pulled in the biggest USDT volume at 2,485,824.\n\n$MUB jumped to 696.82 USDT, up 0.35% with a 1.85% swing from 686.11 to 699.03. That's the widest move among the three and the largest absolute price change.\n\n$SPYB slipped to 736.89 USDT, down 0.107% after trading between 726.89 and 737.72, a 1.47% range.",
-    "status": "published",
-    "postId": 386062761144037,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/386062761144037?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "e40a3bf7880aa0bc",
-      "sourceSnapshot": [
-        {
-          "cashtag": "$CRCLB",
-          "name": "Circle",
-          "lastPriceUSDT": 67.63,
-          "priceChangePercent": 0.044,
-          "highPrice": 67.8,
-          "lowPrice": 66.92,
-          "volumeUSDT": 2485824
-        },
-        {
-          "cashtag": "$MUB",
-          "name": "Micron",
-          "lastPriceUSDT": 696.82,
-          "priceChangePercent": 0.35,
-          "highPrice": 699.03,
-          "lowPrice": 686.11,
-          "volumeUSDT": 1542490
-        },
-        {
-          "cashtag": "$SPYB",
-          "name": "S&P 500 ETF",
-          "lastPriceUSDT": 736.89,
-          "priceChangePercent": -0.107,
-          "highPrice": 737.72,
-          "lowPrice": 726.89,
-          "volumeUSDT": 298220
-        }
-      ],
-      "sourceFetchedAt": "2026-11-08T13:33:22.323Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
