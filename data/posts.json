@@ -1,5 +1,29 @@
 [
   {
+    "id": "35eb7155-2953-4094-8ff1-2d184af184a8",
+    "date": "2026-11-26T08:29:33.387Z",
+    "theme": "relative-strength",
+    "text": "$ETH slipped 0.14% against $BTC, now sitting at 0.02784 BTC. Meanwhile $BTC nudged up 2.87% in USD terms. The median alt in the top-20 basket jumped 3.53%, so the typical alt outpaced $BTC over the last 24 h. In short, $ETH is losing a touch of relative strength to $BTC, and the broader alt set is beating $BTC's gain.",
+    "status": "published",
+    "postId": 392358191342449,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/392358191342449?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "70e4d5763faafe6f",
+      "sourceSnapshot": {
+        "ethBtcPrice": 0.02784,
+        "ethBtcChangePercent": -0.143,
+        "btcChangePercent": 2.872,
+        "altsMedianChangePercent": 3.533,
+        "altsCount": 19
+      },
+      "sourceFetchedAt": "2026-11-26T08:29:32.693Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "15b8f069-c91b-4c72-93c4-2da0825b241f",
     "date": "2026-11-25T21:46:22.795Z",
     "theme": "leaders-laggards",
@@ -1313,52 +1337,6 @@
         "leadership": "alts-ahead"
       },
       "sourceFetchedAt": "2026-11-10T07:26:23.416Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "52b2bdbd-9c90-4f48-876b-4459b7836b6a",
-    "date": "2026-11-08T22:12:51.411Z",
-    "theme": "breakout-watch",
-    "text": "$ONE went crazy, swinging about twice its usual daily range and ending at $0.001662. It dropped 20.5% in 24 h while the price band stretched nearly 39%, well over double the typical 17.6% swing.\n\n$ETH wasn't far behind. The token moved roughly twice as far as it normally does, with an 8.8% range versus the usual 4.3% and a 4.9% dip to $2,123.51.\n\n$XRP also felt the heat, trading in a band 55% wider than its week-average, 6.9% versus 4.5%, and slipping 3.8% to $1.1146.",
-    "status": "published",
-    "postId": 386190426745724,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/386190426745724?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "e0171c731bc44ca5",
-      "sourceSnapshot": [
-        {
-          "symbol": "ONEUSDT",
-          "cashtag": "$ONE",
-          "lastPrice": 0.001662,
-          "priceChangePercent": -20.478,
-          "last24hRangePct": 38.989169675090245,
-          "avgRangePct": 17.55562474708676,
-          "ratio": 2.2208933169160066
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2123.51,
-          "priceChangePercent": -4.871,
-          "last24hRangePct": 8.759041591320074,
-          "avgRangePct": 4.317341532703968,
-          "ratio": 2.0288044216493226
-        },
-        {
-          "symbol": "XRPUSDT",
-          "cashtag": "$XRP",
-          "lastPrice": 1.1146,
-          "priceChangePercent": -3.839,
-          "last24hRangePct": 6.898717143626085,
-          "avgRangePct": 4.463806738464266,
-          "ratio": 1.5454784554582954
-        }
-      ],
-      "sourceFetchedAt": "2026-11-08T22:12:50.729Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
