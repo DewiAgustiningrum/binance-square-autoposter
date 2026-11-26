@@ -1,5 +1,51 @@
 [
   {
+    "id": "57d8475c-306b-4d43-8c85-9c9e46a62690",
+    "date": "2026-11-26T21:39:38.555Z",
+    "theme": "quiet-movers",
+    "text": "$SOXLB is sitting at $34.31, up about 7.6% in 24 h. Its daily swing was roughly 66% tighter than usual, only 9.3% versus a typical 27.7% range.\n\n$WBTC held steady around $60,969, gaining just under 1%. The price moved within a 2.7% band, which is about 64% tighter than its normal 7-day swing of 7.5%.\n\n$SOL nudged to $71.67, up 1.2%. It traded in a 3.1% range, roughly 58% tighter than the usual 7.4% spread.\n\nAll three tokens showed a much tighter range than their week-long averages.",
+    "status": "published",
+    "postId": 392552362671131,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/392552362671131?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "9780762a19ab810a",
+      "sourceSnapshot": [
+        {
+          "symbol": "SOXLBUSDT",
+          "cashtag": "$SOXLB",
+          "lastPrice": 34.31,
+          "priceChangePercent": 7.555,
+          "last24hRangePct": 9.297580880209855,
+          "avgRangePct": 27.659248764915453,
+          "ratio": 0.33614726702206854
+        },
+        {
+          "symbol": "WBTCUSDT",
+          "cashtag": "$WBTC",
+          "lastPrice": 60968.56,
+          "priceChangePercent": 0.951,
+          "last24hRangePct": 2.687139076271438,
+          "avgRangePct": 7.464069702098199,
+          "ratio": 0.3600099119540732
+        },
+        {
+          "symbol": "SOLUSDT",
+          "cashtag": "$SOL",
+          "lastPrice": 71.67,
+          "priceChangePercent": 1.157,
+          "last24hRangePct": 3.1254360262313505,
+          "avgRangePct": 7.4398841733917305,
+          "ratio": 0.4200920274282323
+        }
+      ],
+      "sourceFetchedAt": "2026-11-26T21:39:37.799Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "35eb7155-2953-4094-8ff1-2d184af184a8",
     "date": "2026-11-26T08:29:33.387Z",
     "theme": "relative-strength",
@@ -1310,33 +1356,6 @@
         }
       ],
       "sourceFetchedAt": "2026-11-10T19:48:09.930Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "f57143d4-98a7-4e99-9686-0292b0c2caba",
-    "date": "2026-11-10T07:26:23.917Z",
-    "theme": "market-regime",
-    "text": "$BTC up 1.05% while the alt crowd ripped higher, 89% of the 19 coins rose, only 11% fell. The median alt jumped 2.8%, so the typical alt outperformed $BTC by a solid point. Those alts were swinging about a 6.77% 24-hour range on average.\n\nOverall it was a broad rally led by the alt side, with $BTC holding its own but lagging the median mover.",
-    "status": "published",
-    "postId": 386680359248123,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/386680359248123?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "ef275bd8ab0cb251",
-      "sourceSnapshot": {
-        "btcChangePercent": 1.05,
-        "altsMedianChangePercent": 2.8,
-        "altsCount": 19,
-        "breadthUpPct": 89,
-        "breadthDownPct": 11,
-        "medianRangePct": 6.77,
-        "direction": "broad-up",
-        "leadership": "alts-ahead"
-      },
-      "sourceFetchedAt": "2026-11-10T07:26:23.416Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
