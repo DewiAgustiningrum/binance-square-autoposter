@@ -1,5 +1,32 @@
 [
   {
+    "id": "70b70f2a-ca96-4d5c-a73d-1b27de54066e",
+    "date": "2026-11-27T21:24:17.371Z",
+    "theme": "market-regime",
+    "text": "$BTC slipped 1.64% in the last 24 h. Most alts held up better, the median up 0.59% while the bulk moved mixed, 58% rose versus 42% fell. The typical alt swung about 7.65% from its high to low. So you got a down day for Bitcoin, but the alt crowd was mostly holding ground, with a slight edge to the upside. That's the snapshot.",
+    "status": "published",
+    "postId": 392902483960848,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/392902483960848?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "bfc5e1d260becf61",
+      "sourceSnapshot": {
+        "btcChangePercent": -1.64,
+        "altsMedianChangePercent": 0.59,
+        "altsCount": 19,
+        "breadthUpPct": 58,
+        "breadthDownPct": 42,
+        "medianRangePct": 7.65,
+        "direction": "mixed",
+        "leadership": "alts-ahead"
+      },
+      "sourceFetchedAt": "2026-11-27T21:24:16.761Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "c0f04264-2997-4830-a7c9-1759f52c3d3b",
     "date": "2026-11-27T08:43:15.352Z",
     "theme": "tokenized-stocks",
@@ -1276,83 +1303,6 @@
         "altsCount": 19
       },
       "sourceFetchedAt": "2026-11-11T19:40:13.475Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "87f3a522-86c9-4398-9443-dfd9c56f24ad",
-    "date": "2026-11-11T06:36:05.714Z",
-    "theme": "leaders-laggards",
-    "text": "$INIT surged 27.754% to $0.28429, trading a solid $41.66 M volume. Meanwhile $ONE jumped 22.899% and is now $0.001755 on $30.03 M of trades. On the flip side $ZEC slipped 12.539% to $1,005.02, still moving $266.58 M in quote volume.",
-    "status": "published",
-    "postId": 387021890697809,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/387021890697809?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "56638111742abcb8",
-      "sourceSnapshot": {
-        "leaders": [
-          {
-            "symbol": "INITUSDT",
-            "cashtag": "$INIT",
-            "lastPrice": 0.28429,
-            "priceChangePercent": 27.754,
-            "highPrice": 0.395,
-            "lowPrice": 0.19154,
-            "quoteVolume": 41664234.214025
-          },
-          {
-            "symbol": "ONEUSDT",
-            "cashtag": "$ONE",
-            "lastPrice": 0.001755,
-            "priceChangePercent": 22.899,
-            "highPrice": 0.00208,
-            "lowPrice": 0.001421,
-            "quoteVolume": 30027419.0970178
-          },
-          {
-            "symbol": "SOXLBUSDT",
-            "cashtag": "$SOXLB",
-            "lastPrice": 62.97,
-            "priceChangePercent": 15.372,
-            "highPrice": 63.05,
-            "lowPrice": 51.01,
-            "quoteVolume": 37650046.10839
-          }
-        ],
-        "laggards": [
-          {
-            "symbol": "ZECUSDT",
-            "cashtag": "$ZEC",
-            "lastPrice": 1005.02,
-            "priceChangePercent": -12.539,
-            "highPrice": 1199.82,
-            "lowPrice": 994.22,
-            "quoteVolume": 266577974.95354
-          },
-          {
-            "symbol": "UNIUSDT",
-            "cashtag": "$UNI",
-            "lastPrice": 6.544,
-            "priceChangePercent": -6.661,
-            "highPrice": 7.16,
-            "lowPrice": 6.47,
-            "quoteVolume": 52372419.27466
-          },
-          {
-            "symbol": "NVDABUSDT",
-            "cashtag": "$NVDAB",
-            "lastPrice": 173.33,
-            "priceChangePercent": -3.641,
-            "highPrice": 183.36,
-            "lowPrice": 166.11,
-            "quoteVolume": 73034727.50672
-          }
-        ]
-      },
-      "sourceFetchedAt": "2026-11-11T06:36:04.916Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
