@@ -1,5 +1,51 @@
 [
   {
+    "id": "c0f04264-2997-4830-a7c9-1759f52c3d3b",
+    "date": "2026-11-27T08:43:15.352Z",
+    "theme": "tokenized-stocks",
+    "text": "$SNDKB jumped to 80.58 USDT, up 7.026% in 24 h. The token hit a high of 81.86 USDT and slid down to a low of 73.97 USDT, giving it the widest 9.79% range of the three. Volume topped the board at 10,627,687 USDT.\n\n$MUB is riding a 5.587% gain, last at 643.48 USDT. It bounced between 603.07 USDT and 646.44 USDT, a 6.74% swing, and moved about 3,991,467 USDT in the last day.\n\n$CRCLB nudged higher, sitting at 50.89 USDT after a 4.176% rise. Its 24 h band ran from 48.1 USDT to 51.13 USDT, a 5.95% range, with 4,646,060 USDT traded.",
+    "status": "published",
+    "postId": 392715452297939,
+    "shareLink": "https://app.binance.com/uni-qr/cpos/392715452297939?r=HDVH95ZN&l=id",
+    "meta": {
+      "sourceHash": "992625038164208c",
+      "sourceSnapshot": [
+        {
+          "cashtag": "$CRCLB",
+          "name": "Circle",
+          "lastPriceUSDT": 50.89,
+          "priceChangePercent": 4.176,
+          "highPrice": 51.13,
+          "lowPrice": 48.1,
+          "volumeUSDT": 4646060
+        },
+        {
+          "cashtag": "$MUB",
+          "name": "Micron",
+          "lastPriceUSDT": 643.48,
+          "priceChangePercent": 5.587,
+          "highPrice": 646.44,
+          "lowPrice": 603.07,
+          "volumeUSDT": 3991467
+        },
+        {
+          "cashtag": "$SNDKB",
+          "name": "Sandisk",
+          "lastPriceUSDT": 80.58,
+          "priceChangePercent": 7.026,
+          "highPrice": 81.86,
+          "lowPrice": 73.97,
+          "volumeUSDT": 10627687
+        }
+      ],
+      "sourceFetchedAt": "2026-11-27T08:43:14.319Z",
+      "promptVersion": "2.0",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "validatorVersion": "2.0"
+    }
+  },
+  {
     "id": "57d8475c-306b-4d43-8c85-9c9e46a62690",
     "date": "2026-11-26T21:39:38.555Z",
     "theme": "quiet-movers",
@@ -1307,55 +1353,6 @@
         ]
       },
       "sourceFetchedAt": "2026-11-11T06:36:04.916Z",
-      "promptVersion": "2.0",
-      "provider": "groq",
-      "model": "openai/gpt-oss-120b",
-      "validatorVersion": "2.0"
-    }
-  },
-  {
-    "id": "b53c0e8c-9144-4a7e-b03c-ab98b79280c5",
-    "date": "2026-11-10T19:48:10.860Z",
-    "theme": "daily-recap",
-    "text": "$BTC slipped 2.0% to $73,502, bounced off a high of $75,442 and found support near $72,727. The pair moved about 3.7% in the 24-hour range and traded roughly $1.2 B in USDT volume.\n\n$ETH took the biggest hit, down 4.18% to $2,045.84. It swung from $2,137.30 down to $2,006, a 6.4% range, the widest of the three, and logged about $677 M in quote volume.\n\n$BNB fell 1.99% to $675.04, hovering between $692.64 and $670.06, a 3.3% swing, with $86.7 M USDT traded.\n\nThe standout stat: $BTC moved the most USDT volume, topping $1.19 B.",
-    "status": "published",
-    "postId": 386862659842447,
-    "shareLink": "https://app.binance.com/uni-qr/cpos/386862659842447?r=HDVH95ZN&l=id",
-    "meta": {
-      "sourceHash": "8e1946680ae55b85",
-      "sourceSnapshot": [
-        {
-          "symbol": "BTCUSDT",
-          "cashtag": "$BTC",
-          "lastPrice": 73502,
-          "priceChangePercent": -2.021,
-          "highPrice": 75442.01,
-          "lowPrice": 72727.27,
-          "volume": 16185.64087,
-          "quoteVolume": 1198881025.2071886
-        },
-        {
-          "symbol": "ETHUSDT",
-          "cashtag": "$ETH",
-          "lastPrice": 2045.84,
-          "priceChangePercent": -4.178,
-          "highPrice": 2137.3,
-          "lowPrice": 2006,
-          "volume": 327047.0594,
-          "quoteVolume": 677054097.11601
-        },
-        {
-          "symbol": "BNBUSDT",
-          "cashtag": "$BNB",
-          "lastPrice": 675.04,
-          "priceChangePercent": -1.991,
-          "highPrice": 692.64,
-          "lowPrice": 670.06,
-          "volume": 126472.275,
-          "quoteVolume": 86674470.03672
-        }
-      ],
-      "sourceFetchedAt": "2026-11-10T19:48:09.930Z",
       "promptVersion": "2.0",
       "provider": "groq",
       "model": "openai/gpt-oss-120b",
